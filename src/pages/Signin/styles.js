@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: '#F16520',
         marginBottom: '20',
-        fontWeight: 'Bold',
+        fontWeight: 'bold',
     },
     input: {
         width: 300,
@@ -67,7 +67,19 @@ const styles = StyleSheet.create({
       marginLeft: '15%',
       marginRight: 'auto',
     },
-  
+    imageLogo: {
+        height: 250,
+        width: 250,
+        borderRadius: 150,
+        paddingBottom: 10,
+        shadowColor: 'black',
+        shadowOffset: {
+            width: 0,
+            height: 0
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 35,
+    }
   });
 
-  export default styles;
+export default styles;
