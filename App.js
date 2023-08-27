@@ -37,6 +37,7 @@ export default function App() {
             headerStyle: {
               backgroundColor: '#EEE7D9'
             },
+            
           }}
         />
       </Stack.Navigator>

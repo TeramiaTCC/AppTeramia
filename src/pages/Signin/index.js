@@ -1,15 +1,50 @@
 import { React, useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar } from 'react-native';
-import * as Svg from 'react-native-svg';
-
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard } from 'react-native';
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Signin ( navigation ) {
+export default function Signin ({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [ErrorLogin, setErrorLogin] = useState("");
+  const [logo] = useState(new Animated.ValueXY({x: 250, y: 250}));
+
+
+  useEffect(() => {
+    keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+  });
+
+  function keyboardDidShow(){
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 150,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 150,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
+  function keyboardDidHide(){
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 250,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 250,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
 
   return (
     <KeyboardAvoidingView 
@@ -19,13 +54,22 @@ export default function Signin ( navigation ) {
 
       <StatusBar hidden/>
       
-      <Image source={require('../../../assets/teramia-logo.png')} style={styles.imageLogo} />
+      <View style={styles.viewLogo}>
+        <Animated.Image  style={[
+          styles.imageLogo, {
+            height: logo.x, 
+            width: logo.y,
+          }
+          ]} 
+        source={require('../../../assets/teramia-logo.png')}/>
+      </View>
 
       <Text style={styles.inputTitle}>E-mail</Text>
       <TextInput
         style={styles.input}
         placeholder='Insira seu E-mail'
         type='text'
+        keyboardType='email-address'
         onChangeText={(text) => setEmail (text)} 
         value={email}
       /> 
@@ -39,6 +83,7 @@ export default function Signin ( navigation ) {
         onChangeText={(text) => setSenha (text)} 
         value={senha}
       /> 
+      <Text style={styles.linkForget} onPress={() => navigation.navigate('Signup')}>Esqueci minha senha</Text>
     
     {ErrorLogin === true
       ?
@@ -60,7 +105,7 @@ export default function Signin ( navigation ) {
         disabled={true}
         style={styles.buttonLogin}
       >
-        <Text style={styles.textButtonLogin}>ENTRAR</Text>
+          <Text style={styles.textButtonLogin}>ENTRAR</Text>
       </TouchableOpacity>
     :
     <TouchableOpacity
@@ -71,8 +116,7 @@ export default function Signin ( navigation ) {
     </TouchableOpacity>
     }
 
-    <Text style={styles.registration}>Não possui cadastro?
-      <Text style={styles.linkSubscribe} onPress={() => navigation.navigate('Signup')}> Cadastre-se Aqui!</Text>
+    <Text style={styles.registration}>Não possui cadastro? <Text style={styles.linkSubscribe} onPress={() => navigation.navigate('Cadastrar')}>Cadastre-se Aqui!</Text>
     </Text>
     
     <View style={{height: 100}}/>

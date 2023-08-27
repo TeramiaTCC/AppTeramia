@@ -8,18 +8,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingTop: Platform.OS === 'ios' ? 0 : 50,
     },
-    title: {
-        fontSize: 40,
-        color: '#F16520',
-        marginBottom: '20',
-        fontWeight: 'bold',
-    },
     input: {
-        width: 300,
+        width: '90%',
         height: 40,
         marginTop: 10,
         padding: 10,
         borderWidth: 2,
+        borderColor: '#1F0500',
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 10,
@@ -33,8 +28,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F16520',
-        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: '#1F0500',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 25,
+        borderTopLeftRadius: 25,
+        borderTopRightRadius: 10,
         marginTop: 30,
+        elevation: 5,
+        shadowColor: '#1F0500',
     },
     textButtonLogin: {
         color: '#FFFDFA',
@@ -58,27 +60,29 @@ const styles = StyleSheet.create({
     linkSubscribe: {
         color: '#F16520',
         fontSize: 16,
+        textDecorationLine: 'underline',
     },
     inputTitle: {
       fontSize: 16,
       fontWeight: 'bold',
       marginBottom: -5,
       paddingTop: 10,
-      marginLeft: '15%',
+      marginLeft: '5%',
       marginRight: 'auto',
     },
     imageLogo: {
-        height: 250,
-        width: 250,
         borderRadius: 150,
         paddingBottom: 10,
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 0,
-            height: 0
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 35,
+    },
+    viewLogo: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    linkForget: {
+        color: '#F16520',
+        marginLeft: 'auto',
+        marginRight: '5%',
+        textDecorationLine: 'underline',
     }
   });
 
