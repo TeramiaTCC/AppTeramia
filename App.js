@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Signin from './src/pages/Signin';
 import Signup from './src/pages/Signup';
 import Home from './src/pages/Home';
+import Password from './src/pages/Password';
 
 const Stack = createStackNavigator();
 
@@ -38,9 +39,34 @@ export default function App() {
             headerStyle: {
               backgroundColor: '#EEE7D9'
             },
-            
           }}
         />
+      <Stack.Screen
+        name='Esqueci a senha'
+        component={Password}
+        options={{
+          headerTintColor: "#F16520",
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerStyle: {
+            backgroundColor: '#EEE7D9'
+          },
+        }}
+      />
+      <Stack.Screen
+        name='Página Inicial'
+        component={Home}
+        options={{
+          headerTintColor: "#F16520",
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerStyle: {
+            backgroundColor: '#EEE7D9'
+          },
+        }}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

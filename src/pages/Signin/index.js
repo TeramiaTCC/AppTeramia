@@ -86,7 +86,7 @@ export default function Signin ({ navigation }) {
         onChangeText={(text) => setSenha (text)} 
         value={senha}
       /> 
-      <Text style={styles.linkForget} onPress={() => navigation.navigate('Signup')}>Esqueci minha senha</Text>
+      <Text style={styles.linkForget} onPress={() => navigation.navigate('Esqueci a senha')}>Esqueci minha senha</Text>
     
     {ErrorLogin === true
       ?
