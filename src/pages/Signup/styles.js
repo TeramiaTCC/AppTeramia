@@ -38,6 +38,30 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     backgroundColor: '#EEE7D9',
   },
+  buttonRegister: {
+    width: 200,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#F16520',
+    borderRadius: 50,
+    marginTop: 30,
+    elevation: 5,
+    shadowColor: '#1F0500',
+  },
+  textButtonRegister: {
+    color: '#FFFDFA',
+    fontWeight: 'bold',
+  },
+  login: {
+    marginTop: 20,
+    color: '#4d5156',
+  },
+  linkLogin: {
+      color: '#F16520',
+      fontSize: 16,
+      textDecorationLine: 'underline',
+  },
 });
 
 export default styles;

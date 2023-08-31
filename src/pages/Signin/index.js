@@ -8,6 +8,7 @@ export default function Signin ({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [ErrorLogin, setErrorLogin] = useState("");
+
   const [logo] = useState(new Animated.ValueXY({x: 250, y: 250}));
 
 
@@ -70,6 +71,7 @@ export default function Signin ({ navigation }) {
         placeholder='Insira seu E-mail'
         type='text'
         keyboardType='email-address'
+        autoComplete='email'
         onChangeText={(text) => setEmail (text)} 
         value={email}
       /> 
@@ -80,6 +82,7 @@ export default function Signin ({ navigation }) {
         secureTextEntry={true}
         placeholder='Insira sua senha'
         type='text'
+        autoComplete='current-password'
         onChangeText={(text) => setSenha (text)} 
         value={senha}
       /> 
