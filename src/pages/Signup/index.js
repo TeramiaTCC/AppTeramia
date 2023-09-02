@@ -2,11 +2,12 @@ import {React, useState, useEffect} from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
+import { CheckBox } from '@rneui/themed';
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
-import CheckBox from '../../components/Checkbox';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Signup({ navigation }) {
   const [nome, setNome] = useState("");
@@ -17,14 +18,12 @@ export default function Signup({ navigation }) {
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
   
-  
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
-  const optCB = [{text: 'Termos de Uso', id: 1}];
-  const [check, setCheck] = useState("");
+  const [isChecked, setChecked] = useState(false);
 
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
@@ -46,13 +45,24 @@ export default function Signup({ navigation }) {
   };
 
  return (
-    <KeyboardAvoidingView
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    style={styles.container}>
+
+  <ScrollView >
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container} >
 
       <StatusBar hidden/>
+
       <Text style={styles.title}>Cria uma conta Teramia</Text>
       <Text><Text>*</Text> significa obrigatório.</Text>
+
+      <View style={styles.containerOpt}>
+        <TouchableOpacity style={styles.buttonOptLeft} activeOpacity={1}>
+          <Text style={styles.textSelected}>Paciente</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.buttonOptRight} onPress={() => navigation.navigate('SignupPsico')}>
+          <Text style={styles.textNotSelected}>Psicólogo</Text>
+        </TouchableOpacity>
+      </View>
 
       <Text style={styles.inputTitle}>Nome*</Text>
       <TextInput
@@ -140,13 +150,15 @@ export default function Signup({ navigation }) {
         mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       />
 
-      <CheckBox 
-        options={optCB}
-        onChange={() => setCheck(!check)}
-        value={check}
+      <CheckBox
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms}>Termos de Uso</Text>*</Text>)}
+        checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
+        uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
+        checked={isChecked}
+        onPress={() => setChecked(!isChecked)}
       />
 
-    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNasimento === "" || cell === "" || check === false
+    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNasimento === "" || cell === "" || isChecked === false
     ?
       <TouchableOpacity
         disabled={true}
@@ -166,7 +178,9 @@ export default function Signup({ navigation }) {
     <Text style={styles.login}>Já possui cadastro? <Text style={styles.linkLogin} onPress={() => navigation.navigate('Signin')}>Acesse Aqui!</Text>
     </Text>
 
+    <View style={{height: 50}}/>
 
     </KeyboardAvoidingView>
+  </ScrollView>
   );
 }

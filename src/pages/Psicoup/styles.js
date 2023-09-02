@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonOptLeft: {
-    backgroundColor: '#F16520',
+    backgroundColor: '#f0834d',
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 50,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   buttonOptRight: {
-    backgroundColor: '#f0834d',
+    backgroundColor: '#F16520',
     paddingTop: 10,
     paddingBottom: 10,
     paddingRight: 50,
@@ -99,13 +99,13 @@ const styles = StyleSheet.create({
   textSelected: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#ebbda7',
     marginRight: 40
   },
   textNotSelected: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#ebbda7',
+    color: '#fff',
     marginLeft: 40
   }
 });
