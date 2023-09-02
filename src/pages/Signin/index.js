@@ -86,7 +86,7 @@ export default function Signin ({ navigation }) {
         onChangeText={(text) => setSenha (text)} 
         value={senha}
       /> 
-      <Text style={styles.linkForget} onPress={() => navigation.navigate('Esqueci a senha')}>Esqueci minha senha</Text>
+      <Text style={styles.linkForget} onPress={() => navigation.navigate('Password')}>Esqueci minha senha</Text>
     
     {ErrorLogin === true
       ?
@@ -119,7 +119,7 @@ export default function Signin ({ navigation }) {
     </TouchableOpacity>
     }
 
-    <Text style={styles.registration}>Não possui cadastro? <Text style={styles.linkSubscribe} onPress={() => navigation.navigate('Cadastrar')}>Cadastre-se Aqui!</Text>
+    <Text style={styles.registration}>Não possui cadastro? <Text style={styles.linkSubscribe} onPress={() => navigation.navigate('Signup')}>Cadastre-se Aqui!</Text>
     </Text>
     
     <View style={{height: 100}}/>

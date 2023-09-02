@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
         borderColor: '#1F0500',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#EEE7D9',
     },
     innerCircle: {
         width: 12,

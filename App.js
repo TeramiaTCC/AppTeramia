@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import Signin from './src/pages/Signin';
 import Signup from './src/pages/Signup';
+import Psicoup from './src/pages/Psicoup';
 import Home from './src/pages/Home';
 import Password from './src/pages/Password';
 
@@ -15,9 +16,10 @@ export default function App() {
       <Stack.Navigator initialRouteName='Signin'>
         
         <Stack.Screen
-          name="Entrar"
+          name="Signin"
           component={Signin}
           options={{
+            title: 'Entrar', 
             headerTintColor: "#F16520",
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -29,9 +31,10 @@ export default function App() {
         />
 
       <Stack.Screen
-          name="Cadastrar"
+          name="Signup"
           component={Signup}
           options={{
+            title: 'Cadastrar', 
             headerTintColor: "#F16520",
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -41,23 +44,43 @@ export default function App() {
             },
           }}
         />
+
       <Stack.Screen
-        name='Esqueci a senha'
+          name="SignupPsico"
+          component={Psicoup}
+          options={{
+            title: 'Cadastrar', 
+            headerTintColor: "#F16520",
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerStyle: {
+              backgroundColor: '#EEE7D9'
+            },
+          }}
+        />
+
+      <Stack.Screen
+        name='Password'
         component={Password}
         options={{
+          title: 'Esqueci minha senha', 
           headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerStyle: {
+            
             backgroundColor: '#EEE7D9'
           },
         }}
       />
+
       <Stack.Screen
-        name='Página Inicial'
+        name='Home'
         component={Home}
         options={{
+          title: 'Página inicial', 
           headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',

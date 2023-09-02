@@ -8,8 +8,8 @@ export default function Password() {
   const [ErrorPass, setErrorPass] = useState("");
 
   return (
-
-    <KeyboardAvoidingView 
+  
+  <KeyboardAvoidingView 
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.container}
   >

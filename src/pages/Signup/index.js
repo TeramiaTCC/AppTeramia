@@ -1,10 +1,12 @@
 import {React, useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import MaskInput from 'react-native-mask-input';
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
+import CheckBox from '../../components/Checkbox';
 
 export default function Signup({ navigation }) {
   const [nome, setNome] = useState("");
@@ -14,10 +16,15 @@ export default function Signup({ navigation }) {
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
-  const [tel, setTel] = useState("");
+  
+  
+  const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+
+  const optCB = [{text: 'Termos de Uso', id: 1}];
+  const [check, setCheck] = useState("");
 
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
@@ -42,6 +49,8 @@ export default function Signup({ navigation }) {
     <KeyboardAvoidingView
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.container}>
+
+      <StatusBar hidden/>
       <Text style={styles.title}>Cria uma conta Teramia</Text>
       <Text><Text>*</Text> significa obrigatório.</Text>
 
@@ -122,16 +131,22 @@ export default function Signup({ navigation }) {
       )}
 
       <Text style={styles.inputTitle}>Telefone*</Text>
-      <TextInput
+      <MaskInput
+        placeholder='(99) 99999-9999'
+        keyboardType='numeric'
         style={styles.input}
-        placeholder='Insira seu telefone'
-        inputMode='tel'
-        autoComplete='tel'
-        onChangeText={(text) => setTel(text)}
-        value={tel}
+        value={cell}
+        onChangeText={(text) => setCell(text)}
+        mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
       />
 
-    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || data === ""  || tel === ""
+      <CheckBox 
+        options={optCB}
+        onChange={() => setCheck(!check)}
+        value={check}
+      />
+
+    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNasimento === "" || cell === "" || check === false
     ?
       <TouchableOpacity
         disabled={true}
@@ -148,9 +163,10 @@ export default function Signup({ navigation }) {
     </TouchableOpacity>
     }
 
-    <Text style={styles.login}>Já possui cadastro? <Text style={styles.linkLogin} onPress={() => navigation.navigate('Entrar')}>Acesse Aqui!</Text>
+    <Text style={styles.login}>Já possui cadastro? <Text style={styles.linkLogin} onPress={() => navigation.navigate('Signin')}>Acesse Aqui!</Text>
     </Text>
-    
+
+
     </KeyboardAvoidingView>
   );
 }
