@@ -51,7 +51,7 @@ export default function Signup({ navigation }) {
 
       <StatusBar hidden/>
 
-      <Text style={styles.title}>Cria uma conta Teramia</Text>
+      <Text style={styles.title}>Criar uma conta Teramia</Text>
       <Text><Text>*</Text> significa obrigatório.</Text>
 
       <View style={styles.containerOpt}>
