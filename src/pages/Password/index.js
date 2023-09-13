@@ -2,7 +2,6 @@ import { React, useState } from 'react';
 import {  View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';  
 
 import styles from './style';
@@ -22,7 +21,6 @@ export default function Password() {
         }).catch(function(erro){
         setErrorPass(true)
           console.log("Ocorreu um erro ao enviar o email", erro)
-          console.log(email)
       })
   }
 

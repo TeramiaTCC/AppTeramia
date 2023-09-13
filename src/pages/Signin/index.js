@@ -1,10 +1,7 @@
 import { React, useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard } from 'react-native';
-import { Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard, Alert } from 'react-native';
 
-import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import firebase from "../../config/firebaseconfig"
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
