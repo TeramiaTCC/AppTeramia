@@ -6,7 +6,7 @@ const Radio = ({options=[], horizontal=false, onChangeSelect, selected}) => {
         <View style={horizontal ? styles.horizontal : styles.vertical}>
             {
                 options.map((opt, index) => (
-                    <TouchableOpacity onPress={() => onChangeSelect(opt , index)} style={[styles.opContainer, {marginLeft:horizontal ? 10 : 0, marginTop:horizontal ? 10 : 10}]}>
+                    <TouchableOpacity key={index} onPress={() => onChangeSelect(opt , index)} style={[styles.opContainer, {marginLeft:horizontal ? 10 : 0, marginTop:horizontal ? 10 : 10}]}>
                         <View style={styles.outlineCircle}>
                             {selected === index && <View style={styles.innerCircle}/>}
                         </View>

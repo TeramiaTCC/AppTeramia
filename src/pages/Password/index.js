@@ -1,11 +1,30 @@
-import { React, useState, useEffect } from 'react';
-import {  View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard } from 'react-native';
+import { React, useState } from 'react';
+import {  View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Alert } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
+
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';  
 
 import styles from './style';
 
 export default function Password() {
   const [email, setEmail] = useState("");
   const [ErrorPass, setErrorPass] = useState("");
+
+  async function VerificaEmail(){
+    const auth = getAuth()
+    
+        await sendPasswordResetEmail(auth, email)
+        .then(function(){
+          setErrorPass(false)
+            Alert.alert("email enviado para: ", email)
+
+        }).catch(function(erro){
+        setErrorPass(true)
+          console.log("Ocorreu um erro ao enviar o email", erro)
+          console.log(email)
+      })
+  }
 
   return (
   
@@ -51,10 +70,11 @@ export default function Password() {
       </TouchableOpacity>
     :
     <TouchableOpacity
-      style={styles.buttonLogin}
+      style={styles.buttonBusca}
       activeOpacity={0.7}
+      onPress={VerificaEmail}
     >
-      <Text style={styles.textButtonLogin}>ENTRAR</Text>
+      <Text style={styles.textButtonBusca}>ENTRAR</Text>
     </TouchableOpacity>
     }
     </KeyboardAvoidingView>

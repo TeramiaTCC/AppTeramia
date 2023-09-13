@@ -3,6 +3,11 @@ import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
+import { Alert } from 'react-native';
+
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from 'firebase/auth'; 
+import { getFirestore, doc, deleteDoc, setDoc, Firestore } from 'firebase/firestore';
+import app from "../../config/firebaseconfig"
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,6 +15,8 @@ import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Psicoup({ navigation }) {
+  const db = getFirestore(app);
+  
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
@@ -17,9 +24,7 @@ export default function Psicoup({ navigation }) {
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
-
   const [crp, setCrp] = useState("");
-  
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
@@ -30,6 +35,38 @@ export default function Psicoup({ navigation }) {
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
+
+  async function signUpPsico(){
+    const auth = getAuth(app)
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
+
+      await setDoc(doc(db, "usuarioPsico", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNasimento,
+        cell: cell,
+        crp: crp,
+
+      }).then(() => {
+        Alert.alert("Cadastro feito com sucesso")
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuarioPsico", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+
+  }
+
+
+  
 
   const onChange = ({ type }, selectedDate) => {
     if (type == 'set'){
@@ -184,6 +221,7 @@ export default function Psicoup({ navigation }) {
     <TouchableOpacity
       style={styles.buttonRegister}
       activeOpacity={0.7}
+      onPress={signUpPsico}
     >
       <Text style={styles.textButtonRegister}>CADASTRAR</Text>
     </TouchableOpacity>

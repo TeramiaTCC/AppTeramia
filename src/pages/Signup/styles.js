@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ebbda7',
     marginLeft: 40
+  },
+  keyboard: {
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
 

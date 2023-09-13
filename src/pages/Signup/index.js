@@ -4,12 +4,21 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
 
+
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Alert } from 'react-native';
+
+import { getAuth, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth'; 
+import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+
+import app from "../../config/firebaseconfig"
 
 export default function Signup({ navigation }) {
+  const db = getFirestore(app);
+
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
@@ -17,14 +26,42 @@ export default function Signup({ navigation }) {
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
-  
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
   const [isChecked, setChecked] = useState(false);
+ 
+  async function singUpUser(){
+    const auth = getAuth(app)
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
 
+      await setDoc(doc(db, "usuario", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNasimento,
+        cell: cell,
+      }).then(() => {
+        Alert.alert("Cadastro feito com sucesso")
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuario", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+
+
+    
+  
+  }
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -43,6 +80,8 @@ export default function Signup({ navigation }) {
       toggleDatepicker();
     }
   };
+
+  
 
  return (
 
@@ -170,6 +209,7 @@ export default function Signup({ navigation }) {
     <TouchableOpacity
       style={styles.buttonRegister}
       activeOpacity={0.7}
+      onPress={singUpUser}
     >
       <Text style={styles.textButtonRegister}>CADASTRAR</Text>
     </TouchableOpacity>

@@ -1,21 +1,47 @@
 import { React, useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard } from 'react-native';
+import { Alert } from 'react-native';
+
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebase from "../../config/firebaseconfig"
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function Signin ({ navigation }) {
+export default function Login ({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [ErrorLogin, setErrorLogin] = useState("");
 
+
+  async function singIn(){
+    const auth = getAuth()
+    await signInWithEmailAndPassword(auth, email, senha)
+    .then(() => {
+      setErrorLogin(false)
+      navigation.navigate('Home')
+      
+    })
+    .catch((error) => {
+      setErrorLogin(true)
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
+    }
+
+  
+
   const [logo] = useState(new Animated.ValueXY({x: 250, y: 250}));
+
 
 
   useEffect(() => {
     keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
     keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
   });
+
+
 
   function keyboardDidShow(){
     Animated.parallel([
@@ -62,7 +88,7 @@ export default function Signin ({ navigation }) {
             width: logo.y,
           }
           ]} 
-        source={require('../../../assets/teramia-logo.png')}/>
+        source={require('../../../assets/img/logo/teramia-logo.png')}/>
       </View>
 
       <Text style={styles.inputTitle}>E-mail</Text>
@@ -114,6 +140,8 @@ export default function Signin ({ navigation }) {
     <TouchableOpacity
       style={styles.buttonLogin}
       activeOpacity={0.7}
+      onPress={singIn}
+      
     >
       <Text style={styles.textButtonLogin}>ENTRAR</Text>
     </TouchableOpacity>
