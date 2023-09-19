@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, Text, StatusBar } from 'react-native';
-import styles from '../Pet/styles';
+import styles from './styles';
 
 export default function Home() {
  return (

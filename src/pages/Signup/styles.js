@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   scroll: {
     flex: 1,
     width:'100%',
-    height: '100',
+    height: '100%',
   },
   scrollContent:{
     alignItems: 'center',

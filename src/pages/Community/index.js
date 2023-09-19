@@ -1,8 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { SafeAreaView, Text, StatusBar } from 'react-native';
+import styles from './styles';
 
 export default function Community() {
  return (
-   <View/>
+   <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={'default'}/>
+        <Text>Community page</Text>
+   </SafeAreaView>
   );
 }

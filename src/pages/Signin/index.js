@@ -17,7 +17,7 @@ export default function Login ({ navigation }) {
     await signInWithEmailAndPassword(auth, email, senha)
     .then(() => {
       setErrorLogin(false)
-      navigation.navigate('Home')
+      navigation.navigate('Rotation')
       
     })
     .catch((error) => {
@@ -139,7 +139,6 @@ export default function Login ({ navigation }) {
       style={styles.buttonLogin}
       activeOpacity={0.7}
       onPress={singIn}
-      
     >
       <Text style={styles.textButtonLogin}>ENTRAR</Text>
     </TouchableOpacity>

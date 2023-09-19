@@ -69,6 +69,7 @@ export default function Signup({ navigation }) {
         cell: cell,
       }).then(() => {
         Alert.alert("Cadastro feito com sucesso")
+        navigation.navigate('Signin')
       }).catch(async(error) => {
         console.log(error.code)
             await deleteDoc(doc(db, "usuario", userCredential.user.uid))
@@ -241,7 +242,7 @@ export default function Signup({ navigation }) {
     <TouchableOpacity
       style={styles.buttonRegister}
       activeOpacity={0.7}
-      onPress={salvar}
+      onPress={singUpUser}
     >
       <Text style={styles.textButtonRegister}>CADASTRAR</Text>
     </TouchableOpacity>

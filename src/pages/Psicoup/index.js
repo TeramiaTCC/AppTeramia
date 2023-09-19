@@ -51,6 +51,7 @@ export default function Psicoup({ navigation }) {
 
       }).then(() => {
         Alert.alert("Cadastro feito com sucesso")
+        navigation.navigate('Sigin')
       }).catch(async(error) => {
         console.log(error.code)
             await deleteDoc(doc(db, "usuarioPsico", userCredential.user.uid))
