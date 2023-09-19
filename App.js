@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Signin'>
+      <Stack.Navigator initialRouteName='Home'>
         
         <Stack.Screen
           name="Signin"
@@ -70,7 +70,6 @@ export default function App() {
             fontWeight: 'bold',
           },
           headerStyle: {
-            
             backgroundColor: '#EEE7D9'
           },
         }}
@@ -88,6 +87,7 @@ export default function App() {
           headerStyle: {
             backgroundColor: '#EEE7D9'
           },
+          headerShown: false
         }}
       />
       </Stack.Navigator>

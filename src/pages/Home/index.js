@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { SafeAreaView, Text, StatusBar } from 'react-native';
+import styles from '../Pet/styles';
 
 export default function Home() {
  return (
-   <View>
+   <SafeAreaView style={styles.container}>
+        <StatusBar barStyle={'default'}/>
         <Text>Home page</Text>
-   </View>
+   </SafeAreaView>
   );
 }

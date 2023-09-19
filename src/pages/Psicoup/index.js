@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
@@ -84,16 +84,17 @@ export default function Psicoup({ navigation }) {
   };
  
   return (
-
-  <ScrollView>
-    <KeyboardAvoidingView
+  
+  <KeyboardAvoidingView
+    keyboardVerticalOffset={60}
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.container}>
+  <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
 
       <StatusBar hidden/>
 
       <Text style={styles.title}>Criar uma conta Teramia</Text>
-      <Text><Text>*</Text> significa obrigatório.</Text>
+      <Text>* significa obrigatório.</Text>
 
       <View style={styles.containerOpt}>
         <TouchableOpacity style={styles.buttonOptLeft} onPress={() => navigation.navigate('Signup')}>
@@ -202,7 +203,7 @@ export default function Psicoup({ navigation }) {
       />
 
       <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms}>Termos de Uso</Text>*</Text>)}
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://drive.google.com/file/d/1QQ7tZDNp8e94qfuvJrCZlCVv972NXZOY/view?usp=sharing');}}>Termos de Uso</Text>*</Text>)}
         checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
         uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
         checked={isChecked}
@@ -232,7 +233,8 @@ export default function Psicoup({ navigation }) {
 
     <View style={{height: 50}}/>
 
-    </KeyboardAvoidingView>
+    
   </ScrollView>
+  </KeyboardAvoidingView>
   );
 }

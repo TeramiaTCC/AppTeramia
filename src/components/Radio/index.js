@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEE7D9',
     },
     innerCircle: {
-        width: 12,
-        height: 12,
+        width: 13,
+        height: 13,
         borderRadius: 6,
         backgroundColor: '#F16520',
     },

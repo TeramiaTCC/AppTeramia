@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   title: {
+    textAlign: 'center',
     fontSize: 35,
     color: '#F16520',
     marginBottom: '20',
@@ -54,13 +55,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   login: {
+    alignSelf: 'center',
     marginTop: 20,
     color: '#4d5156',
   },
   linkLogin: {
-      color: '#F16520',
-      fontSize: 16,
-      textDecorationLine: 'underline',
+    color: '#F16520',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
   checkText: {
     marginLeft: 8,
@@ -107,7 +109,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
     marginLeft: 40
-  }
+  },
+  scroll: {
+    flex: 1,
+    width:'100%',
+    height: '100',
+  },
+  scrollContent:{
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default styles;

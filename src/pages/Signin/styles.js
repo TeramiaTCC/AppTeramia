@@ -67,11 +67,12 @@ const styles = StyleSheet.create({
     },
     imageLogo: {
         borderRadius: 150,
-        paddingBottom: 10,
+        padding: 90
     },
     viewLogo: {
         flex: 1,
         justifyContent: 'center',
+        padding: 90
     },
     linkForget: {
         color: '#F16520',

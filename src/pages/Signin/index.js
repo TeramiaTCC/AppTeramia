@@ -83,6 +83,7 @@ export default function Login ({ navigation }) {
           styles.imageLogo, {
             height: logo.x, 
             width: logo.y,
+            padding: 50,
           }
           ]} 
         source={require('../../../assets/img/logo/teramia-logo.png')}/>
