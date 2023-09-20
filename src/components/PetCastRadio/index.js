@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 
-const Radio = ({options=[], horizontal=false, onChangeSelect, selected}) => {
+const PetCastRadio = ({options=[], horizontal=false, onChangeSelect, selected}) => {
     return (
         <View style={horizontal ? styles.horizontal : styles.vertical}>
             {
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Radio;
+export default PetCastRadio;

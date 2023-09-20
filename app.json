@@ -4,12 +4,12 @@
     "slug": "Teramia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/img/logo/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/img/logo/splash-screen.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#F16520"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/img/logo/icon.png",
+        "backgroundColor": "#F16520"
+      },
+      "package": "com.teramia.teramia"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/img/logo/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "284b92b0-c84b-4f23-91d3-85094d62e2a2"
+      }
     }
   }
 }

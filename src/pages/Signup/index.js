@@ -1,15 +1,24 @@
-import {React, useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable } from 'react-native';
+import { React, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
+
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Alert } from 'react-native';
+
+import { getAuth, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth'; 
+import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+
+import app from "../../config/firebaseconfig"
 
 export default function Signup({ navigation }) {
+  const db = getFirestore(app);
+
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
@@ -17,7 +26,6 @@ export default function Signup({ navigation }) {
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
-  
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
@@ -25,6 +33,60 @@ export default function Signup({ navigation }) {
 
   const [isChecked, setChecked] = useState(false);
 
+  const [errorEmail, setErrorEmail] = useState (null);
+  const [errorSenha, setErrorSenha] = useState (null);
+  const [errorTel, setErrorTel] = useState (null);
+
+  const validar = () => {
+    let error = false
+    setErrorEmail(null)
+
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    if (!re.test(String(email).toLowerCase())){
+    setErrorEmail('preencha seu email corretamente')
+    error = true
+    }
+    return !error
+  }
+
+  const salvar = () =>{
+    if (validar()){
+      console.log('Salvou')
+    }
+  }
+ 
+  async function singUpUser(){
+    const auth = getAuth(app)
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
+
+      await setDoc(doc(db, "usuario", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNasimento,
+        cell: cell,
+        
+      }).then(() => {
+        Alert.alert("Cadastro feito com sucesso")
+        navigation.navigate('Signin')
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuario", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+
+
+    
+  
+  }
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -44,15 +106,22 @@ export default function Signup({ navigation }) {
     }
   };
 
+  
+
  return (
 
-  <ScrollView >
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container} >
+  <KeyboardAvoidingView
+    keyboardVerticalOffset={60}
+    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    style={styles.container}
+  >
+  <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+    
 
       <StatusBar hidden/>
 
       <Text style={styles.title}>Criar uma conta Teramia</Text>
-      <Text><Text>*</Text> significa obrigatório.</Text>
+      <Text style={styles.obrigation}>* significa obrigatório.</Text>
 
       <View style={styles.containerOpt}>
         <TouchableOpacity style={styles.buttonOptLeft} activeOpacity={1}>
@@ -88,9 +157,13 @@ export default function Signup({ navigation }) {
         placeholder='Insira seu E-mail'
         type='text'
         keyboardType='email-address'
-        onChangeText={(text) => setEmail(text)}
+        onChangeText={(text) => {
+          setEmail(text) 
+          setErrorEmail(null)
+        }}
         value={email}
       /> 
+      <Text style={styles.errorMessage}>{errorEmail}</Text>
 
       <Text style={styles.inputTitle}>Senha*</Text>
       <TextInput
@@ -151,7 +224,7 @@ export default function Signup({ navigation }) {
       />
 
       <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms}>Termos de Uso</Text>*</Text>)}
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://drive.google.com/file/d/1QQ7tZDNp8e94qfuvJrCZlCVv972NXZOY/view?usp=sharing');}}>Termos de Uso</Text>*</Text>)}
         checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
         uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
         checked={isChecked}
@@ -170,6 +243,7 @@ export default function Signup({ navigation }) {
     <TouchableOpacity
       style={styles.buttonRegister}
       activeOpacity={0.7}
+      onPress={singUpUser}
     >
       <Text style={styles.textButtonRegister}>CADASTRAR</Text>
     </TouchableOpacity>
@@ -180,7 +254,8 @@ export default function Signup({ navigation }) {
 
     <View style={{height: 50}}/>
 
-    </KeyboardAvoidingView>
+    
   </ScrollView>
+  </KeyboardAvoidingView>
   );
 }

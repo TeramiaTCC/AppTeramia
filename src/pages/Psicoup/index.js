@@ -1,8 +1,13 @@
 import {React, useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
+import { Alert } from 'react-native';
+
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from 'firebase/auth'; 
+import { getFirestore, doc, deleteDoc, setDoc, Firestore } from 'firebase/firestore';
+import app from "../../config/firebaseconfig"
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,6 +15,8 @@ import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Psicoup({ navigation }) {
+  const db = getFirestore(app);
+  
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
@@ -17,9 +24,7 @@ export default function Psicoup({ navigation }) {
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
   const [dataNasimento, setDataNascimento] = useState("");
-
   const [crp, setCrp] = useState("");
-  
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
@@ -30,6 +35,39 @@ export default function Psicoup({ navigation }) {
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
+
+  async function signUpPsico(){
+    const auth = getAuth(app)
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
+
+      await setDoc(doc(db, "usuarioPsico", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNasimento,
+        cell: cell,
+        crp: crp,
+
+      }).then(() => {
+        Alert.alert("Cadastro feito com sucesso")
+        navigation.navigate('Sigin')
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuarioPsico", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+
+  }
+
+
+  
 
   const onChange = ({ type }, selectedDate) => {
     if (type == 'set'){
@@ -47,16 +85,17 @@ export default function Psicoup({ navigation }) {
   };
  
   return (
-
-  <ScrollView>
-    <KeyboardAvoidingView
+  
+  <KeyboardAvoidingView
+    keyboardVerticalOffset={60}
     behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     style={styles.container}>
+  <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
 
       <StatusBar hidden/>
 
       <Text style={styles.title}>Criar uma conta Teramia</Text>
-      <Text><Text>*</Text> significa obrigatório.</Text>
+      <Text>* significa obrigatório.</Text>
 
       <View style={styles.containerOpt}>
         <TouchableOpacity style={styles.buttonOptLeft} onPress={() => navigation.navigate('Signup')}>
@@ -165,7 +204,7 @@ export default function Psicoup({ navigation }) {
       />
 
       <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms}>Termos de Uso</Text>*</Text>)}
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://drive.google.com/file/d/1QQ7tZDNp8e94qfuvJrCZlCVv972NXZOY/view?usp=sharing');}}>Termos de Uso</Text>*</Text>)}
         checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
         uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
         checked={isChecked}
@@ -184,6 +223,7 @@ export default function Psicoup({ navigation }) {
     <TouchableOpacity
       style={styles.buttonRegister}
       activeOpacity={0.7}
+      onPress={signUpPsico}
     >
       <Text style={styles.textButtonRegister}>CADASTRAR</Text>
     </TouchableOpacity>
@@ -194,7 +234,8 @@ export default function Psicoup({ navigation }) {
 
     <View style={{height: 50}}/>
 
-    </KeyboardAvoidingView>
+    
   </ScrollView>
+  </KeyboardAvoidingView>
   );
 }
