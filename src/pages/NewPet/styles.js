@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   input: {
-    width: '90%',
+    width: "90%",
     height: 40,
     marginTop: 10,
     padding: 10,
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     backgroundColor: '#EEE7D9',
   },
-  buttonRegister: {
+  buttonAdd: {
     width: 200,
     height: 50,
     alignItems: 'center',
@@ -50,75 +50,47 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: '#1F0500',
   },
-  textButtonRegister: {
+  textButtonAdd: {
     color: '#FFFDFA',
     fontWeight: 'bold',
   },
-  login: {
-    alignSelf: 'center',
-    marginTop: 20,
-    color: '#4d5156',
-  },
-  linkLogin: {
-    color: '#F16520',
-    fontSize: 16,
-    textDecorationLine: 'underline',
-  },
-  checkText: {
-    marginLeft: 8,
-    fontSize: 14,
-    color: '#777'
-  },
-  useTerms: {
-    color: '#F16520',
-    textDecorationLine: 'underline',
-  },
-  containerOpt: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 10,
-  },
-  buttonOptLeft: {
-    backgroundColor: '#f0834d',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 50,
-    borderTopLeftRadius: 25,
-    borderBottomLeftRadius: 25,
-    elevation: 5,
-  },
-  buttonOptRight: {
-    backgroundColor: '#F16520',
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 50,
-    borderTopRightRadius: 25,
-    borderBottomRightRadius: 25,
-    elevation: 5,
-  },
-  textSelected: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#ebbda7',
-    marginRight: 40
-  },
-  textNotSelected: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginLeft: 40
-  },
-  scroll: {
+  safeArea: {
     flex: 1,
     width:'100%',
-    height: '100%',
-  },
-  scrollContent:{
     alignItems: 'center',
     justifyContent: 'center',
   },
+  contentContainer:{
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  boxList: {
+    width: 370,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 10,
+    marginTop: 10,
+    borderColor: '#1F0500',
+    borderWidth: 2,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#EEE7D9',
+    alignItems: 'space-between',
+    justifyContent: 'space-between',
+  },
+  dropdownList: {
+    width: 370,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 10,
+    borderColor: '#1F0500',
+    borderWidth: 2,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    backgroundColor: '#EEE7D9',
+  }
 });
 
 export default styles;
