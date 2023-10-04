@@ -5,15 +5,39 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import { deleteUser } from 'firebase/auth'; 
-
+import auth from '../../config/firebaseAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig"
+import { Alert } from 'react-native-web';
 
 export default function User({navigation, route}) {
 
   const db = getFirestore(app);
 
-  function deleteUser(id){
-    db.collection(route.params.userc).doc(id).delete()
+  async function deleteUsuario(){
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+
+    await deleteDoc(doc(db, "usuario", credentials.uid))
+    await deleteUser(auth.currentUser)
+    .then(Alert.alert("Realizado com sucesso", "Conta apagada."))
+
+    await AsyncStorage.clear();
+    navigation.reset({
+      index:0, 
+      routes: [{
+        name:"Signin"
+      }]
+    })
+  }
+
+  async function exit(){
+    await AsyncStorage.clear();
+    navigation.reset({
+      index:0, 
+      routes: [{
+        name:"Signin"
+      }]
+    })
   }
 
  return (
@@ -23,7 +47,7 @@ export default function User({navigation, route}) {
       <TouchableOpacity
         style={styles.buttonLogout}
         activeOpacity={0.7}
-        onPress={() => navigation.navigate('Signin')}
+        onPress={exit}
       >
         <Text style={styles.textButtonLogout}>SAIR DA CONTA</Text>
       </TouchableOpacity>
@@ -31,7 +55,7 @@ export default function User({navigation, route}) {
       <TouchableOpacity
         style={styles.buttonDelete}
         activeOpacity={0.7}
-        onPress={deleteUser}
+        onPress={deleteUsuario}
       >
         <Text style={styles.textButtonDelete}>EXCLUIR CONTA</Text>
       </TouchableOpacity>

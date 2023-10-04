@@ -6,8 +6,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
-import { getAuth, deleteUser } from 'firebase/auth'; 
-import app from "../../config/firebaseconfig"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import app from "../../config/firebaseconfig";
+import { Alert } from 'react-native';
+
 
 import PetGenRadio from '../../components/PetGenRadio';
 import PetAdesRadio from '../../components/PetAdesRadio';
@@ -15,9 +17,10 @@ import PetCastRadio from '../../components/PetCastRadio';
 import PetTypeRadio from '../../components/PetTypeRadio';
 
 import styles from './styles';
-import { formatWithMask } from 'react-native-mask-input';
 
-export default function NewPet() {
+export default function NewPet({ navigation })  {
+
+    const db = getFirestore(app);
 
     const [nome, setNome] = useState ('');
     const [dataNasimento, setDataNascimento] = useState('');
@@ -35,7 +38,7 @@ export default function NewPet() {
     const [showPicker, setShowPicker] = useState(false);
    
     dataFormatada = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()  
-    
+
     const catRaces = [
         {key:'Abissínio', value:'Abissínio'},
         {key:'Balinês', value:'Balinês'},
@@ -184,9 +187,31 @@ export default function NewPet() {
       }
     };
 
-    async function addPet (){
+    async function addPet(){
 
+      const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+
+      await setDoc(doc(db, "pet", credentials.uid), {
+        nome: nome,
+        tipo: tipo,
+        raca: raca,
+        adestramento: adestramento,
+        castramento: castrado,
+        genero: genero,
+        datanascimento: dataNasimento,
+        
+      }).then(() => {
+        Alert.alert("Terapet", "Cadastrado com sucesso")
+        navigation.navigate('Pet')
+        
+      }).catch(async(error) => {
+        console.log(error)
+        await deleteDoc(doc(db, "pet", credentials.uid))
+          
+      })
     }
+    
+
 
  return (
     <KeyboardAvoidingView

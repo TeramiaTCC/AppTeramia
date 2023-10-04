@@ -73,6 +73,7 @@ export default function Signup({ navigation }) {
       }).then(() => {
         Alert.alert("Cadastro feito com sucesso")
         navigation.navigate('Signin')
+        
       }).catch(async(error) => {
         console.log(error.code)
             await deleteDoc(doc(db, "usuario", userCredential.user.uid))
@@ -228,7 +229,7 @@ export default function Signup({ navigation }) {
       />
 
       <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://drive.google.com/file/d/1QQ7tZDNp8e94qfuvJrCZlCVv972NXZOY/view?usp=sharing');}}>Termos de Uso</Text>*</Text>)}
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://teramiatcc.github.io/pages/eula.html');}}>Termos de Uso</Text>*</Text>)}
         checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
         uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
         checked={isChecked}

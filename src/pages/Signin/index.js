@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Image, StatusBar, Animated, Keyboard, Alert } from 'react-native';
-
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from '../../config/firebaseconfig';
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login ({ navigation }) {
   const [email, setEmail] = useState("");
@@ -12,15 +13,25 @@ export default function Login ({ navigation }) {
   const [ErrorLogin, setErrorLogin] = useState("");
 
 
+
   async function singIn(){
-    const auth = getAuth()
+    const auth = getAuth(app)
     await signInWithEmailAndPassword(auth, email, senha)
-    .then(() => {
+    .then(async (userCredentials) => {
+
       setErrorLogin(false)
       navigation.navigate('Rotation')
-      
+
+
+      await AsyncStorage.setItem("userId", JSON.stringify({
+        email: email,
+        senha: senha,
+        uid: userCredentials.user.uid
+      }))
     })
+    
     .catch((error) => {
+      console.log(error)
       setErrorLogin(true)
       const errorCode = error.code;
       const errorMessage = error.message;
