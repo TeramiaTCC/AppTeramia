@@ -6,6 +6,7 @@ import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Psicoup from '../pages/Psicoup';
 import TabBar from './tabbar';
+import TabBar2 from './tabbart2';
 import Password from '../pages/Password';
 import NewPet from '../pages/NewPet';
 import PetDetails from '../pages/PetDetails';
@@ -23,12 +24,12 @@ export default function StackNav () {
           component={Signin}
           options={{
             title: 'Entrar', 
-            headerTintColor: "#FFF",
+            headerTintColor: "#F16520",
             headerTitleStyle: {
               fontWeight: 'bold',
             },
             headerStyle: {
-              backgroundColor: '#F16520'
+              backgroundColor: '#EEE7D9'
             },
           }}
         />
@@ -38,12 +39,12 @@ export default function StackNav () {
           component={Signup}
           options={{
             title: 'Cadastrar', 
-            headerTintColor: "#FFF",
+            headerTintColor: "#F16520",
             headerTitleStyle: {
               fontWeight: 'bold',
             },
             headerStyle: {
-              backgroundColor: '#F16520'
+              backgroundColor: '#EEE7D9'
             },
           }}
         />
@@ -53,12 +54,12 @@ export default function StackNav () {
           component={Psicoup}
           options={{
             title: 'Cadastrar', 
-            headerTintColor: "#FFF",
+            headerTintColor: "#F16520",
             headerTitleStyle: {
               fontWeight: 'bold',
             },
             headerStyle: {
-              backgroundColor: '#F16520'
+              backgroundColor: '#EEE7D9'
             },
           }}
         />
@@ -68,12 +69,12 @@ export default function StackNav () {
         component={Password}
         options={{
           title: 'Esqueci minha senha', 
-          headerTintColor: "#FFF",
+          headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerStyle: {
-            backgroundColor: '#F16520'
+            backgroundColor: '#EEE7D9'
           },
         }}
       />
@@ -83,12 +84,12 @@ export default function StackNav () {
         component={NewPet}
         options={{
           title: 'Adicionar Pet', 
-          headerTintColor: "#FFF",
+          headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerStyle: {
-            backgroundColor: '#F16520'
+            backgroundColor: '#EEE7D9'
           },
         }}
       />
@@ -98,12 +99,12 @@ export default function StackNav () {
         component={PetDetails}
         options={{
           title: 'Nome do Pet', 
-          headerTintColor: "#FFF",
+          headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerStyle: {
-            backgroundColor: '#F16520'
+            backgroundColor: '#EEE7D9'
           },
         }}
       />
@@ -112,18 +113,18 @@ export default function StackNav () {
         component={NewPost}
         options={{
           title: 'Criar Publicação', 
-          headerTintColor: "#FFF",
+          headerTintColor: "#F16520",
           headerTitleStyle: {
             fontWeight: 'bold',
           },
           headerStyle: {
-            backgroundColor: '#F16520'
+            backgroundColor: '#EEE7D9'
           },
         }}
       />
       <Stack.Screen
         name='Rotation'
-        component={TabBar}
+        component={TabBar2}
         options={{
           headerShown: false
         }}

@@ -19,9 +19,9 @@ export default function TabBar() {
         initialRouteName='Home'
         screenOptions={{
             tabBarShowLabel: false,
-            tabBarActiveTintColor: '#FFF',
-            tabBarInactiveTintColor: 'rgba(240, 240, 240, 0.35)',
-            tabBarStyle: { backgroundColor: '#F16520', },
+            tabBarActiveTintColor: '#F16520',
+            tabBarInactiveTintColor: '#f7b08d',
+            tabBarStyle: { backgroundColor: '#EEE7D9', },
         }}
     >
 
@@ -30,12 +30,12 @@ export default function TabBar() {
             component={Home}
             options={{
                 title: 'Página inicial', 
-                headerTintColor: "#FFF",
+                headerTintColor: "#F16520",
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
                 headerStyle: {
-                  backgroundColor: '#F16520'
+                  backgroundColor: '#EEE7D9'
                 },
                 tabBarIcon: ({size, color}) => (<Foundation name="home" size={size} color={color} />),
                 
@@ -47,12 +47,12 @@ export default function TabBar() {
             component={Community}
             options={{
                 title: 'Comunidade', 
-                headerTintColor: "#FFF",
+                headerTintColor: "#F16520",
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
                 headerStyle: {
-                  backgroundColor: '#F16520'
+                  backgroundColor: '#EEE7D9'
                 },
                 tabBarIcon: ({size, color}) => (<Ionicons name="chatbubbles" size={size} color={color} />),
             }}
@@ -63,12 +63,12 @@ export default function TabBar() {
             component={Club}
             options={{
                 title: 'Clube do Mia', 
-                headerTintColor: "#FFF",
+                headerTintColor: "#F16520",
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
                 headerStyle: {
-                  backgroundColor: '#F16520'
+                  backgroundColor: '#EEE7D9'
                 },
                 tabBarIcon: ({size, color}) => (<FontAwesome5 name="certificate" size={size} color={color} />),
             }}
@@ -79,12 +79,12 @@ export default function TabBar() {
             component={Pett}
             options={{
                 title: 'Meus Pets', 
-                headerTintColor: "#FFF",
+                headerTintColor: "#F16520",
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
                 headerStyle: {
-                  backgroundColor: '#F16520'
+                  backgroundColor: '#EEE7D9'
                 },
                 tabBarIcon: ({size, color}) => (<Ionicons name="paw" size={size} color={color} />),
             }}
@@ -95,12 +95,12 @@ export default function TabBar() {
             component={User}
             options={{
                 title: 'Usuario', 
-                headerTintColor: "#FFF",
+                headerTintColor: "#F16520",
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
                 headerStyle: {
-                  backgroundColor: '#F16520'
+                  backgroundColor: '#EEE7D9'
                 },
                 tabBarIcon: ({size, color}) => (<FontAwesome5 name="user-circle" size={size} color={color} />),
             }}
