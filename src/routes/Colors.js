@@ -21,6 +21,7 @@ export default {
     line: '#282C35',
     gray: '#CCCCCC',
     darkGray: '#999999',
+    brown: '#502C24',
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',
@@ -29,6 +30,7 @@ export default {
     redAlpha: 'rgba(255, 84, 84, 0.15)',
     greenAlpha: 'rgba(96, 197, 168, 0.15)',
     purpleAlpha: 'rgba(146, 6, 228, 0.15)',
+    brownAlpha: 'rgba(80, 44, 36, 0.15)',
 
 
     // bags background colors

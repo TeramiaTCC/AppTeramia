@@ -12,6 +12,7 @@ import NewPet from '../pages/NewPet';
 import PetDetails from '../pages/PetDetails';
 import NewPost from '../pages/NewPost';
 
+
 const Stack = createStackNavigator();
 
 export default function StackNav () {

@@ -1,10 +1,12 @@
-import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from './icons';
 import { Icons } from './icons';
 import Colors from './Colors';
+
+import * as Animatable from 'react-native-animatable';
 
 import Home from '../pages/Home';
 import User from '../pages/User';
@@ -13,21 +15,48 @@ import Club from '../pages/Club';
 import Community from '../pages/Community';
 
 const TabArr = [
-    { route: 'Página Incial', label: 'Página Incial', type: Icons.Foundation, icon: 'home', component: Home, color: Colors.primary, alphaClr: Colors.primaryAlpha },
-    { route: 'Comunidade', label: 'Comunidade', type: Icons.Ionicons, icon: 'chatbubbles', component: Community, color: Colors.green, alphaClr: Colors.greenAlpha },
-    { route: 'Clube do Mia', label: 'Clube do Mia', type: Icons.FontAwesome5, icon: 'certificate', component: Club, color: Colors.red, alphaClr: Colors.redAlpha },
-    { route: 'Meus TeraPets', label: 'Meus TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.purple, alphaClr: Colors.purpleAlpha },
-    { route: 'Conta', label: 'Conta', type: Icons.FontAwesome5, icon: 'user-circle', component: User, color: Colors.purple, alphaClr: Colors.purpleAlpha },
+    { route: 'Página Incial', label: 'Página Incial', type: Icons.Foundation, icon: 'home', component: Home, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Comunidade', label: 'Comunidade', type: Icons.Ionicons, icon: 'chatbubbles', component: Community, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Clube do Mia', label: 'Clube do Mia', type: Icons.FontAwesome5, icon: 'certificate', component: Club, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Meus TeraPets', label: 'Meus TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Conta', label: 'Conta', type: Icons.FontAwesome5, icon: 'user-circle', component: User, color: Colors.brown, alphaClr: Colors.brownAlpha },
   ];
 
 const Tab = createBottomTabNavigator();
 
+
 const TabButton = (props) => {
     const {item, onPress, accessibilityState} = props;
     const focused = accessibilityState.selected;
+    const viewRef = useRef(null);
+    const textViewRef = useRef(null);
+
+    useEffect(() => {
+        if (focused) { // 0.3: { scale: .7 }, 0.5: { scale: .3 }, 0.8: { scale: .7 }, 0: { scale: 0 }, 1: { scale: 1 } }
+          viewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
+          textViewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
+        } else {
+          viewRef.current.animate({ 0: { scale: 1, }, 1: { scale: 0, } });
+          textViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
+        }
+      }, [focused])
+
     return(
-        <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.8}>
-            <Icon type={item.type} name={item.icon} color={focused ? Colors.colorAct : Colors.colorInAct}/>
+        <TouchableOpacity style={[styles.container, {flex: focused ? 1 : 0.4}]} onPress={onPress} activeOpacity={0.8}>
+            <View>
+                <Animatable.View
+                    ref={viewRef}
+                    style={[StyleSheet.absoluteFillObject, {backgroundColor: item.color, borderRadius: 16}]}
+                />
+                <View style={[styles.btn, {backgroundColor: focused ? null : item.alphaClr}]}>
+                    <Icon type={item.type} name={item.icon} color={focused ? Colors.colorAct : Colors.colorInAct}/>
+                    <Animatable.View
+                        ref={textViewRef}
+                    >
+                    {focused && <Text style={{color: Colors.white, paddingHorizontal: 8}}>{item.label}</Text>}
+                    </Animatable.View>
+                </View>
+            </View>
         </TouchableOpacity>
     )
 }
@@ -78,8 +107,13 @@ export default function TabBar2() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    btn: {
+        flexDirection: "row",
+        alignItems: "center",
+        padding: 8,
+        borderRadius: 16
     }
 })
