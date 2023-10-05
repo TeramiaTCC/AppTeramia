@@ -15,7 +15,7 @@ import Club from '../pages/Club';
 import Community from '../pages/Community';
 
 const TabArr = [
-    { route: 'Página Incial', label: 'Página Incial', type: Icons.Foundation, icon: 'home', component: Home, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Página Incial', label: 'Página Incial', type: Icons.Ionicons, icon: 'home-sharp', component: Home, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Comunidade', label: 'Comunidade', type: Icons.Ionicons, icon: 'chatbubbles', component: Community, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Clube do Mia', label: 'Clube do Mia', type: Icons.FontAwesome5, icon: 'certificate', component: Club, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Meus TeraPets', label: 'Meus TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.brown, alphaClr: Colors.brownAlpha },
@@ -30,14 +30,17 @@ const TabButton = (props) => {
     const focused = accessibilityState.selected;
     const viewRef = useRef(null);
     const textViewRef = useRef(null);
+    const iconeViewRef = useRef(null);
 
     useEffect(() => {
         if (focused) { // 0.3: { scale: .7 }, 0.5: { scale: .3 }, 0.8: { scale: .7 }, 0: { scale: 0 }, 1: { scale: 1 } }
           viewRef.current.animate({ 0: { scale: 0 }, 1: { scale: 1 } });
           textViewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
+          iconeViewRef.current.animate({0: {scale: 0}, 1: {scale: 1}});
         } else {
           viewRef.current.animate({ 0: { scale: 1, }, 1: { scale: 0, } });
           textViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
+          iconeViewRef.current.animate({0: {scale: 1}, 1: {scale: 0}});
         }
       }, [focused])
 
@@ -49,11 +52,15 @@ const TabButton = (props) => {
                     style={[StyleSheet.absoluteFillObject, {backgroundColor: item.color, borderRadius: 16}]}
                 />
                 <View style={[styles.btn, {backgroundColor: focused ? null : item.alphaClr}]}>
-                    <Icon type={item.type} name={item.icon} color={focused ? Colors.colorAct : Colors.colorInAct}/>
+                    <Animatable.View
+                        ref={iconeViewRef}
+                    >
+                        <Icon type={item.type} name={item.icon} color={focused ? Colors.colorAct : Colors.colorInAct}/>
+                    </Animatable.View>
                     <Animatable.View
                         ref={textViewRef}
                     >
-                    {focused && <Text style={{color: Colors.white, paddingHorizontal: 8}}>{item.label}</Text>}
+                    { focused && <Text style={{color: Colors.white, paddingHorizontal: 8}}>{item.label}</Text> }
                     </Animatable.View>
                 </View>
             </View>
@@ -69,9 +76,9 @@ export default function TabBar2() {
             tabBarStyle: {
                 height: 60,
                 position: "absolute",
-                bottom: 16,
-                right: 16,
-                left: 16,
+                bottom: 8,
+                right: 8,
+                left: 8,
                 borderRadius: 50,
                 backgroundColor: Colors.backColor,
             }

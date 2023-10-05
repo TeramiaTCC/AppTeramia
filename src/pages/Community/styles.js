@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: '#F16520',
     position: 'absolute',
-    bottom: 30,
+    bottom: 80,
     left: 20,
     borderRadius: 30,
     justifyContent: 'center',
