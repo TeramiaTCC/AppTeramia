@@ -2,16 +2,30 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Icon from '../components/Icons/icons';
+import { Icons } from '../components/Icons/icons';
+import Colors from '../components/Colors/Colors';
+
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Psicoup from '../pages/Psicoup';
 import TabBar from './tabbar';
-import TabBar2 from './tabbart2';
 import Password from '../pages/Password';
 import NewPet from '../pages/NewPet';
 import PetDetails from '../pages/PetDetails';
 import NewPost from '../pages/NewPost';
+import { TouchableOpacity } from 'react-native';
 
+const StackR = [
+  { route: 'Signin', title: 'Entrar', component: Signin, color: Colors.white, bckgClr: Colors.backColor },
+  { route: 'Signup', title: 'Cadastro', type: Icons.Feather, icon: 'arrow-left-circle', component: Signup, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'SignupPsico', title: 'Cadastro', type: Icons.Feather, icon: 'arrow-left-circle', component: Psicoup, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'Password', title: 'Esqueci minha senha', type: Icons.Feather, icon: 'arrow-left-circle', component: Password, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'NewPet', title: 'TeraPet', type: Icons.Feather, icon: 'arrow-left-circle', component: NewPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'PetDetails', title: 'Nome do Pet*', type: Icons.Feather, icon: 'arrow-left-circle', component: PetDetails, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'NewPost', title: 'Criar Publicação', type: Icons.Feather, icon: 'arrow-left-circle', component: NewPost, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'Rotation',  component: TabBar, hdrOpt: false },
+];
 
 const Stack = createStackNavigator();
 
@@ -19,117 +33,34 @@ export default function StackNav () {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Signin'>
-        
-        <Stack.Screen
-          name="Signin"
-          component={Signin}
+
+      {StackR.map((item) => {
+        return (
+          <Stack.Screen
+          name={item.route}
+          component={item.component}
           options={{
-            title: 'Entrar', 
-            headerTintColor: "#F16520",
+            headerShown: item.hdrOpt,
+            title: item.title, 
+            headerTintColor: item.color,
             headerTitleStyle: {
               fontWeight: 'bold',
             },
             headerStyle: {
-              backgroundColor: '#EEE7D9'
+              backgroundColor: item.bckgClr
             },
+            headerBackImage: () => (
+              <Icon type={item.type} name={item.icon} color={Colors.white} />
+            ),
+            headerLeftContainerStyle: {
+              marginRight: item.mrgRgt
+            }
           }}
         />
-
-      <Stack.Screen
-          name="Signup"
-          component={Signup}
-          options={{
-            title: 'Cadastrar', 
-            headerTintColor: "#F16520",
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerStyle: {
-              backgroundColor: '#EEE7D9'
-            },
-          }}
-        />
-
-      <Stack.Screen
-          name="SignupPsico"
-          component={Psicoup}
-          options={{
-            title: 'Cadastrar', 
-            headerTintColor: "#F16520",
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerStyle: {
-              backgroundColor: '#EEE7D9'
-            },
-          }}
-        />
-
-      <Stack.Screen
-        name='Password'
-        component={Password}
-        options={{
-          title: 'Esqueci minha senha', 
-          headerTintColor: "#F16520",
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerStyle: {
-            backgroundColor: '#EEE7D9'
-          },
-        }}
-      />
-
-      <Stack.Screen
-        name='NewPet'
-        component={NewPet}
-        options={{
-          title: 'Adicionar Pet', 
-          headerTintColor: "#F16520",
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerStyle: {
-            backgroundColor: '#EEE7D9'
-          },
-        }}
-      />
-
-      <Stack.Screen
-        name='PetDetails'
-        component={PetDetails}
-        options={{
-          title: 'Nome do Pet', 
-          headerTintColor: "#F16520",
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerStyle: {
-            backgroundColor: '#EEE7D9'
-          },
-        }}
-      />
-      <Stack.Screen
-        name='NewPost'
-        component={NewPost}
-        options={{
-          title: 'Criar Publicação', 
-          headerTintColor: "#F16520",
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerStyle: {
-            backgroundColor: '#EEE7D9'
-          },
-        }}
-      />
-      <Stack.Screen
-        name='Rotation'
-        component={TabBar2}
-        options={{
-          headerShown: false
-        }}
-      />
+        )
+      }
+      )} 
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 5,
   },
 });
 

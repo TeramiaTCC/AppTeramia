@@ -23,7 +23,7 @@ export default function Psicoup({ navigation }) {
   const [senha, setSenha] = useState("");
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
-  const [dataNasimento, setDataNascimento] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
   const [crp, setCrp] = useState("");
   const [cell, setCell] = useState("");
 
@@ -47,7 +47,7 @@ export default function Psicoup({ navigation }) {
         nome: nome,
         sobrenome: sobrenome,
         genero: genero,
-        datanascimento: dataNasimento,
+        datanascimento: dataNascimento,
         cell: cell,
         crp: crp,
 
@@ -188,10 +188,10 @@ export default function Psicoup({ navigation }) {
         >
           <TextInput
             style={{color: '#000',}}
-            placeholder='Insira sua data de nascimento'
+            placeholder='Selecione sua data de nascimento'
             autoComplete='birthdate-full'
             onChangeText={setDataNascimento}
-            value={dataNasimento}
+            value={dataNascimento}
             editable={false}
           />
         </Pressable>
@@ -215,7 +215,7 @@ export default function Psicoup({ navigation }) {
         onPress={() => setChecked(!isChecked)}
       />
 
-    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNasimento === "" || cell === "" || isChecked === false || crp === ""
+    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNascimento === "" || cell === "" || isChecked === false || crp === ""
     ?
       <TouchableOpacity
         disabled={true}

@@ -8,8 +8,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-
-
 export default function Login ({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");

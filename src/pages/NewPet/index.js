@@ -23,7 +23,7 @@ export default function NewPet({ navigation })  {
     const db = getFirestore(app);
 
     const [nome, setNome] = useState ('');
-    const [dataNasimento, setDataNascimento] = useState('');
+    const [dataNascimento, setDataNascimento] = useState('');
     const [tipo, setTipo] = useState ('');
     const [selectedTipo, setSelectedTipo] = useState ('');
     const [genero, setGenero] = useState('');
@@ -198,7 +198,7 @@ export default function NewPet({ navigation })  {
         adestramento: adestramento,
         castramento: castrado,
         genero: genero,
-        datanascimento: dataNasimento,
+        datanascimento: dataNascimento,
         
       }).then(() => {
         Alert.alert("Terapet", "Cadastrado com sucesso")
@@ -257,7 +257,7 @@ export default function NewPet({ navigation })  {
             placeholder='Selecione a data de nascimento'
             autoComplete='birthdate-full'
             onChangeText={setDataNascimento}
-            value={dataNasimento}
+            value={dataNascimento}
             editable={false}
           />
         </Pressable>
@@ -345,7 +345,7 @@ export default function NewPet({ navigation })  {
 
         <View style={{height: 25}}/>
 
-        { nome === "" || genero === "" || adestramento === "" || castrado === "" || raca === "" || dataNasimento === ""
+        { nome === "" || genero === "" || adestramento === "" || castrado === "" || raca === "" || dataNascimento === ""
         ?
         <TouchableOpacity
             disabled={true}

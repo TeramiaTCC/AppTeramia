@@ -21,7 +21,6 @@ export default {
     line: '#282C35',
     gray: '#CCCCCC',
     darkGray: '#999999',
-    brown: '#502C24',
 
     darkOverlayColor: 'rgba(0, 0, 0, 0.4)',
     darkOverlayColor2: 'rgba(0, 0, 0, 0.8)',
@@ -30,7 +29,6 @@ export default {
     redAlpha: 'rgba(255, 84, 84, 0.15)',
     greenAlpha: 'rgba(96, 197, 168, 0.15)',
     purpleAlpha: 'rgba(146, 6, 228, 0.15)',
-    brownAlpha: 'rgba(80, 44, 36, 0.15)',
 
 
     // bags background colors
@@ -46,8 +44,12 @@ export default {
     bag10Bg: '#979dc1',
     bag11Bg: '#c7d3c0',
 
+    
     //Cores Teramia
+    brown: '#502C24',
+    orange: '#F16520',
     backColor: '#F16520',
     colorAct: '#FFF',
     colorInAct: 'rgba(240, 240, 240, 0.35)',
+    brownAlpha: 'rgba(80, 44, 36, 0.15)',
 }

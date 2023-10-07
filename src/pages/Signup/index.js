@@ -25,7 +25,7 @@ export default function Signup({ navigation }) {
   const [senha, setSenha] = useState("");
   const [selected, setSelected] = useState ("");
   const [genero, setGenero] = useState ("");
-  const [dataNasimento, setDataNascimento] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
   const [cell, setCell] = useState("");
 
   const [date, setDate] = useState(new Date());
@@ -67,7 +67,7 @@ export default function Signup({ navigation }) {
         nome: nome,
         sobrenome: sobrenome,
         genero: genero,
-        datanascimento: dataNasimento,
+        datanascimento: dataNascimento,
         cell: cell,
         
       }).then(() => {
@@ -212,7 +212,7 @@ export default function Signup({ navigation }) {
             placeholder='Selecione sua data de nascimento'
             autoComplete='birthdate-full'
             onChangeText={setDataNascimento}
-            value={dataNasimento}
+            value={dataNascimento}
             editable={false}
           />
         </Pressable>
@@ -236,7 +236,7 @@ export default function Signup({ navigation }) {
         onPress={() => setChecked(!isChecked)}
       />
 
-    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNasimento === "" || cell === "" || isChecked === false
+    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNascimento === "" || cell === "" || isChecked === false
     ?
       <TouchableOpacity
         disabled={true}
