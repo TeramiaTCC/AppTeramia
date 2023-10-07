@@ -14,6 +14,7 @@ export default function Login ({ navigation }) {
   const [ErrorLogin, setErrorLogin] = useState("");
   const auth = getAuth(app)
 
+
   const callback = useCallback(() => {
     (async()=>{
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
