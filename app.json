@@ -4,7 +4,7 @@
     "slug": "Teramia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/logo/Icon.png",
+    "icon": "./assets/img/logo/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/img/logo/splash-screen.png",
