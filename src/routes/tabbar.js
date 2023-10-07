@@ -15,10 +15,10 @@ import Club from '../pages/Club';
 import Community from '../pages/Community';
 
 const TabArr = [
-    { route: 'Página Incial', label: 'Página Incial', type: Icons.Entypo, icon: 'home', component: Home, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Página Incial', label: 'Atividades', type: Icons.Entypo, icon: 'home', component: Home, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Comunidade', label: 'Comunidade', type: Icons.Ionicons, icon: 'chatbubbles', component: Community, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Clube do Mia', label: 'Clube do Mia', type: Icons.FontAwesome5, icon: 'certificate', component: Club, color: Colors.brown, alphaClr: Colors.brownAlpha },
-    { route: 'Meus TeraPets', label: 'Meus TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Meus TeraPets', label: 'TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Conta', label: 'Conta', type: Icons.FontAwesome5, icon: 'user-circle', component: User, color: Colors.brown, alphaClr: Colors.brownAlpha },
   ];
 

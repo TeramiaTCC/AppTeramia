@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { Splash } from '../../components/Splash/Splash';
+
 export default function Login ({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -103,12 +105,13 @@ export default function Login ({ navigation }) {
   };
 
   return (
+    
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-
       <StatusBar hidden/>
+      <Splash/>
       
       <View style={styles.viewLogo}>
         <Animated.Image  style={[
