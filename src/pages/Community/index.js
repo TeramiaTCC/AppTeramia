@@ -17,7 +17,7 @@ export default function Community({ navigation }) {
     <TouchableOpacity style= {styles.buttonNewPost}
       onPress={() => navigation.navigate('NewPost')}
     >
-      <MaterialIcons name="post-add" size={34} color="#fff" />
+      <MaterialIcons name="post-add" size={24} color="#fff" />
     </TouchableOpacity>
 
    </SafeAreaView>

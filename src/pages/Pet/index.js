@@ -19,6 +19,24 @@ export default function Pett({ navigation }) {
   <SafeAreaView style={styles.container}>
   <StatusBar barStyle={'default'}/>
 
+      <View style={styles.contextAllPets}>
+        <TouchableOpacity style= {styles.deletePet}
+          onPress={() => ('')} /*bota a função de deletar aqui*/
+        >
+          <FontAwesome5 name='heart-broken' size={24} color={'#F16520'}/>
+        </TouchableOpacity>
+        <Text style={styles.descriptionPet}
+          onPress={() => {
+            navigation.navigate ('PetDetails', {
+            id: item.id, /*id do pet q ele pega do banco*/
+            nome: item.nome /*nome do pet q ele pega do banco*/
+          })
+        }}
+        >
+        </Text>
+      </View>
+
+{/*
     <FlatList
       showsVerticalScrollIndicator={false}
       data={teraPet}
@@ -26,15 +44,15 @@ export default function Pett({ navigation }) {
       return (
         <View style={styles.contextAllPets}>
           <TouchableOpacity style= {styles.deletePet}
-            onPress={() => ('')} /*bota a função de deletar aqui*/
+            onPress={() => ('')} //bota a função de deletar aqui
           >
             <FontAwesome5 name='heart-broken' size={24} color={'#F16520'}/>
           </TouchableOpacity>
           <Text style={styles.descriptionPet}
             onPress={() => {
               navigation.navigate ('PetDetails', {
-              id: item.id, /*id do pet q ele pega do banco*/
-              nome: item.nome /*nome do pet q ele pega do banco*/
+              id: item.id, //id do pet q ele pega do banco
+              nome: item.nome //nome do pet q ele pega do banco
               })
             }}
           >
@@ -45,11 +63,14 @@ export default function Pett({ navigation }) {
     >
 
     </FlatList>
+*/}
+
+    
 
     <TouchableOpacity style= {styles.buttonNewpet}
       onPress={() => navigation.navigate('NewPet')}
     >
-      <FontAwesome name="plus" size={34} color="#fff" />
+      <FontAwesome name="plus" size={24} color="#fff" />
     </TouchableOpacity>
 
    </SafeAreaView>

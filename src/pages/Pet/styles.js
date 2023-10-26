@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   buttonNewpet:{
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     backgroundColor: '#F16520',
     position: 'absolute',
     bottom: 80,
