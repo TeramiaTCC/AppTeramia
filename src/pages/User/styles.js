@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.pageBack
   },
   borderTopGray: {
-    borderTopWidth: 1,
+    borderTopWidth: 2,
     borderColor: Colors.brown
   },
 });
