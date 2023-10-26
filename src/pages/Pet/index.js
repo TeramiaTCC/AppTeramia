@@ -1,9 +1,12 @@
 import { React, useState, useEffect }from 'react';
 import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 
-import { FontAwesome5 } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
+import Colors from '../../components/Colors/Colors';
 import styles from './styles';
 
 
@@ -16,24 +19,52 @@ export default function Pett({ navigation }) {
   }, [])
 
   return (
-  <SafeAreaView style={styles.container}>
+  <SafeAreaView style={styles.prmyContainer}>
   <StatusBar barStyle={'default'}/>
 
-      <View style={styles.contextAllPets}>
-        <TouchableOpacity style= {styles.deletePet}
-          onPress={() => ('')} /*bota a função de deletar aqui*/
-        >
-          <FontAwesome5 name='heart-broken' size={24} color={'#F16520'}/>
-        </TouchableOpacity>
-        <Text style={styles.descriptionPet}
-          onPress={() => {
-            navigation.navigate ('PetDetails', {
-            id: item.id, /*id do pet q ele pega do banco*/
-            nome: item.nome /*nome do pet q ele pega do banco*/
-          })
-        }}
-        >
-        </Text>
+      <View style={styles.petInfo}>
+        <View style={styles.row}>
+          <MaterialIcons style={styles.petIcon} name="pets" size={50} color={Colors.backColor} />
+
+          <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
+
+            <View style={[styles.justifyCenter, styles.containerName]}>
+              <Text style={styles.textName}>Nome*</Text>
+            </View>
+
+            <View style={[styles.justifyCenter, styles.containerIcons]}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate ('PetDetails', {
+                  id: item.id, //id do pet q ele pega do banco
+                  nome: item.nome //nome do pet q ele pega do banco
+                  })
+                }}
+                activeOpacity={0.4}
+              >
+                <Feather name="edit" size={24} color={Colors.brown} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={[styles.justifyCenter, styles.containerIcons]}>
+              <TouchableOpacity
+                onPress={() => ('')} //bota a função de deletar aqui
+                activeOpacity={0.6}
+              >
+                <FontAwesome5 name='heart-broken' size={24} color={Colors.brown}/>
+              </TouchableOpacity>
+            </View>
+
+          </View>
+
+        </View>
+
+        <View>
+          <Text style={styles.textDesc}>
+            Description*
+          </Text>
+        </View>
+
       </View>
 
 {/*
