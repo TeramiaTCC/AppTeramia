@@ -23,3 +23,17 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
+
+import styled from 'styled-components';
+
+//export const Post = styled.View``;
+
+//export const Header = styled.View``;
+
+//export const Avatar = styled.image``;
+
+//export const PostImage = styled.image``;
+
+//export const Name = styled.text``;
+
+//export const Description = styled.text``;

@@ -90,6 +90,12 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     backgroundColor: '#EEE7D9',
+  },
+  disableItem: {
+    backgroundColor: '#EEE7D9',
+  },
+  disableText: {
+    color: '#1F0500'
   }
 });
 

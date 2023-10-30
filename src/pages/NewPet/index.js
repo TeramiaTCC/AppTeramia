@@ -167,6 +167,10 @@ export default function NewPet({ navigation })  {
         {key:'Yorkshire Terrier', value:'Yorkshire Terrier'}        
     ];
 
+    const slctTp = [
+      {key:'Por favor selecione o tipo de animal primeiro', value:'Por favor selecione o tipo de animal primeiro', disabled:true},
+    ];
+
     const toggleDatepicker = () => {
       setShowPicker(!showPicker);
     };
@@ -285,13 +289,15 @@ export default function NewPet({ navigation })  {
           searchPlaceholder='Procurar uma Raça'
           notFoundText='Raça não encontrada! Por favor verique se está escrito corretamente.'
           value={raca}
-          arrowicon={<FontAwesome name="chevron-down" size={15} color={'#F16520'} />} 
-          searchicon={<FontAwesome name="search" size={15} color={'#F16520'} />} 
+          arrowicon={<FontAwesome name="chevron-down" size={15} color={'#F16520'}/>} 
+          searchicon={<FontAwesome name="search" size={15} color={'#F16520'} style={{paddingRight: 5}}/>} 
           closeicon={<FontAwesome name="close" size={15} color={'#F16520'} />}
           boxStyles= {styles.boxList}
           dropdownStyles= {styles.dropdownList}
         />
-        :
+        : 
+        tipo === 'Felino'
+        ?
         <SelectList
           setSelected={setRaca}
           data={catRaces}
@@ -300,10 +306,25 @@ export default function NewPet({ navigation })  {
           notFoundText='Raça não encontrada! Por favor verique se está escrito corretamente.'
           value={raca}
           arrowicon={<FontAwesome name="chevron-down" size={15} color={'#F16520'} />} 
-          searchicon={<FontAwesome name="search" size={15} color={'#F16520'} />} 
+          searchicon={<FontAwesome name="search" size={15} color={'#F16520'} style={{paddingRight: 5}}/>} 
           closeicon={<FontAwesome name="close" size={15} color={'#F16520'} />}
           boxStyles= {styles.boxList}
           dropdownStyles= {styles.dropdownList}
+        />
+        :
+        <SelectList
+          data={slctTp}
+          placeholder='Selecione uma Raça'
+          searchPlaceholder='Procurar uma Raça'
+          notFoundText='Raça não encontrada! Por favor verique se está escrito corretamente.'
+          value={raca}
+          arrowicon={<FontAwesome name="chevron-down" size={15} color={'#F16520'} />} 
+          searchicon={<FontAwesome name="search" size={15} color={'#F16520'} style={{paddingRight: 5}}/>} 
+          closeicon={<FontAwesome name="close" size={15} color={'#F16520'} />}
+          boxStyles= {styles.boxList}
+          dropdownStyles= {styles.dropdownList}
+          disabledItemStyles = {styles.disableItem}
+          disabledTextStyles={styles.disableText}
         />
         }
 
