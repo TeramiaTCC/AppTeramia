@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import Colors from '../../components/Colors/Colors';
 
 const styles = StyleSheet.create({
+  //Profile Box
   prmryContainer: {
     flex: 1,
     backgroundColor: Colors.pageBack,
@@ -98,6 +99,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.white,
   },
+
+  //Info Box
+  petInfo: {
+    padding: 15,
+    margin: 10,
+    backgroundColor: Colors.whiteGold,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: Colors.brown,
+    elevation: 5,
+  },
+  titleInfo: {
+    color: Colors.backColor,
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  textInfo:{
+    color: Colors.brown,
+    fontWeight: '300',
+  },
+  containerPetInfo: {
+    flex: 1,
+  },
+  paddingBottom: {
+    paddingBottom: 5,
+  }
 });
 
 export default styles;

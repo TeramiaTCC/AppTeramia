@@ -33,7 +33,6 @@ export default function PetDetails({ navigation }) {
       </View>
 
       <View>
-          <Text style={styles.textType}>Tipo*</Text>
           <Text style={styles.textDesc}>Description*</Text>
       </View>
 
@@ -58,7 +57,59 @@ export default function PetDetails({ navigation }) {
 
 
     <View>
-      <Text>AAAAAA</Text>
+      <View style={styles.petInfo}>
+        <View style={styles.row}>
+          <View style={[styles.container, styles.horizontal, styles.justifyCenter, styles.paddingBottom]}>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+            <Text style={styles.titleInfo}>Tipo:</Text>
+            <Text style={styles.textInfo}>Felino ou Canino*</Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+            <Text style={styles.titleInfo}>Raça:</Text>
+            <Text style={styles.textInfo}>Nome da Raça*</Text>
+          </View>
+
+          </View>
+
+        </View>
+
+        <View style={styles.row}>
+          <View style={[styles.container, styles.horizontal, styles.justifyCenter, styles.paddingBottom]}>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+          <Text style={styles.titleInfo}>Data de Nascimento:</Text>
+            <Text style={styles.textInfo}>00/00/0000*</Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+          <Text style={styles.titleInfo}>Gênero:</Text>
+            <Text style={styles.textInfo}>Gender*</Text>
+          </View>
+
+          </View>
+
+        </View>
+
+        <View style={styles.row}>
+          <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+            <Text style={styles.titleInfo}>Castrado:</Text>
+            <Text style={styles.textInfo}>Sim ou Não*</Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPetInfo]}>
+            <Text style={styles.titleInfo}>Adestrado:</Text>
+            <Text style={styles.textInfo}>Sim ou Não*</Text>
+          </View>
+
+          </View>
+
+        </View>
+
+      </View>
     </View>
 
 
