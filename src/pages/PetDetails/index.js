@@ -58,6 +58,7 @@ export default function PetDetails({ navigation }) {
 
     <View>
       <View style={styles.petInfo}>
+        
         <View style={styles.row}>
           <View style={[styles.container, styles.horizontal, styles.justifyCenter, styles.paddingBottom]}>
 

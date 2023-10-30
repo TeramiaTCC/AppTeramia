@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  textInfo:{
+  textInfo: {
     color: Colors.brown,
     fontWeight: '300',
   },
@@ -124,6 +124,11 @@ const styles = StyleSheet.create({
   },
   paddingBottom: {
     paddingBottom: 5,
+  },
+  petInfoTitle: {
+    color: Colors.darkOverlayColor,
+    fontWeight: 'bold',
+    fontSize: 25,
   }
 });
 
