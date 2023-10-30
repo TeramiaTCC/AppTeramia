@@ -1,8 +1,67 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Text, StatusBar, View, SafeAreaView, TouchableOpacity } from 'react-native';
 
-export default function PetDetails() {
+import styles from './styles';
+import Colors from '../../components/Colors/Colors';
+
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+
+export default function PetDetails({ navigation }) {
  return (
-   <View/>
+  <SafeAreaView style={styles.prmryContainer}>
+    <StatusBar barStyle={'default'}/>
+
+    <View style={[styles.profilePet, styles.borderBottomBrown]}>
+        <View style={styles.row}>
+        <MaterialIcons style={styles.petIcon} name="pets" size={60} color={Colors.white} />
+           
+        <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
+
+          <View style={[styles.justifyCenter, styles.containerPet]}>
+            <Text style={styles.textName}></Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPet2]}>
+            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberDesc}>Anos</Text>
+          </View>
+
+        </View>
+      
+      </View>
+
+      <View>
+          <Text style={styles.textType}>Tipo*</Text>
+          <Text style={styles.textDesc}>Description*</Text>
+      </View>
+
+      <View style={styles.horizontal}>
+
+        <TouchableOpacity
+          style={[styles.editButton, styles.container, styles.row]}
+          onPress={() => navigation.navigate('EditPet')}>
+            <Feather name="edit" size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textButton}>Editar TeraPet</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.dltButton, styles.container, styles.row]}
+          onPress={() => ('')}>
+            <FontAwesome5 name='heart-broken' size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textButton}>Deletar TeraPet</Text>
+        </TouchableOpacity>
+
+      </View>
+    </View>
+
+
+    <View>
+      <Text>AAAAAA</Text>
+    </View>
+
+
+  </SafeAreaView>
   );
 }

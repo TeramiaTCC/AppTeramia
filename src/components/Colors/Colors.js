@@ -54,4 +54,6 @@ export default {
     colorAct: '#FFF',
     colorInAct: 'rgba(240, 240, 240, 0.35)',
     brownAlpha: 'rgba(80, 44, 36, 0.15)',
+    redDel: '#F12020',
+    redDel2: '#ED4545'
 }

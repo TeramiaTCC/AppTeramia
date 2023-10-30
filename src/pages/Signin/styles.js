@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     viewLogo: {
         flex: 1,
         justifyContent: 'center',
-        padding: 90
+        margin: 90,
     },
     linkForget: {
         color: '#F16520',

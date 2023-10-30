@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  containerPrf: {
-    flex: 1 / 2
+  containerPet: {
+    flex: 1,
   },
-  containerImage: {
-    flex: 1 / 3
+  containerPet2: {
+    flex: 1 / 5,
   },
   horizontal: {
     flexDirection: 'row',
@@ -26,28 +26,30 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingLeft: 10,
   },
-  profileInfo: {
+  profilePet: {
     padding: 25,
     paddingBottom: 10,
     flexDirection: 'column',
     backgroundColor: Colors.backColor,
+  },
+  petIcon: {
+    width: 60,
+    height: 60,
+    borderRadius: 60 / 2,
+    marginBottom: 10,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     height: 'auto',
   },
-  numberConst: {
+  textName: {
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 45,
+    fontSize: 25,
     color: Colors.brown,
   },
-  numberDesc: {
-    textAlign: 'center',
-    color: Colors.white,
-  },
-  textName: {
+  textType: {
     fontWeight: 'bold',
     color: Colors.white,
     fontSize: 17,
@@ -64,31 +66,37 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: Colors.brown,
     borderRadius: 8,
+    marginRight: 2
   },
-  textEdit: {
-    textAlign: 'center',
+  dltButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: Colors.redDel,
+    borderRadius: 8,
+    marginLeft: 2 
+  },
+  textButton: {
     fontWeight: 'bold',
     color: Colors.white,
     fontSize: 14,
   },
-  profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 80 / 2,
-    marginBottom: 10,
-  },
-  borderWhite: {
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderColor: Colors.pageBack
-  },
-  borderTopGray: {
-    borderTopWidth: 2,
+  borderBottomBrown: {
+    borderBottomWidth: 2,
     borderColor: Colors.brown
   },
   ico: {
-    marginRight: 5
+    flex: 1 / 2
+  },
+  numberConst: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 40,
+    color: Colors.brown,
+  },
+  numberDesc: {
+    textAlign: 'center',
+    color: Colors.white,
   },
 });
 

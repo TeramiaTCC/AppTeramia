@@ -10,9 +10,11 @@ export default function Community({ navigation }) {
   <SafeAreaView style={styles.container}>
   <StatusBar barStyle={'default'}/>
 
-    <FlatList>
-
-    </FlatList>
+    <FlatList
+      horizontal={false}
+      data={''}
+      style={{}}
+    />
 
     <TouchableOpacity style= {styles.buttonNewPost}
       onPress={() => navigation.navigate('NewPost')}

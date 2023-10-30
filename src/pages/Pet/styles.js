@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   containerName: {
-    flex: 1 / 2,
+    flex: 1,
+    paddingLeft: 10,
   },
   containerIcons: {
     flex: 1 / 6,

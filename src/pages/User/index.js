@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import Colors from '../../components/Colors/Colors';
 
 import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
 
 
@@ -14,7 +16,7 @@ export default function User({ navigation, props }) {
 
 return (
 
-    <ScrollView style={styles.prmryContainer}>
+    <SafeAreaView style={styles.prmryContainer}>
 
     <StatusBar barStyle={'default'}/>
 
@@ -32,8 +34,8 @@ return (
             <Text style={styles.numberDesc}>Publicações</Text>
           </View>
 
-          <View style={[styles.justifyCenter, styles.containerImage]}>
-          <Text style={styles.numberConst}>00</Text>
+          <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}>00</Text>
             <Text style={styles.numberDesc}>TeraPets</Text>
           </View>
 
@@ -48,9 +50,10 @@ return (
 
       <View style={styles.horizontal}>
         <TouchableOpacity
-          style={styles.editButton}
+          style={[styles.editButton, styles.container, styles.row]}
           onPress={() => navigation.navigate('EditUser')}>
-          <Text style={styles.textEdit}>Editar perfil</Text>
+            <Feather name="edit" size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textEdit}>Editar perfil</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -91,7 +94,7 @@ return (
     </View>
 
 
-    </ScrollView >
+    </SafeAreaView >
    
   );
 }
