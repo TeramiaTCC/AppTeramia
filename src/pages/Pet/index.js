@@ -1,10 +1,7 @@
 import { React, useState, useEffect }from 'react';
 import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, FlatList } from 'react-native';
 
-import { MaterialIcons } from '@expo/vector-icons'
-import { FontAwesome } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Entypo, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
 import Colors from '../../components/Colors/Colors';
 import styles from './styles';
@@ -124,7 +121,7 @@ export default function Pett({ navigation }) {
     <TouchableOpacity style= {styles.buttonNewpet}
       onPress={() => navigation.navigate('NewPet')}
     >
-      <FontAwesome name="plus" size={24} color="#fff" />
+      <Entypo name="plus" size={24} color="#fff" />
     </TouchableOpacity>
 
    </SafeAreaView>
