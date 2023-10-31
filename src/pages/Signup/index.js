@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
 
+import ModalCad from '../../components/Modal/ModalCad';
 
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -71,7 +72,10 @@ export default function Signup({ navigation }) {
         cell: cell,
         
       }).then(() => {
-        Alert.alert("Cadastro feito com sucesso")
+        
+          <ModalCad visible={true}/>
+        
+        //Alert.alert("Cadastro feito com sucesso")
         navigation.navigate('Signin')
         
       }).catch(async(error) => {

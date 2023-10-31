@@ -4,6 +4,8 @@ import styles from './styles';
 
 import { Post, Header, Avatar, Name, PostImage, Description } from './styles';
 
+import ModalCad from '../../components/Modal/ModalCad';
+
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
