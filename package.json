@@ -37,7 +37,9 @@
     "react-native-svg-transformer": "^1.1.0",
     "react-native-web": "~0.19.6",
     "redux": "^4.2.1",
-    "styled-components": "^6.1.0"
+    "styled-components": "^6.1.0",
+    "expo-camera": "~13.4.4",
+    "expo-image-picker": "~14.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
