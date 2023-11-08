@@ -1,12 +1,42 @@
+import React, { useState, useEffect } from 'react';
 import { Camera, CameraType } from 'expo-camera';
-import { useState } from 'react';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, Text, TouchableOpacity, View, Image } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+
+import Colors from '../../components/Colors/Colors';
 
 export default function NewPost() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [camera, setCamera] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const takePicture = async () => {
+    if(camera){
+      const data = await camera.takePictureAsync(null);
+      console.log(data.uri);
+      setImage(data.uri);
+    }
+  }
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   if (!permission) {
     // Camera permissions are still loading
@@ -17,8 +47,8 @@ export default function NewPost() {
     // Camera permissions are not granted yet
     return (
       <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Text style={{ textAlign: 'center' }}>Precisamos da sua permissão para usar a câmera</Text>
+        <Button onPress={requestPermission} title="Conceder Permissão" />
       </View>
     );
   }
@@ -29,13 +59,56 @@ export default function NewPost() {
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} type={type}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-            <Text style={styles.text}>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
+      <View style={styles.cameraContainer}>
+        <Camera
+          ref={ref => setCamera(ref)}
+          style={styles.fixedRatio} 
+          type={type}
+          ratio={'1:1'}
+        />
+      </View>
+
+      <View style={{flex:1}}>
+          <View style={[styles.horizontal, styles.justifyCenter, {backgroundColor: Colors.whiteGold}]}>
+
+            <View style={[styles.justifyCenter, styles.containerOpt]}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={toggleCameraType}
+                activeOpacity={0.8}
+              >
+                <Ionicons name="camera-reverse" size={40} color={Colors.brownAlpha2} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={[styles.justifyCenter, styles.containerOpt]}>
+              <TouchableOpacity
+                style={styles.buttonC}
+                onPress={takePicture}
+                activeOpacity={0.8}
+              >
+                <Ionicons name="camera" size={50} color={Colors.orange} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={[styles.justifyCenter, styles.containerOpt]}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={pickImage}
+                activeOpacity={0.8}
+              >
+                <MaterialIcons name="insert-photo" size={40} color={Colors.brownAlpha2} />
+              </TouchableOpacity>
+            </View>
+
+          </View>
+
+          { image && <Image source={{uri: image}} style={{flex:1}}/> }
+
+      </View>
+
+      
+
     </View>
   );
 }

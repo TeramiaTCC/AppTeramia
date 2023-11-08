@@ -1,29 +1,45 @@
 import { StyleSheet } from 'react-native';
 
+import Colors from '../../components/Colors/Colors';
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
     },
-    camera: {
-      flex: 1,
-    },
-    buttonContainer: {
+    cameraContainer: {
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: 'transparent',
-      margin: 64,
+    },
+    fixedRatio: {
+      flex: 1,
+      aspectRatio: 1
     },
     button: {
-      flex: 1,
-      alignSelf: 'flex-end',
+      width: 40,
+      height: 40,
       alignItems: 'center',
+      alignSelf: 'center'
     },
-    text: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: 'white',
+    buttonC: {
+      width: 50,
+      height: 50,
+      alignItems: 'center',
+      alignSelf: 'center'
     },
+    horizontal: {
+      flexDirection: 'row',
+      display: 'flex',
+    },
+    justifyCenter: {
+      justifyContent: 'center',
+    },
+    containerOpt: {
+      flex: 1 / 6,
+    },
+    
   });
+
+  
 
 export default styles;
