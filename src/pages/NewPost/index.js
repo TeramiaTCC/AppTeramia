@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, CameraType } from 'expo-camera';
-import { Button, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Button, Text, TouchableOpacity, View, Image, Modal } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
@@ -13,6 +13,7 @@ export default function NewPost() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
+  const [visible, setVisible]= useState(true);
 
   const takePicture = async () => {
     if(camera){
@@ -46,11 +47,30 @@ export default function NewPost() {
   if (!permission.granted) {
     // Camera permissions are not granted yet
     return (
-      <View style={styles.container}>
-        <Text style={{ textAlign: 'center' }}>Precisamos da sua permissão para usar a câmera</Text>
-        <Button onPress={requestPermission} title="Conceder Permissão" />
+      <View style={[styles.container, styles.modalBack]}>
+         <Modal
+            animationType='fade'
+            transparent={true}
+            visible={visible}
+            style={styles.modalBack}
+        >
+            <View style={styles.modal}>
+                <Text style={styles.modalText}>Precisamos que você nos dê acesso a câmera.</Text>
+                <TouchableOpacity
+                    style={styles.modalButton}
+                    onPress={requestPermission}
+                >
+                    <Text style={styles.modalTextButton}>Permitir</Text>
+                </TouchableOpacity>
+            </View>
+        </Modal>
       </View>
     );
+  }
+
+  function modalPermition(){
+    requestPermission;
+    setVisible(false);
   }
 
   function toggleCameraType() {
