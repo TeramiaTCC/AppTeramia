@@ -14,10 +14,9 @@ import Password from '../pages/Password';
 import NewPet from '../pages/NewPet';
 import PetDetails from '../pages/PetDetails';
 import NewPost from '../pages/NewPost';
+import CameraP from '../pages/Camera';
 import EditUser from '../pages/EditUser';
 import EditPet from '../pages/EditPet';
-
-import { TouchableOpacity } from 'react-native';
 
 const StackR = [
   { route: 'Signin', title: 'Entrar', component: Signin, color: Colors.white, bckgClr: Colors.backColor },
@@ -26,10 +25,11 @@ const StackR = [
   { route: 'Password', title: 'Esqueci minha senha', type: Icons.Feather, icon: 'arrow-left-circle', component: Password, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'NewPet', title: 'TeraPet', type: Icons.Feather, icon: 'x-circle', component: NewPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'PetDetails', title: 'Nome do Pet*', type: Icons.Feather, icon: 'arrow-left-circle', component: PetDetails, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
-  { route: 'NewPost', title: 'Criar Publicação', type: Icons.Feather, icon: 'x-circle', component: NewPost, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'Camera', title: 'Tirar Foto', type: Icons.Feather, icon: 'x-circle', component: CameraP, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20, hdrOpt: false, navprops: this.props },
   { route: 'Rotation',  component: TabBar, hdrOpt: false },
   {route: 'EditUser', title: 'Editar Perfil', type: Icons.Feather, icon: 'x-circle', component: EditUser, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
-  {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 }
+  {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  { route: 'NewPost', title: 'Criar Publicação', type: Icons.Feather, icon: 'arrow-left-circle', component: NewPost, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20},
 ];
 
 const Stack = createStackNavigator();

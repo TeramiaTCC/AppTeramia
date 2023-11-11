@@ -6,40 +6,39 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
+      alignItems: 'center'
     },
-    cameraContainer: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    fixedRatio: {
-      flex: 1,
-      aspectRatio: 1
-    },
-    button: {
-      width: 40,
+    input: {
+      width: '90%',
       height: 40,
-      alignItems: 'center',
-      alignSelf: 'center'
+      marginTop: 10,
+      padding: 10,
+      borderWidth: 2,
+      borderColor: '#1F0500',
+      borderRightWidth: 0,
+      borderLeftWidth: 0,
+      borderTopWidth: 0,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 10,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      backgroundColor: Colors.whiteGold,
     },
-    buttonC: {
-      width: 50,
+    saveButton:{
+      width: 200,
       height: 50,
       alignItems: 'center',
-      alignSelf: 'center'
-    },
-    horizontal: {
-      flexDirection: 'row',
-      display: 'flex',
-    },
-    justifyCenter: {
       justifyContent: 'center',
+      backgroundColor: Colors.orange,
+      borderRadius: 50,
+      marginTop: 10,
+      elevation: 5,
+      shadowColor: Colors.brown,
     },
-    containerOpt: {
-      flex: 1 / 6,
+    textButtonSave: {
+      color: '#FFFDFA',
+      fontWeight: 'bold',
     },
-    
   });
-
-  
 
 export default styles;

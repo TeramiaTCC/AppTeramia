@@ -36,7 +36,7 @@ export default function Community({ navigation }) {
     />
 
     <TouchableOpacity style= {styles.buttonNewPost}
-      onPress={() => navigation.navigate('NewPost')}
+      onPress={() => navigation.navigate('Camera')}
     >
       <MaterialIcons name="post-add" size={24} color="#fff" />
     </TouchableOpacity>
