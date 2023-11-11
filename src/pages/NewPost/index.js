@@ -5,8 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
 
-
-
 export default function NewPost() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
