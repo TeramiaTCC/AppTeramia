@@ -29,7 +29,7 @@ const StackR = [
   { route: 'Rotation',  component: TabBar, hdrOpt: false },
   {route: 'EditUser', title: 'Editar Perfil', type: Icons.Feather, icon: 'x-circle', component: EditUser, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
-  { route: 'NewPost', title: 'Criar Publicação', type: Icons.Feather, icon: 'arrow-left-circle', component: NewPost, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20},
+  { route: 'Camera', hdrOpt: false, component: CameraP, }
 ];
 
 const Stack = createStackNavigator();

@@ -21,14 +21,6 @@ export default function CameraP({ navigation }) {
       setImage(data.uri);
     }
   }
-  const takePicture2 = async () => {
-    if(camera){
-      const data = await camera.takePictureAsync(null);
-      console.log(data.uri);
-      setImage(data.uri);
-      navigation.navigate('NewPost', {image})
-    }
-  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
