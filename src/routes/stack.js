@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, useLinkProps } from '@react-navigation/stack';
 
 import Icon from '../components/Icons/icons';
 import { Icons } from '../components/Icons/icons';
@@ -17,6 +17,7 @@ import NewPost from '../pages/NewPost';
 import CameraP from '../pages/Camera';
 import EditUser from '../pages/EditUser';
 import EditPet from '../pages/EditPet';
+import Activity from '../pages/Activity';
 
 const StackR = [
   { route: 'Signin', title: 'Entrar', component: Signin, color: Colors.white, bckgClr: Colors.backColor },
@@ -29,7 +30,8 @@ const StackR = [
   { route: 'Rotation',  component: TabBar, hdrOpt: false },
   {route: 'EditUser', title: 'Editar Perfil', type: Icons.Feather, icon: 'x-circle', component: EditUser, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
-  { route: 'Camera', hdrOpt: false, component: CameraP, }
+  { route: 'Camera', hdrOpt: false, component: CameraP, },
+  {route: 'Activity', title: 'Atividades', type: Icons.Feather, icon: 'arrow-left-circle', component: Activity, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
 ];
 
 const Stack = createStackNavigator();

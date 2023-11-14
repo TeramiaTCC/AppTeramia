@@ -3,6 +3,11 @@ import { TextInput, Text, TouchableOpacity, View, Image } from 'react-native';
 
 import styles from './styles';
 
+import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+import {} from 'firebase/storage'
+
+import app from '../../config/firebaseconfig';
+
 export default function NewPost(props) {
   //console.log(props.route.params.image)
 

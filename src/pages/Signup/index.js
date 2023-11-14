@@ -233,7 +233,7 @@ export default function Signup({ navigation }) {
       />
 
       <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://teramiatcc.github.io/pages/eula.html');}}>Termos de Uso</Text>*</Text>)}
+        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://teramiatcc.github.io/pages/eula');}}>Termos de Uso</Text>*</Text>)}
         checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
         uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
         checked={isChecked}
