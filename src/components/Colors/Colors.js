@@ -51,6 +51,7 @@ export default {
     backColor: '#F16520',
     pageBack: '#FFFDFA',
     whiteGold: '#EEE7D9',
+    whiteGoldAlpha: 'rgba(238, 231, 217, 0.45)',
     colorAct: '#FFF',
     colorInAct: 'rgba(240, 240, 240, 0.35)',
     brownAlpha: 'rgba(80, 44, 36, 0.15)',

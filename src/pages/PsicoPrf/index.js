@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
@@ -56,11 +56,16 @@ return (
         <Text style={styles.comentTitle} >Comentários</Text>
     </View>
 
-    <View style={[styles.margin, styles.row, styles.marginBottom]}>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={90}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={[styles.margin, styles.row, styles.marginBottom]}
+    >
         <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
         <TextInput
             style={styles.comentInput}
             multiline
+            maxLength={150}
             placeholder='Adicione um comentário...'
             placeholderTextColor={Colors.brownAlpha2}
         />
@@ -69,7 +74,7 @@ return (
         >
             <Ionicons style={styles.send} name="send" size={15} color={Colors.white} />
         </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
 
     <View style={[styles.margin]}>
         <View style={styles.boxComent}>
