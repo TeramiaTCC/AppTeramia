@@ -18,6 +18,7 @@ import CameraP from '../pages/Camera';
 import EditUser from '../pages/EditUser';
 import EditPet from '../pages/EditPet';
 import Activity from '../pages/Activity';
+import PsicoPrf from '../pages/PsicoPrf';
 
 const StackR = [
   { route: 'Signin', title: 'Entrar', component: Signin, color: Colors.white, bckgClr: Colors.backColor },
@@ -32,6 +33,7 @@ const StackR = [
   {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'Camera', hdrOpt: false, component: CameraP, },
   {route: 'Activity', title: 'Atividades', type: Icons.Feather, icon: 'arrow-left-circle', component: Activity, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  {route: 'Psicologo', title: 'Psicólogo', type: Icons.Feather, icon: 'arrow-left-circle', component: PsicoPrf, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
 ];
 
 const Stack = createStackNavigator();

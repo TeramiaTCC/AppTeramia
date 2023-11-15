@@ -1,37 +1,37 @@
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import Colors from '../../components/Colors/Colors';
 
+import { AntDesign } from '@expo/vector-icons';
+import { Alert } from 'react-native';
+
+export default function ListItem ({ data, navigation}) {
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.item}
+    >
+      <Image source={{ uri: data.avatar }} style={styles.itemPhoto} />
+      <View style={styles.itemInfo}>
+        <Text style={styles.itemP1}>{data.name}</Text>
+        <Text style={styles.itemP2}>CRP: {data.crp}</Text>
+        <View style={styles.row}>
+          <AntDesign name="star" size={25} color={Colors.yellowT} />
+          <Text style={styles.itemP3}>{data.stars}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFDFA',
-  },
-  searchBox:{
-    padding: 25,
-    paddingBottom: 10,
-    backgroundColor: Colors.backColor,
-  },
-  input: {
-    height: 40,
-    backgroundColor: Colors.whiteGold,
-    borderRadius: 20,
-    fontSize: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
-    color: Colors.brown,
-    borderColor: Colors.brown,
-    borderWidth: 2
-  },
-  list: {
-    flex: 1,
-    paddingBottom: 250
-  },
   item: {
     flexDirection: 'row',
     marginLeft: 10,
     marginRight: 10,
     borderWidth: 2,
-    borderBottomColor: Colors.brown,
+    borderColor: Colors.brown,
     padding: 15,
     backgroundColor: Colors.whiteGold,
     borderRadius: 25,
@@ -70,5 +70,3 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
 });
-
-export default styles;

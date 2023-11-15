@@ -56,5 +56,7 @@ export default {
     brownAlpha: 'rgba(80, 44, 36, 0.15)',
     brownAlpha2: 'rgba(80, 44, 36, 0.5)',
     redDel: '#F12020',
-    redDel2: '#ED4545'
+    redDel2: '#ED4545',
+    whiteAlpha: 'rgba(255, 255, 255, 0.0)',
+    yellowT:'#F1B620'
 }
