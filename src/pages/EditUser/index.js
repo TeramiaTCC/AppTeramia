@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
@@ -27,8 +27,7 @@ export default function EditUser({navigation, route}) {
 
   const db = getFirestore(app);
 
-  const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo( () => [1, "25%"], []);
+  const snapPoints = useMemo( () => ["22%", "25%"], []);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -37,10 +36,9 @@ export default function EditUser({navigation, route}) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
-      
     });
-    bottomSheetRef.current?.close();
     console.log(result);
+    bottomSheetModalRef.current?.dismiss();
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
@@ -49,23 +47,28 @@ export default function EditUser({navigation, route}) {
 
   function noPick() {
     setImage("");
-    bottomSheetRef.current?.close();
-  }
-
-  function handlePresentModal() {
-    bottomSheetRef.current?.expand();
+    bottomSheetModalRef.current?.dismiss();
   }
 
   const renderBackdrop = useCallback(
     props => (
       <BottomSheetBackdrop
         {...props}
-        disappearsOnIndex={0}
-        appearsOnIndex={1}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
       />
     ),
     []
   );
+
+  const bottomSheetModalRef = useRef(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   async function deleteUsuario(){
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
@@ -104,21 +107,20 @@ export default function EditUser({navigation, route}) {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
         <ScrollView>
-
         <View style={styles.picAlt}>
 
           { !image
           ?
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={handlePresentModal}
+              onPress={handlePresentModalPress}
             >
               <FontAwesome style={styles.profileImage} name="user-circle-o" size={100} color={Colors.brown}/>
             </TouchableOpacity>
           :
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={handlePresentModal}
+              onPress={handlePresentModalPress}
             >
               <Image source={{uri: image}} style={styles.profileImage} />
             </TouchableOpacity>
@@ -127,12 +129,11 @@ export default function EditUser({navigation, route}) {
 
           <TouchableOpacity
             activeOpacity={0.8}
-            onPress={handlePresentModal}
+            onPress={handlePresentModalPress}
           >
             <Text style={styles.altText}>Alterar foto de perfil</Text>
           </TouchableOpacity>
         </View>
-
 
         <Text style={styles.label}>Nome</Text>
         <TextInput
@@ -207,14 +208,16 @@ export default function EditUser({navigation, route}) {
       </KeyboardAvoidingView>
       </View>
 
-      <BottomSheet
-        ref={bottomSheetRef}
+      <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
         index={0}
         snapPoints={snapPoints}
         backgroundStyle={{backgroundColor: Colors.orange}}
         handleIndicatorStyle={{backgroundColor: Colors.brown}}
         enablePanDownToClose={true}
         backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
       >
         <View style={styles.margin}>
           <TouchableOpacity
@@ -234,8 +237,8 @@ export default function EditUser({navigation, route}) {
             <Text style={styles.btmText}>Remover foto</Text>
           </TouchableOpacity>
         </View>
-      </BottomSheet>
-
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
    </SafeAreaView >
   );
 }
