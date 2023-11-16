@@ -29,10 +29,12 @@ const styles = StyleSheet.create({
     marginBottom: 15
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 80 / 2,
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
     marginBottom: 10,
+    borderWidth: 2,
+    borderColor: Colors.orange
   },
   buttonLogout: {
     width: "33%",
@@ -108,6 +110,31 @@ const styles = StyleSheet.create({
   },
   inputHeight2: {
     height: 70,
+  },
+  altButton: {
+    backgroundColor: Colors.brown,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10
+  },
+  btmText: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 15,
+    paddingLeft: 5
+  },
+  delButton: {
+    backgroundColor: Colors.redDel,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10
   },
 });
 

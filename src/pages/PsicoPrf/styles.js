@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.brownAlpha2,
     marginLeft: 10,
-  }
+  },
 });
 
 export default styles;
