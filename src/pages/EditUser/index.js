@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Animated, Pressable } from 'react-native';
 import MaskInput from 'react-native-mask-input';
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { FadeOut, SlideInDown } from 'react-native-reanimated';
 
 import styles from './styles';
 import { FontAwesome, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
@@ -11,8 +14,6 @@ import { deleteUser } from 'firebase/auth';
 import auth from '../../config/firebaseAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig"
-import { Alert } from 'react-native-web';
-import { ScrollView } from 'react-native';
 
 export default function EditUser({navigation, route}) {
 
@@ -21,8 +22,16 @@ export default function EditUser({navigation, route}) {
   const [nome] = useState('Nome*')
   const [sobrenome] = useState('Sobrenome*')
   const [data] = useState('00/00/0000*')
-  const [telefone, setTelefone] = useState('');
+  const [telefone, setTelefone] = useState('11912345678');
   const [bio, setBio] = useState('');
+
+  const [isOpen, setOpen] = useState(false);
+
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+  const toggleSheet = () => {
+    setOpen(!isOpen);
+  };
 
   const db = getFirestore(app);
 
@@ -67,6 +76,7 @@ export default function EditUser({navigation, route}) {
 
           <TouchableOpacity
             activeOpacity={0.8}
+            onPress={toggleSheet}
           >
             <Text style={styles.altText}>Alterar foto de perfil</Text>
           </TouchableOpacity>
@@ -149,6 +159,28 @@ export default function EditUser({navigation, route}) {
       </ScrollView>
       </KeyboardAvoidingView>
       </View>
+
+      <GestureHandlerRootView style={styles.container}>
+      <SafeAreaProvider>
+        {isOpen && (
+          <>
+            <AnimatedPressable
+              style={styles.backdrop}
+              onPress={toggleSheet}
+              entering={FadeIn}
+              exiting={FadeOut}
+            />
+            <Animated.View 
+              style={styles.sheet}
+              entering={SlideInDown.springify().damping(15)}
+              exiting={SlideOutDown} 
+            >
+              <Text>AAAAAAAAA</Text>
+            </Animated.View>
+          </>
+        )}
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
 
    </SafeAreaView>
   );

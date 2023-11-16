@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFDFA',
     paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
+  containerBottom: {
+    flex: 1,
+    backgroundColor: '#FFFDFA',
+  },
   cont: {
     flex: 1
   },
@@ -109,6 +113,21 @@ const styles = StyleSheet.create({
   inputHeight2: {
     height: 70,
   },
+  sheet: {
+    backgroundColor: "white",
+    padding: 16,
+    height: HEIGHT,
+    width: "100%",
+    position: "absolute",
+    bottom: -OVERDRAG * 1.1,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    zIndex: 1,
+  },
+  backdrop: {
+    zIndex: 1,
+    backgroundColor: Colors.whiteGold,
+  }
 });
 
 export default styles;
