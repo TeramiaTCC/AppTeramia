@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import BottomSheet from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet'
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
@@ -28,7 +28,7 @@ export default function EditUser({navigation, route}) {
   const db = getFirestore(app);
 
   const bottomSheetRef = useRef(null);
-  const snapPoints = [1, "25%"];
+  const snapPoints = useMemo( () => [1, "25%"], []);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -37,8 +37,9 @@ export default function EditUser({navigation, route}) {
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
+      
     });
-
+    bottomSheetRef.current?.close();
     console.log(result);
 
     if (!result.canceled) {
@@ -48,11 +49,23 @@ export default function EditUser({navigation, route}) {
 
   function noPick() {
     setImage("");
+    bottomSheetRef.current?.close();
   }
 
   function handlePresentModal() {
     bottomSheetRef.current?.expand();
   }
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={0}
+        appearsOnIndex={1}
+      />
+    ),
+    []
+  );
 
   async function deleteUsuario(){
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
@@ -200,6 +213,8 @@ export default function EditUser({navigation, route}) {
         snapPoints={snapPoints}
         backgroundStyle={{backgroundColor: Colors.orange}}
         handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
       >
         <View style={styles.margin}>
           <TouchableOpacity

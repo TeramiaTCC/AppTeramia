@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    elevation: 5
   },
   btmText: {
     color: Colors.white,
@@ -138,7 +139,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    elevation: 5
   },
 });
 
