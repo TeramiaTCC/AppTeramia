@@ -25,17 +25,7 @@ export default function EditUser({navigation, route}) {
   const [telefone, setTelefone] = useState('11912345678');
   const [bio, setBio] = useState('');
 
-  const [isOpen, setOpen] = useState(false);
-
-  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
-
-  const toggleSheet = () => {
-    setOpen(!isOpen);
-  };
-
   const db = getFirestore(app);
-
-  const [open, setOpen] = useState(false);
 
   const bottomSheetRef = useRef(null);
   const snapPoints = [1, "25%"];
