@@ -1,7 +1,7 @@
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import MaskInput from 'react-native-mask-input';
-import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
@@ -28,6 +28,7 @@ export default function EditUser({navigation, route}) {
   const db = getFirestore(app);
 
   const snapPoints = useMemo( () => ["22%", "25%"], []);
+  const snapPoints2 = useMemo( () => ["25%", "28%"], []);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -69,6 +70,33 @@ export default function EditUser({navigation, route}) {
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  const dmiss = useCallback(() => {
+    bottomSheetModalRef2.current?.dismiss();
+  }, []);
+
+  const bottomSheetModalRef2 = useRef(null);
+
+  const handlePresentPress = useCallback(() => {
+    bottomSheetModalRef2.current?.present();
+  }, []);
+  const handleChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const bottomSheetModalRef3 = useRef(null);
+
+  const dimiss = useCallback(() => {
+    bottomSheetModalRef3.current?.dismiss();
+  }, []);
+
+  const handlePresentPres = useCallback(() => {
+    bottomSheetModalRef3.current?.present();
+  }, []);
+  const handleChange = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
 
   async function deleteUsuario(){
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
@@ -188,7 +216,7 @@ export default function EditUser({navigation, route}) {
           <TouchableOpacity
             style={[styles.buttonLogout, styles.cont, styles.row]}
             activeOpacity={0.8}
-            onPress={exit}
+            onPress={handlePresentPres}
           >
               <Ionicons name="exit-outline" size={24} color={Colors.white} />
               <Text style={styles.textButtonLogout}>Sair da conta</Text>
@@ -197,7 +225,7 @@ export default function EditUser({navigation, route}) {
           <TouchableOpacity
             style={[styles.buttonDelete, styles.cont, styles.row]}
             activeOpacity={0.8}
-            onPress={deleteUsuario}
+            onPress={handlePresentPress}
           >
               <Feather name="trash-2" size={24} color={Colors.white} />
               <Text style={styles.textButtonDelete}>Excluir conta</Text>
@@ -235,6 +263,76 @@ export default function EditUser({navigation, route}) {
           >
             <Feather name="trash-2" size={20} color={Colors.white} />
             <Text style={styles.btmText}>Remover foto</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
+
+      <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef2}
+        index={0}
+        snapPoints={snapPoints2}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Tem certeza de que deseja excluir a sua conta?</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.altButton, styles.row]}
+            onPress={dmiss}
+          >
+            <Feather name="x-circle" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Não, mudei de ideia</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.delButton, styles.row]}
+            onPress={deleteUsuario}
+          >
+            <Feather name="trash-2" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Sim, excluir conta </Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
+
+      <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef3}
+        index={0}
+        snapPoints={snapPoints2}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleChange}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Tem certeza de que deseja sair da conta?</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.altButton, styles.row]}
+            onPress={dimiss}
+          >
+            <Feather name="x-circle" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Não, mudei de ideia</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.delButton, styles.row]}
+            onPress={exit}
+          >
+            <Ionicons name="exit-outline" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Sim, sair conta </Text>
           </TouchableOpacity>
         </View>
       </BottomSheetModal>

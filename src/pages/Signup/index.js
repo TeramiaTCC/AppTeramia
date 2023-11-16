@@ -1,13 +1,15 @@
-import { React, useState } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
 
-import ModalCad from '../../components/Modal/ModalCad';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+
 
 import styles from './styles';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from '../../components/Colors/Colors';
+import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
@@ -39,6 +41,28 @@ export default function Signup({ navigation }) {
   const [errorEmail, setErrorEmail] = useState (null);
   const [errorSenha, setErrorSenha] = useState (null);
   const [errorTel, setErrorTel] = useState (null);
+
+  const snapPoints = useMemo( () => ["22%", "25%"], []);
+
+  const bottomSheetModalRef = useRef(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   const validar = () => {
     let error = false
@@ -73,10 +97,8 @@ export default function Signup({ navigation }) {
         
       }).then(() => {
         
-          <ModalCad visible={true}/>
-        
-        //Alert.alert("Cadastro feito com sucesso")
-        navigation.navigate('Signin')
+        handlePresentModalPress()
+        console.log('foi')
         
       }).catch(async(error) => {
         console.log(error.code)
@@ -263,7 +285,31 @@ export default function Signup({ navigation }) {
 
     <View style={{height: 50}}/>
 
-    
+    <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Cadastro realizado com sucesso!</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.mdlButton}
+            onPress={() => navigation.navigate("Signin")}
+          >
+            <Text style={styles.btmText}>Efutuar login</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
   </ScrollView>
   </KeyboardAvoidingView>
   );

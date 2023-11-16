@@ -142,6 +142,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     elevation: 5
   },
+  titleModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+  }
 });
 
 export default styles;

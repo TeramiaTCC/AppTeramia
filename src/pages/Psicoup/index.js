@@ -1,14 +1,17 @@
-import {React, useState, useEffect} from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
 import { Alert } from 'react-native';
 
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from 'firebase/auth'; 
 import { getFirestore, doc, deleteDoc, setDoc, Firestore } from 'firebase/firestore';
 import app from "../../config/firebaseconfig"
 
+import Colors from '../../components/Colors/Colors';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
@@ -38,6 +41,28 @@ export default function Psicoup({ navigation }) {
     setShowPicker(!showPicker);
   };
 
+  const snapPoints = useMemo( () => ["22%", "25%"], []);
+
+  const bottomSheetModalRef = useRef(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
+
   async function signUpPsico(){
     const auth = getAuth(app)
     await createUserWithEmailAndPassword(auth, email, senha)
@@ -52,8 +77,8 @@ export default function Psicoup({ navigation }) {
         crp: crp,
 
       }).then(() => {
-        Alert.alert("Cadastro feito com sucesso")
-        navigation.navigate('Sigin')
+        handlePresentModalPress()
+        console.log('foi')
       }).catch(async(error) => {
         console.log(error.code)
             await deleteDoc(doc(db, "usuarioPsico", userCredential.user.uid))
@@ -238,6 +263,31 @@ export default function Psicoup({ navigation }) {
 
     <View style={{height: 50}}/>
 
+    <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Cadastro realizado com sucesso!</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.mdlButton}
+            onPress={() => navigation.navigate("Signin")}
+          >
+            <Text style={styles.btmText}>Efutuar login</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
     
   </ScrollView>
   </KeyboardAvoidingView>

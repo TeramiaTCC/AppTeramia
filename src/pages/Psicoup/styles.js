@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../components/Colors/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -119,6 +120,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  mdlButton: {
+    backgroundColor: Colors.brown,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 5
+  },
+  btmText: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 15,
+    paddingLeft: 5
+  },
+  titleModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    paddingBottom: 5
+  },
+  margin: {
+    marginLeft: 10,
+    marginRight: 10,
+  }
 });
 
 export default styles;
