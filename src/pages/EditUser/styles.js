@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFDFA',
     paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
+  containerBottom: {
+    flex: 1,
+    backgroundColor: '#FFFDFA',
+  },
   cont: {
     flex: 1
   },

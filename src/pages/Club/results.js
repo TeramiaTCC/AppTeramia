@@ -67,7 +67,7 @@ export default [
     {
       id: 10,
       name: 'Edna Sousa',
-      crp: '8350444/7',
+      crp: '8350444/6',
       avatar: 'https://i.pravatar.cc/150?img=40',
       stars: '0.5/5'
     },

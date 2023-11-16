@@ -22,8 +22,16 @@ export default function EditUser({navigation, route}) {
   const [nome] = useState('Nome*')
   const [sobrenome] = useState('Sobrenome*')
   const [data] = useState('00/00/0000*')
-  const [telefone, setTelefone] = useState('');
+  const [telefone, setTelefone] = useState('11912345678');
   const [bio, setBio] = useState('');
+
+  const [isOpen, setOpen] = useState(false);
+
+  const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
+  const toggleSheet = () => {
+    setOpen(!isOpen);
+  };
 
   const db = getFirestore(app);
 
