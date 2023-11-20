@@ -20,6 +20,7 @@ import EditUser from '../pages/EditUser';
 import EditPet from '../pages/EditPet';
 import Activity from '../pages/Activity';
 import PsicoPrf from '../pages/PsicoPrf';
+import EditUserPsico from '../pages/EditUserPsico';
 
 const StackR = [
   { route: 'Signin', title: 'Entrar', component: Signin, color: Colors.white, bckgClr: Colors.backColor },
@@ -32,6 +33,7 @@ const StackR = [
   { route: 'Rotation',  component: TabBar, hdrOpt: false },
   { route: 'RotationPsico',  component: TabBarPsico, hdrOpt: false },
   {route: 'EditUser', title: 'Editar Perfil', type: Icons.Feather, icon: 'arrow-left-circle', component: EditUser, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  {route: 'EditUserPsico', title: 'Editar Perfil', type: Icons.Feather, icon: 'arrow-left-circle', component: EditUserPsico, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'Camera', hdrOpt: false, component: CameraP, },
   {route: 'Activity', title: 'Atividades', type: Icons.Feather, icon: 'arrow-left-circle', component: Activity, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },

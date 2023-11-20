@@ -1,66 +1,99 @@
-import React from 'react';
-import { SafeAreaView, Text, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from './styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
-import { deleteUser } from 'firebase/auth'; 
-import auth from '../../config/firebaseAuth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import app from "../../config/firebaseconfig"
-import { Alert } from 'react-native-web';
+import Colors from '../../components/Colors/Colors';
 
-export default function UserPsico({ navigation, route }) {
+import { FontAwesome, Feather } from '@expo/vector-icons';
+import CachedImage from '../../components/CachedImage/CachedImage';
 
-    const db = getFirestore(app);
 
-    async function deleteUsuario(){
-        const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+export default function UserPsico({ navigation, props }) {
 
-        await deleteDoc(doc(db, "usuario", credentials.uid))
-        await deleteUser(auth.currentUser)
-        .then(Alert.alert("Realizado com sucesso", "Conta apagada."))
+  const [userPosts, setUserPosts] = useState([]);
 
-        await AsyncStorage.clear();
-        navigation.reset({
-        index:0, 
-        routes: [{
-            name:"Signin"
-        }]
-        })
-    }
 
-    async function exit(){
-        await AsyncStorage.clear();
-        navigation.reset({
-        index:0, 
-        routes: [{
-            name:"Signin"
-        }]
-        })
-    }
+return (
 
- return (
-<SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.prmryContainer}>
+
     <StatusBar barStyle={'default'}/>
 
-      <TouchableOpacity
-        style={styles.buttonLogout}
-        activeOpacity={0.7}
-        onPress={exit}
-      >
-        <Text style={styles.textButtonLogout}>SAIR DA CONTA</Text>
-      </TouchableOpacity>
+      <View style={styles.profileInfo}>
+        <View style={styles.row}>
+          <FontAwesome
+            style={styles.profileImage}
+            name="user-circle-o" size={80} color="white"
+		      />
+           
+        <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
-      <TouchableOpacity
-        style={styles.buttonDelete}
-        activeOpacity={0.7}
-        onPress={deleteUsuario}
-      >
-        <Text style={styles.textButtonDelete}>EXCLUIR CONTA</Text>
-      </TouchableOpacity>
+          <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberDesc}>Publicações</Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberDesc}>TeraPets</Text>
+          </View>
+
+        </View>
+      
+      </View>
+
+      <View>
+          <Text style={styles.textName}>Name</Text>
+          <Text style={styles.textDesc}>Description</Text>
+      </View>
+
+      <View style={styles.horizontal}>
+        <TouchableOpacity
+          style={[styles.editButton, styles.container, styles.row]}
+          onPress={() => navigation.navigate('EditUserPsico')}>
+            <Feather name="edit" size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textEdit}>Editar perfil</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+
+    {/* Lista de Posts */}
+
+    <View style={[styles.borderTopGray]}>
+        <FlatList
+          numColumns={3}
+          horizontal={false}
+          data={userPosts}
+          style={{}}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[styles.containerImage, styles.borderWhite]}
+              onPress={() => props.navigation.navigate("Post", { //item, user 
+              })}>
+                {item.type == 0 ?
+
+                  <CachedImage
+                    cacheKey={''}
+                    style={container.image}
+                    source={{ //uri: item.downloadURLStill 
+                    }}
+                  />
+                :
+                  <CachedImage
+                    cacheKey={''}
+                    style={container.image}
+                    source={{ //uri: item.downloadURL
+                     }}
+                  />
+                }
+            </TouchableOpacity>
+        )}
+
+      />
+    </View>
 
 
-   </SafeAreaView>
+    </SafeAreaView >
+   
   );
 }

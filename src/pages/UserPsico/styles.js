@@ -1,46 +1,95 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../components/Colors/Colors';
 
 const styles = StyleSheet.create({
+  prmryContainer: {
+    flex: 1,
+    backgroundColor: Colors.pageBack,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#FFFDFA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
-  buttonLogout: {
-    width: 200,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#F16520',
-    borderRadius: 50,
-    marginTop: 30,
-    elevation: 5,
-    shadowColor: '#1F0500',
+  containerPrf: {
+    flex: 1 / 2
   },
-  textButtonLogout: {
-    color: '#FFFDFA',
+  containerImage: {
+    flex: 1 / 3
+  },
+  horizontal: {
+    flexDirection: 'row',
+    display: 'flex',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
+  },
+  padding10Sides: {
+    paddingRight: 10,
+    paddingLeft: 10,
+  },
+  profileInfo: {
+    padding: 25,
+    paddingBottom: 10,
+    flexDirection: 'column',
+    backgroundColor: Colors.backColor,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 'auto',
+  },
+  numberConst: {
+    textAlign: 'center',
     fontWeight: 'bold',
+    fontSize: 45,
+    color: Colors.brown,
   },
-  buttonDelete: {
-    width: 200,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'red',
-    borderRadius: 50,
-    marginTop: 30,
-    elevation: 5,
-    shadowColor: '#1F0500',
+  numberDesc: {
+    textAlign: 'center',
+    color: Colors.white,
   },
-  textButtonDelete: {
-    color: '#FFFDFA',
+  textName: {
     fontWeight: 'bold',
+    color: Colors.white,
+    fontSize: 17,
   },
-
-
-  
+  textDesc: {
+    fontWeight: '300',
+    color: Colors.white,
+    fontSize: 16,
+    marginBottom: 15,
+  },
+  editButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: Colors.brown,
+    borderRadius: 8,
+  },
+  textEdit: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: Colors.white,
+    fontSize: 14,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 80 / 2,
+    marginBottom: 10,
+  },
+  borderWhite: {
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderTopWidth: 2,
+    borderColor: Colors.pageBack
+  },
+  borderTopGray: {
+    borderTopWidth: 2,
+    borderColor: Colors.brown
+  },
+  ico: {
+    marginRight: 5
+  },
 });
 
 export default styles;

@@ -51,7 +51,6 @@ export default function Login ({ navigation }) {
   const callback = useCallback(() => {
     (async()=>{
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
-      const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
 
       const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
 
@@ -61,7 +60,7 @@ export default function Login ({ navigation }) {
       .then(async (userCredentials) => {
         setErrorLogin(false)
 
-        navigation.navigate('Rotation')
+        navigation.navigate('RotationPsico')
 
        /* if (UserType.UserType == "0"){
           navigation.navigate('Rotation');
@@ -97,7 +96,7 @@ export default function Login ({ navigation }) {
         senha: senha
       }));
 
-      navigation.navigate('Rotation')
+      navigation.navigate('RotationPsico')
     })
     
     .catch((error) => {
