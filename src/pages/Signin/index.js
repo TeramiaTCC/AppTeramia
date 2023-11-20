@@ -53,6 +53,8 @@ export default function Login ({ navigation }) {
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
       const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
 
+      const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
+
       if(credentials !== null){
 
         await signInWithEmailAndPassword(auth, credentials.email, credentials.senha)
