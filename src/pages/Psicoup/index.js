@@ -4,6 +4,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
@@ -29,6 +30,10 @@ export default function Psicoup({ navigation }) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [crp, setCrp] = useState("");
   const [cell, setCell] = useState("");
+
+
+  const UserType = "1";
+  const Analize = "0";
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -68,20 +73,29 @@ export default function Psicoup({ navigation }) {
     await createUserWithEmailAndPassword(auth, email, senha)
     .then(async(userCredential)=>{
 
-      await setDoc(doc(db, "usuarioPsico", userCredential.user.uid), {
+      await setDoc(doc(db, "usuario", userCredential.user.uid), {
         nome: nome,
         sobrenome: sobrenome,
         genero: genero,
         datanascimento: dataNascimento,
         cell: cell,
         crp: crp,
+        usertype: UserType,
+        analizeSitu: Analize,
 
-      }).then(() => {
+      }).then(async() => {
         handlePresentModalPress()
         console.log('foi')
+
+        await AsyncStorage.setItem("typeUser", JSON.stringify({
+          UserType: UserType,
+          analizeSitu: Analize,
+         
+        }));
+
       }).catch(async(error) => {
         console.log(error.code)
-            await deleteDoc(doc(db, "usuarioPsico", userCredential.user.uid))
+            await deleteDoc(doc(db, "usuario", userCredential.user.uid))
             await deleteUser(userCredential.user)
       })
       

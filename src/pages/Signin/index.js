@@ -20,14 +20,24 @@ export default function Login ({ navigation }) {
   const callback = useCallback(() => {
     (async()=>{
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
+      const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
+
       if(credentials !== null){
 
         await signInWithEmailAndPassword(auth, credentials.email, credentials.senha)
       .then(async (userCredentials) => {
         setErrorLogin(false)
-        navigation.navigate('Rotation')
-      })
 
+        if (UserType.UserType == "0"){
+        navigation.navigate('Rotation')}
+        navigation.navigate('EditUser');
+   
+        
+    /*  if (UserType.analizeSitu == "0"){
+        navigation.navigate('')} Não Analizado 
+        navigation.navigate('EditUser'); Analizado
+    */
+      })
       .catch((error) =>{
         console.log(error)
       })

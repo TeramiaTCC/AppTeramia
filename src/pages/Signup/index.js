@@ -42,6 +42,8 @@ export default function Signup({ navigation }) {
   const [errorSenha, setErrorSenha] = useState (null);
   const [errorTel, setErrorTel] = useState (null);
 
+  const UserType = "0";
+
   const snapPoints = useMemo( () => ["22%", "25%"], []);
 
   const bottomSheetModalRef = useRef(null);
@@ -94,11 +96,17 @@ export default function Signup({ navigation }) {
         genero: genero,
         datanascimento: dataNascimento,
         cell: cell,
+        usertype: UserType,
         
-      }).then(() => {
-        
+      }).then(async() => {
         handlePresentModalPress()
         console.log('foi')
+ 
+
+        await AsyncStorage.setItem("typeUser", JSON.stringify({
+          UserType: UserType,      
+        }));
+        
         
       }).catch(async(error) => {
         console.log(error.code)
