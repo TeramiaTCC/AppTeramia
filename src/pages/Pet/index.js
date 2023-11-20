@@ -19,7 +19,7 @@ export default function Pett({ navigation }) {
   <SafeAreaView style={styles.prmyContainer}>
   <StatusBar barStyle={'default'}/>
 
-  <View style={styles.petInfo}>
+  <View style={[styles.petInfo, styles.margin]}>
             <View style={styles.row}>
               <MaterialIcons style={styles.petIcon} name="pets" size={50} color={Colors.backColor} />
 
@@ -41,16 +41,6 @@ export default function Pett({ navigation }) {
                     <FontAwesome5 name="list-alt" size={24} color={Colors.brown} />
                   </TouchableOpacity>
                 </View>
-
-                <View style={[styles.justifyCenter, styles.containerIcons]}>
-                  <TouchableOpacity
-                    onPress={() => ('')} //bota a função de deletar aqui
-                    activeOpacity={0.6}
-                  >
-                    <FontAwesome5 name='heart-broken' size={24} color={Colors.redDel2}/>
-                  </TouchableOpacity>
-                </View>
-
               </View>
 
             </View>

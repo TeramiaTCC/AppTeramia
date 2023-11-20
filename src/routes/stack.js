@@ -10,6 +10,7 @@ import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Psicoup from '../pages/Psicoup';
 import TabBar from './tabbar';
+import TabBarPsico from './tabbarpscio';
 import Password from '../pages/Password';
 import NewPet from '../pages/NewPet';
 import PetDetails from '../pages/PetDetails';
@@ -29,6 +30,7 @@ const StackR = [
   { route: 'PetDetails', title: 'Nome do Pet*', type: Icons.Feather, icon: 'arrow-left-circle', component: PetDetails, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'NewPost', title: 'Criar Publicação', type: Icons.Feather, icon: 'x-circle', component: NewPost, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'Rotation',  component: TabBar, hdrOpt: false },
+  { route: 'RotationPsico',  component: TabBarPsico, hdrOpt: false },
   {route: 'EditUser', title: 'Editar Perfil', type: Icons.Feather, icon: 'arrow-left-circle', component: EditUser, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'EditPet', title: 'Editar TeraPet', type: Icons.Feather, icon: 'x-circle', component: EditPet, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   { route: 'Camera', hdrOpt: false, component: CameraP, },

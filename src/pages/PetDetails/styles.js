@@ -67,20 +67,12 @@ const styles = StyleSheet.create({
     padding: 8,
     backgroundColor: Colors.brown,
     borderRadius: 8,
-    marginRight: 2
-  },
-  dltButton: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 8,
-    backgroundColor: Colors.redDel,
-    borderRadius: 8,
-    marginLeft: 2 
   },
   textButton: {
     fontWeight: 'bold',
     color: Colors.white,
     fontSize: 14,
+    marginLeft: 5
   },
   borderBottomBrown: {
     borderBottomWidth: 2,
@@ -129,6 +121,48 @@ const styles = StyleSheet.create({
     color: Colors.darkOverlayColor,
     fontWeight: 'bold',
     fontSize: 25,
+  },
+  scroll: {
+    width:'100%',
+    height: '100%',
+  },
+  scrollContent: {
+    justifyContent: 'center',
+  },
+  title: {
+    color: Colors.orange,
+    fontSize: 30,
+    fontWeight: 'bold',
+    borderBottomWidth: 2,
+    borderColor: Colors.orange,
+  },
+  boxActivity: {
+    backgroundColor: Colors.oryelow,
+    padding: 25,
+    borderRadius: 15,
+    color: Colors.white,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginBottom: 20,
+    borderWidth: 2,
+    borderColor: Colors.brown,
+    elevation: 5,
+  },
+  titleAct: {
+    color: Colors.white,
+    fontWeight: 'bold',
+    fontSize: 25,
+    borderBottomWidth: 2,
+    borderColor: Colors.brown,
+    marginBottom: 5,
+    paddingBottom: 5,
+    textAlign: 'left'
+  },
+  descD: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: Colors.white,
+    textAlign: 'justify'
   }
 });
 

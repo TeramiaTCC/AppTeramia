@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   prmyContainer: {
     flex: 1,
     backgroundColor: '#FFFDFA',
+    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   container: {
     flex: 1,
@@ -46,8 +47,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     flexDirection: 'column',
     backgroundColor: Colors.whiteGold,
-    borderBottomWidth: 2,
-    borderColor: Colors.brown
+    borderWidth: 2,
+    borderColor: Colors.brown,
+    borderRadius: 25,
+    marginBottom: 10,
+    elevation: 5
   },
   row: {
     flexDirection: 'row',
@@ -84,6 +88,10 @@ const styles = StyleSheet.create({
     color: Colors.brown,
     fontSize: 16,
   },
+  margin: {
+    marginLeft: 10,
+    marginRight: 10,
+  }
 });
 
 export default styles;

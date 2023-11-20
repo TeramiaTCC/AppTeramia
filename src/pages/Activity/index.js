@@ -23,13 +23,6 @@ export default function Activity(props) {
             </View>
             <Text style={styles.desc}>{props.route.params.desc}</Text>
           </View>
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            style={styles.timerButton}
-          >
-            <Text style={styles.textButton}>Inicar Timer</Text>
-          </TouchableOpacity>
         </View>
    </ScrollView>
   );
