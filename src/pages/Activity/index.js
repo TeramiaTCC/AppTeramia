@@ -19,7 +19,7 @@ export default function Activity(props) {
             <Text style={styles.title}>{props.route.params.name}</Text>
             <View style={[styles.row, {justifyContent: 'flex-end', marginBottom: 10}]}>
               <Feather name="clock" size={24} color={Colors.brown} />
-              <Text style={styles.time}>40 minutos</Text>
+              <Text style={styles.time}>{props.route.params.tempo}</Text>
             </View>
             <Text style={styles.desc}>{props.route.params.desc}</Text>
           </View>

@@ -102,7 +102,6 @@ export default function Signup({ navigation }) {
         handlePresentModalPress()
         console.log('foi')
  
-
         await AsyncStorage.setItem("typeUser", JSON.stringify({
           UserType: UserType,      
         }));

@@ -1,39 +1,103 @@
-import React, { useState } from 'react';
-import { TextInput, Text, TouchableOpacity, View, Image } from 'react-native';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { Button, Text, TouchableOpacity, View, Image, Modal, TextInput, SafeAreaView, TouchableHighlight, StatusBar, KeyboardAvoidingView } from 'react-native';
 
 import styles from './styles';
 
-import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
-import {} from 'firebase/storage'
+import { Ionicons, MaterialIcons, Entypo, Feather, FontAwesome } from '@expo/vector-icons';
+
+
 
 import app from '../../config/firebaseconfig';
+import { getAuth, getFirestore, snapshot } from "firebase/auth";
+import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+
+import Colors from '../../components/Colors/Colors';
 
 export default function NewPost(props) {
-  //console.log(props.route.params.image)
+  //console.log('foto que chegou:', props.route.params.image)
+  const image = props.route.params.image;
 
   const [legenda, setLegenda]=useState("")
 
+  const uploadImage = async () => {
+    const uri = props.route.params.image;
+
+    const storage = getStorage();
+    const storageRef = ref(storage, 'publicacoes/');
+
+    const uploadTask = uploadBytesResumable(storageRef, uri);
+
+    
+
+    uploadTask.on('state_changed', 
+      (snapshot) => {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case 'paused':
+            console.log('Upload is paused');
+            break;
+          case 'running':
+            console.log('Upload is running');
+            break;
+        }
+      }, 
+      (error) => {
+        // Handle unsuccessful uploads
+      }, 
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('File available at', downloadURL);
+        });
+      }
+    );
+
+      console.log(storageRef)
+  }
+
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
 
-        <Image source={{uri: props.route.params.image}}/>
+            <View style={styles.margin}> 
+              <Image source={{uri: image}} style={[styles.imageSize]}/>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Adicione uma legenda"
-          onChangeText={(text) => setLegenda(text)}
-          value={legenda}
-        />
 
-        <TouchableOpacity
-          style={styles.saveButton}
-          activeOpacity={0.8}
-          onPress={() => ("")}
-        >
-          <Text style={styles.textButtonSave}>Publicar</Text>
-        </TouchableOpacity>
+            <View style={styles.row}>
+            <KeyboardAvoidingView
+              keyboardVerticalOffset={90}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={[styles.margin, styles.row, styles.marginTop]}
+            >
+                <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Adicione uma legenda..."
+                  placeholderTextColor={Colors.brownAlpha2}
+                  multiline
+                  maxLength={50}
+                  numberOfLines={3}
+                  onChangeText={(text) => setLegenda(text)}
+                  value={legenda}
+                />
+            </KeyboardAvoidingView>
 
-        <Text>{props.route.params.image}</Text>
-      </View>
+            </View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.send}
+              onPress={uploadImage}
+            >
+              <View style={styles.row}>
+                <Text style={styles.saveText}>Publicar</Text>
+                <Ionicons name="send" size={18} color={Colors.white} />
+              </View>
+            </TouchableOpacity>
+            </View>
+      </SafeAreaView>
     );
 }

@@ -6,7 +6,6 @@ import * as ImagePicker from 'expo-image-picker';
 import BottomSheet, { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheet } from '@gorhom/bottom-sheet'
 
 import styles from './styles';
-import styles2 from './styles2';
 
 import { Ionicons, MaterialIcons, Entypo, Feather, FontAwesome } from '@expo/vector-icons';
 
@@ -17,8 +16,6 @@ export default function CameraP({ navigation }) {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const [image, setImage] = useState(null);
-  const [visible, setVisible]= useState(false);
-  const [legenda, setLegenda]= useState('');
 
   const snapPoints = useMemo( () => ["22%", "25%"], []);
 
@@ -42,15 +39,12 @@ export default function CameraP({ navigation }) {
   const takePicture = async () => {
     if(camera){
       const data = await camera.takePictureAsync(null);
-      console.log(data.uri);
+      console.log('foto enviada:', data.uri);
       setImage(data.uri);
-      setVisible(!visible)
+      navigation.navigate('NewPost', {image: data.uri})
     }
   }
 
-  const close = () => {
-    setVisible(!visible)
-  }
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -61,12 +55,11 @@ export default function CameraP({ navigation }) {
       quality: 1,
     });
 
-    console.log(result);
-
+    console.log('foto enviada:', result);
 
     if (!result.canceled) {
-      setVisible(!visible)
       setImage(result.assets[0].uri);
+      navigation.navigate('NewPost', {image: result.assets[0].uri})
     }
   };
 
@@ -75,26 +68,25 @@ export default function CameraP({ navigation }) {
     return <View />;
   }
 
-
   function toggleCameraType() {
     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   }
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: Colors.black}]}>
-      <View style={styles2.cameraContainer}>        
+      <View style={styles.cameraContainer}>        
         <Camera
           ref={ref => setCamera(ref)}
-          style={styles2.fixedRatio} 
+          style={styles.fixedRatio} 
           type={type}
           ratio={'1:1'}
         />
       </View>
 
 
-        <View style={[styles2.horizontal, styles2.positionBack]}>
+        <View style={[styles.horizontal, styles.positionBack]}>
               <TouchableOpacity
-                style={styles2.buttonBack}
+                style={styles.buttonBack}
                 onPress={() => navigation.goBack()}
                 activeOpacity={0.8}
               >
@@ -102,9 +94,9 @@ export default function CameraP({ navigation }) {
               </TouchableOpacity>
         </View>
         
-        <View style={[styles2.horizontal, styles2.position,]}>
+        <View style={[styles.horizontal, styles.position,]}>
               <TouchableOpacity
-                style={styles2.button}
+                style={styles.button}
                 onPress={toggleCameraType}
                 activeOpacity={0.8}
               >
@@ -112,7 +104,7 @@ export default function CameraP({ navigation }) {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles2.buttonC}
+                style={styles.buttonC}
                 onPress={takePicture}
                 activeOpacity={0.8}
               >
@@ -120,61 +112,13 @@ export default function CameraP({ navigation }) {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={styles2.button}
+                style={styles.button}
                 onPress={pickImage}
                 activeOpacity={0.8}
               >
                 <Ionicons name="image" size={40} color={Colors.whiteAlpha} />
               </TouchableOpacity>
         </View>
-
-        <Modal
-            animationType='fade'
-            visible={visible}
-            style={''}
-        >
-            <View style={styles.container}>
-            <StatusBar hidden={true}/>
-
-              <View style={[styles2.row, styles2.containerHdr]}>
-                <TouchableOpacity
-                  onPress={(close)}
-                  activeOpacity={1}
-                >
-                  <Feather name="arrow-left-circle" size={25} color={Colors.white} />
-                </TouchableOpacity>
-                <Text style={styles2.textHeader}>Criar Publicação</Text>
-              </View>
-
-            <View style={styles2.margin}> 
-              <Image source={{uri: image}} style={[styles2.imageSize]}/>
-
-
-            <View style={styles2.row}>
-            <KeyboardAvoidingView
-              keyboardVerticalOffset={90}
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={[styles2.margin, styles2.row, styles2.marginTop]}
-            >
-                <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
-                <TextInput
-                  style={styles2.input}
-                  placeholder="Adicione uma legenda..."
-                  onChangeText={(text) => setLegenda(text)}
-                  value={legenda}
-                />
-                <TouchableOpacity
-                    activeOpacity={0.8}
-                >
-                    <Ionicons style={styles2.send} name="send" size={15} color={Colors.white} />
-                </TouchableOpacity>
-            </KeyboardAvoidingView>
-
-            </View>
-
-            </View>
-          </View>
-        </Modal>
 
         {!permission.granted
         &&
@@ -187,17 +131,17 @@ export default function CameraP({ navigation }) {
           backgroundStyle={{backgroundColor: Colors.orange}}
           handleIndicatorStyle={{backgroundColor: Colors.brown}}
         >
-          <View style={styles2.margin}>
+          <View style={styles.margin}>
 
-            <Text style={styles2.titleModal}>ATENÇÃO!</Text>
-            <Text style={styles2.textModal}>Precisamos da sua permissão para usar a câmera</Text>
+            <Text style={styles.titleModal}>ATENÇÃO!</Text>
+            <Text style={styles.textModal}>Precisamos da sua permissão para usar a câmera</Text>
 
             <TouchableOpacity
               activeOpacity={0.8}
-              style={styles2.mdlButton}
+              style={styles.mdlButton}
               onPress={requestPermission}
             >
-              <Text style={styles2.btmText}>Conceder permissão</Text>
+              <Text style={styles.btmText}>Conceder permissão</Text>
             </TouchableOpacity>
           </View>
         </BottomSheet>

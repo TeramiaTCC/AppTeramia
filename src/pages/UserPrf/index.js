@@ -4,11 +4,11 @@ import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
-import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, Feather } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
 
 
-export default function UserPsico({ navigation, props }) {
+export default function UserPrf({ navigation, props }) {
 
   const [userPosts, setUserPosts] = useState([]);
 
@@ -44,18 +44,9 @@ return (
 
       <View>
           <Text style={styles.textName}>Name</Text>
-          <Text style={styles.textCrp}>CRP</Text>
           <Text style={styles.textDesc}>Description</Text>
       </View>
 
-      <View style={styles.horizontal}>
-        <TouchableOpacity
-          style={[styles.editButton, styles.container, styles.row]}
-          onPress={() => navigation.navigate('EditUserPsico')}>
-            <Feather name="edit" size={24} color={Colors.white} style={styles.ico}/>
-            <Text style={styles.textEdit}>Editar perfil</Text>
-        </TouchableOpacity>
-      </View>
     </View>
 
     {/* Lista de Posts */}

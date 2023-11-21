@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   containerContent: {
     marginLeft: 10,
@@ -20,6 +19,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 'auto',
   },
+  justifyCenter: {
+    justifyContent: 'center'
+  },
+  avaliCont: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    marginBottom: 20,
+    borderColor: Colors.brown,
+    borderBottomWidth: 2,
+    backgroundColor: Colors.orange,
+    elevation: 5
+  },
   boxPropaganda:{
     backgroundColor: Colors.brown,
     padding: 25,
@@ -31,62 +43,54 @@ const styles = StyleSheet.create({
   },
   title: {
     color: Colors.orange,
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     borderBottomWidth: 2,
     borderColor: Colors.orange,
+  },
+  titleAv: {
+    color: Colors.white,
+    fontSize: 25,
+    fontWeight: 'bold',
   },
   number: {
     color: Colors.brownAlpha2,
     alignSelf: 'flex-end'
   },
-  item: {
-    flexDirection: 'row',
+  boxComent:{
+    marginTop: 15,
+    padding: 10,
+    backgroundColor: Colors.whiteGold,
+    borderRadius: 20,
     borderWidth: 2,
     borderColor: Colors.brown,
-    padding: 15,
-    backgroundColor: Colors.whiteGold,
-    borderRadius: 25,
-    marginTop: 15,
-    elevation: 3,
   },
-  itemPhoto: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 4,
-    borderColor: Colors.orange,
-  },
-  itemInfo: {
-    marginLeft: 20,
-  },
-  itemP1: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors.orange,
-    marginBottom: 2
-  },
-  itemP2: {
+  comentName: {
     fontSize: 15,
-    color: Colors.brownAlpha2,
-    marginBottom: 2
+    marginLeft: 5,
+    fontWeight: '700',
+    color: Colors.brown
   },
-  itemP3:{
-    fontSize: 15,
+  comentText: {
+    fontSize: 12,
+    marginLeft: 5,
+    marginRight: 30,
     color: Colors.brown,
-    textAlign: 'justify',
-    marginRight: 100,
+    textAlign: 'justify'
   },
-  row: {
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 'auto',
+  comentDate: {
+    fontSize: 12,
+    color: Colors.brownAlpha2,
+    marginLeft: 2,
   },
-  list: {
-    flex: 1,
-    paddingBottom: 250
+  comentStar: {
+    marginLeft: 10,
   },
+  starValue: {
+    fontSize: 30,
+    color: Colors.brownAlpha2,
+    marginLeft: 2,
+  }
 });
 
 export default styles;

@@ -1,45 +1,155 @@
-import { StyleSheet } from 'react-native';
-
-import Colors from '../../components/Colors/Colors';
+import { StyleSheet } from "react-native";
+import Colors from "../../components/Colors/Colors";
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      backgroundColor: '#FFFDFA',
+      paddingTop: Platform.OS === 'ios' ? 0 : 25,
+    },
+    cameraContainer: {
+      flexDirection: 'row',
+      backgroundColor: '#000',
+    },
+    fixedRatio: {
+      flex: 1,
+      aspectRatio: 1
+    },
+    button: {
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    buttonBack: {
+        width: 35,
+        height: 35,
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
+    buttonC: {
+        width: 50,
+        height: 50,
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginLeft: 5,
+        marginRight: 5,
+    },
+    horizontal: {
+      flexDirection: 'row',
+      display: 'flex',
+    },
+    justifyCenter: {
       justifyContent: 'center',
-      alignItems: 'center'
+    },
+    containerOpt: {
+      flex: 1 / 6,
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 'auto',
+      },
+    position: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 35,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    positionBack: {
+        position: 'absolute',
+        top: 35,
+        left: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     input: {
-      width: '90%',
-      height: 40,
-      marginTop: 10,
-      padding: 10,
-      borderWidth: 2,
-      borderColor: '#1F0500',
-      borderRightWidth: 0,
-      borderLeftWidth: 0,
-      borderTopWidth: 0,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 10,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      backgroundColor: Colors.whiteGold,
-    },
-    saveButton:{
-      width: 200,
-      height: 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: Colors.orange,
-      borderRadius: 50,
-      marginTop: 10,
-      elevation: 5,
-      shadowColor: Colors.brown,
-    },
-    textButtonSave: {
-      color: '#FFFDFA',
-      fontWeight: 'bold',
-    },
-    
+        marginLeft: 5,
+        marginRight: 5,
+        color: Colors.brown,
+        width: '87%',
+        height: 40,
+        borderBottomWidth: 2,
+        borderColor: Colors.brown,
+        fontSize: 12,
+      },
+      margin: {
+        marginLeft: 10,
+        marginRight: 10,
+      },
+      containerHdr: {
+        backgroundColor: Colors.backColor,
+        flex: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        padding: 15,
+      },
+      imageSize: {
+        aspectRatio: 1,
+        borderWidth: 2,
+        borderColor: Colors.orange,
+        borderRadius: 10
+      },
+      send: {
+        backgroundColor: Colors.backColor,
+        padding: 15,
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        marginTop: 25
+      },
+      marginTop: {
+        marginTop: 25,
+      },
+      textHeader: {
+        color: Colors.white,
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginLeft: 8
+      },
+      mdlButton: {
+        backgroundColor: Colors.brown,
+        padding: 15,
+        borderRadius: 15,
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginTop: 10,
+        marginBottom: 10,
+        elevation: 5
+      },
+      btmText: {
+        color: Colors.white,
+        textAlign: 'center',
+        fontWeight: '700',
+        fontSize: 15,
+        paddingLeft: 5
+      },
+      titleModal: {
+        color: Colors.white,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 18,
+        paddingBottom: 5
+      },
+      textModal:{
+        color: Colors.white,
+        textAlign: 'center',
+        fontWeight: '300',
+        fontSize: 15,
+        paddingBottom: 5
+      },
+      saveText: {
+        color: Colors.white,
+        marginRight: 10,
+        fontWeight: 'bold',
+        fontSize: 18
+      }
   });
 
-export default styles;
+  export default styles;

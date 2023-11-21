@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    paddingBottom: 250
+    paddingBottom: 75
   },
   item: {
     flexDirection: 'row',
@@ -68,6 +68,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 'auto',
+  },
+  advice: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 25,
+  },
+  adviceText: {
+    color: Colors.brown,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
 });
 

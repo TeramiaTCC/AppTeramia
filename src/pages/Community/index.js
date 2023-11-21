@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 
 import { Post, Header, Avatar, Name, PostImage, Description } from './styles';
@@ -29,6 +29,7 @@ export default function Community({ navigation }) {
 */}
 
     <FlatList
+      ListFooterComponent={<View style={{height: 80}} />}
       keyExtractor={''}
       data={''}
       style={{}}

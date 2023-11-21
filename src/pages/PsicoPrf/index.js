@@ -83,7 +83,10 @@ return (
             <View>
                 <View style={[styles.row]}>
                     <Text style={styles.comentName}>Nome*</Text>
-                    <Text style={styles.comentDate}>XX/XX/XXXX</Text>
+                    <View style={[styles.row]}>
+                      <AntDesign name='star' color={Colors.brownAlpha2} style={styles.comentStar}/>
+                      <Text style={styles.comentDate}>XX/5</Text>
+                    </View>
                 </View>
                 <Text style={styles.comentText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
             </View>
