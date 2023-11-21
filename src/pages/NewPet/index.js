@@ -6,10 +6,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { FontAwesome } from '@expo/vector-icons';
 
 import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig";
 import { Alert } from 'react-native';
 
+import uuid from 'react-native-uuid';
 
 import PetGenRadio from '../../components/PetGenRadio';
 import PetAdesRadio from '../../components/PetAdesRadio';
@@ -193,6 +195,9 @@ export default function NewPet({ navigation })  {
 
     async function addPet(){
 
+     const PetId = uuid.v4()
+    
+
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
 
       await setDoc(doc(db, "pet", credentials.uid), {
@@ -203,6 +208,7 @@ export default function NewPet({ navigation })  {
         castramento: castrado,
         genero: genero,
         datanascimento: dataNascimento,
+        PetID: PetId
         
       }).then(() => {
         Alert.alert("Terapet", "Cadastrado com sucesso")
