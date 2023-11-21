@@ -1,14 +1,15 @@
-import { React, useState } from 'react';
+import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 import {  View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import ModalFrgt from '../../components/Modal/ModalFrgt';
+import Colors from '../../components/Colors/Colors';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
 
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';  
 
 import styles from './style';
 
-export default function Password() {
+export default function Password({ navigation }) {
   const [email, setEmail] = useState("");
   const [ErrorPass, setErrorPass] = useState("");
 
@@ -18,15 +19,38 @@ export default function Password() {
         await sendPasswordResetEmail(auth, email)
         .then(function(){
           setErrorPass(false)
-            Alert.alert("email enviado para: ", email)
-            {
-              <ModalFrgt email={email}/>
-            }
+            handlePresentModalPress()
         }).catch(function(erro){
         setErrorPass(true)
           console.log("Ocorreu um erro ao enviar o email", erro)
       })
   }
+
+  const snapPoints = useMemo( () => ["22%", "25%"], []);
+
+  const bottomSheetModalRef = useRef(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const close = useCallback(() => {
+    bottomSheetModalRef.current?.dismisss();
+  }, []);
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
 
   return (
   
@@ -79,6 +103,34 @@ export default function Password() {
       <Text style={styles.textButtonBusca}>ENTRAR</Text>
     </TouchableOpacity>
     }
+
+    <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Email de recuperação</Text>
+
+          <Text style={styles.textModal}>email enviado para: {email}</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.mdlButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.btmText}>Ok</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
     </KeyboardAvoidingView>
   );
 }

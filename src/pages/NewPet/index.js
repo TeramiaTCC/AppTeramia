@@ -1,9 +1,11 @@
-import {React, useState} from 'react';
+import React, {useRef, useState, useMemo, useCallback, useEffect} from 'react';
 import { SafeAreaView, View, Text, StatusBar, TextInput, TouchableOpacity, KeyboardAvoidingView, Pressable, } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { FontAwesome } from '@expo/vector-icons';
+import Colors from '../../components/Colors/Colors';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
 
 import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -211,8 +213,7 @@ export default function NewPet({ navigation })  {
         PetID: PetId
         
       }).then(() => {
-        Alert.alert("Terapet", "Cadastrado com sucesso")
-        navigation.navigate('Pet')
+        handlePresentModalPress()
         
       }).catch(async(error) => {
         console.log(error)
@@ -221,6 +222,31 @@ export default function NewPet({ navigation })  {
       })
     }
     
+    const snapPoints = useMemo( () => ["22%", "25%"], []);
+
+    const bottomSheetModalRef = useRef(null);
+  
+    const handlePresentModalPress = useCallback(() => {
+      bottomSheetModalRef.current?.present();
+    }, []);
+    const handleSheetChanges = useCallback((index: number) => {
+      console.log('handleSheetChanges', index);
+    }, []);
+  
+    const close = useCallback(() => {
+      bottomSheetModalRef.current?.dismisss();
+    }, []);
+  
+    const renderBackdrop = useCallback(
+      props => (
+        <BottomSheetBackdrop
+          {...props}
+          disappearsOnIndex={-1}
+          appearsOnIndex={0}
+        />
+      ),
+      []
+    );
 
 
  return (
@@ -390,8 +416,35 @@ export default function NewPet({ navigation })  {
         </TouchableOpacity>
         }
 
-
    </SafeAreaView>
+
+   <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleSheetChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Terapet cadastrado!</Text>
+
+          <Text style={styles.textModal}>Cadastrado com sucesso</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.mdlButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.btmText}>Ok</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
    </KeyboardAvoidingView>
   );
 }

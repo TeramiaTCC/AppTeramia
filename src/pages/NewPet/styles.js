@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Colors from '../../components/Colors/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -96,6 +97,41 @@ const styles = StyleSheet.create({
   },
   disableText: {
     color: '#1F0500'
+  },
+  mdlButton: {
+    backgroundColor: Colors.brown,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 5
+  },
+  btmText: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 15,
+    paddingLeft: 5
+  },
+  titleModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    paddingBottom: 5
+  },
+  textModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '300',
+    fontSize: 14,
+    paddingBottom: 5
+  },
+  margin: {
+    marginLeft: 10,
+    marginRight: 10,
   }
 });
 
