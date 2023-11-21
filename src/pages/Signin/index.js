@@ -93,7 +93,8 @@ export default function Login ({ navigation }) {
       setErrorLogin(false)
       await AsyncStorage.setItem("userId", JSON.stringify({
         email: email,
-        senha: senha
+        senha: senha,
+        uid: userCredentials.user.uid,
       }));
 
       navigation.navigate('RotationPsico')

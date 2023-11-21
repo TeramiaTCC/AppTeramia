@@ -13,6 +13,7 @@ import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getAuth, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth'; 
 import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
