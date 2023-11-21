@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     marginRight: 10,
-    alignItems: 'center',
   },
   boxTexts: {
     backgroundColor: Colors.whiteGold,
@@ -67,6 +66,13 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontWeight: '400',
     paddingLeft: 5
+  },
+  boxPropaganda:{
+    backgroundColor: Colors.brown,
+    padding: 25,
+    borderRadius: 15,
+    color: Colors.white,
+    marginTop: 20,
   },
 });
 

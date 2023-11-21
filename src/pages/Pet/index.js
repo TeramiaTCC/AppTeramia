@@ -1,5 +1,5 @@
 import { React, useState, useEffect }from 'react';
-import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, FlatList, Imagem } from 'react-native';
 
 import { Feather, Entypo, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
@@ -21,7 +21,10 @@ export default function Pett({ navigation }) {
 
   <View style={[styles.petInfo, styles.margin]}>
             <View style={styles.row}>
-              <MaterialIcons style={styles.petIcon} name="pets" size={50} color={Colors.backColor} />
+              <View style={styles.petIcon}>
+                <MaterialIcons  name="pets" size={35} color={Colors.backColor} />
+              </View>
+
 
               <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
@@ -56,12 +59,22 @@ export default function Pett({ navigation }) {
     <FlatList
       showsVerticalScrollIndicator={false}
       data={teraPet}
+      ListFooterComponent={<View style={{height: 80}} />}
+      keyExtractor={(item) => item.id}
       renderItem={(item) => {
       return (
           <View style={styles.petInfo}>
             <View style={styles.row}>
-              <MaterialIcons style={styles.petIcon} name="pets" size={50} color={Colors.backColor} />
-
+              { item.image
+              ?
+                <View style={styles.petIcon}>
+                  <Image source={{uri: item.image}} />
+                </View>
+              :
+                <View style={styles.petIcon}>
+                  <MaterialIcons style={styles.petIcon} name="pets" size={25} color={Colors.backColor} />
+                </View>
+              }
               <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
                 <View style={[styles.justifyCenter, styles.containerName]}>

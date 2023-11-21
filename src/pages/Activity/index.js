@@ -13,7 +13,6 @@ export default function Activity(props) {
         <StatusBar barStyle={'default'}/>
 
         <View style={styles.containerContent}>
-          <Image  source={require('../../../assets/img/logo/teramia-logo.png')} style={styles.imageStyle}/>
 
           <View style={styles.boxTexts}>
             <Text style={styles.title}>{props.route.params.name}</Text>
@@ -23,6 +22,15 @@ export default function Activity(props) {
             </View>
             <Text style={styles.desc}>{props.route.params.desc}</Text>
           </View>
+
+          <View style={styles.boxPropaganda}>
+            <Text>Propaganda</Text>
+          </View>
+
+          <View style={styles.boxPropaganda}>
+            <Text>Propaganda</Text>
+          </View>
+
         </View>
    </ScrollView>
   );

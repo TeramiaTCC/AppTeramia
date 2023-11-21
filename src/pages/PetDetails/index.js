@@ -1,14 +1,15 @@
-import React from 'react';
-import { Text, StatusBar, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Text, StatusBar, View, SafeAreaView, TouchableOpacity, ScrollView, Image } from 'react-native';
 
 import styles from './styles';
 import Colors from '../../components/Colors/Colors';
 
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
+
 
 export default function PetDetails({ navigation }) {
+
+  const [image, setImage] = useState('');
 
   const Dicas = [
     { name: 'Alimentação balanceada', description: 'Uma alimentação cuidadosamente planejada, adaptada às especificidades de idade, raça e condição de saúde do seu pet, não apenas promove a saúde física, mas também contribui para uma vida mais longa e vibrante. Consultar regularmente um veterinário para ajustes na dieta garante que as necessidades nutricionais em constante mudança do seu animal sejam atendidas.' },
@@ -60,8 +61,16 @@ export default function PetDetails({ navigation }) {
 
     <View style={[styles.profilePet, styles.borderBottomBrown]}>
         <View style={styles.row}>
-        <MaterialIcons style={styles.petIcon} name="pets" size={60} color={Colors.white} />
-           
+          { image
+          ?
+            <View style={styles.petIcon}>
+              <Image source={{uri: image}} style={styles.petIconImage} />
+            </View>
+          :
+            <View style={styles.petIcon}>
+              <MaterialIcons name="pets" size={40} color={Colors.brown} />
+            </View>
+          }
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
           <View style={[styles.justifyCenter, styles.containerPet]}>
@@ -168,7 +177,6 @@ export default function PetDetails({ navigation }) {
                       <Text style={styles.descD}>{item.description}</Text>
                     </View>
                 </View>
-
           )
         }
       )} 

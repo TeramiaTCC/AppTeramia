@@ -312,7 +312,7 @@ export default function Signup({ navigation }) {
             style={styles.mdlButton}
             onPress={() => navigation.navigate("Signin")}
           >
-            <Text style={styles.btmText}>Efutuar login</Text>
+            <Text style={styles.btmText}>Efetuar login</Text>
           </TouchableOpacity>
         </View>
       </BottomSheetModal>

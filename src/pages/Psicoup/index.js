@@ -290,14 +290,15 @@ export default function Psicoup({ navigation }) {
       >
         <View style={styles.margin}>
 
-          <Text style={styles.titleModal}>Cadastro realizado com sucesso!</Text>
+          <Text style={styles.titleModal}>Em análise!</Text>
+          <Text style={styles.textModal}>O seu cadastro está em situação de análise, aguarde no maximo 72 horas para a verificação.</Text>
 
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.mdlButton}
             onPress={() => navigation.navigate("Signin")}
           >
-            <Text style={styles.btmText}>Efutuar login</Text>
+            <Text style={styles.btmText}>Ok</Text>
           </TouchableOpacity>
         </View>
       </BottomSheetModal>

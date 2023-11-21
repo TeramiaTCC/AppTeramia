@@ -38,6 +38,15 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 60 / 2,
     marginBottom: 10,
+    borderColor: Colors.brown,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white
+  },
+  petIconImage: {
+    width: 50,
+    height: 50,
   },
   row: {
     flexDirection: 'row',

@@ -144,6 +144,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingBottom: 5
   },
+  textModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '300',
+    fontSize: 14,
+    paddingBottom: 5
+  },
   margin: {
     marginLeft: 10,
     marginRight: 10,

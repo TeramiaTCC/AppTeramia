@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 
+import Colors from '../../components/Colors/Colors';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   buttonNewPost:{
     width: 50,
@@ -20,20 +19,64 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
+  profileImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 40 / 2 ,
+    borderWidth: 2,
+    borderColor: Colors.orange,
+    marginRight: 5
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.orange
+  },
+  imageSize: {
+    aspectRatio: 1,
+    borderWidth: 4,
+    borderColor: Colors.orange,
+    borderRadius: 20
+  },
+  horizontal: {
+    flexDirection: 'row',
+    display: 'flex',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 'auto',
+  },
+  post: {
+    backgroundColor: Colors.brown,
+    borderRadius: 20,
+    marginTop: 25,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  header: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  description: {
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  descText: {
+    color: Colors.whiteAlpha,
+    fontWeight: '300',
+    textAlign: 'justify'
+  },
+  descTextName: {
+    color: Colors.whiteAlpha,
+    fontWeight: '400',
+    textAlign: 'justify',
+    textDecorationLine: 'underline'
+  }
 });
 
 export default styles;
-
-import styled from 'styled-components';
-
-//export const Post = styled.View``;
-
-//export const Header = styled.View``;
-
-//export const Avatar = styled.image``;
-
-//export const PostImage = styled.image``;
-
-//export const Name = styled.text``;
-
-//export const Description = styled.text``;

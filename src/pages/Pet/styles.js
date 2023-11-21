@@ -61,8 +61,13 @@ const styles = StyleSheet.create({
   petIcon: {
     width: 50,
     height: 50,
-    borderRadius: 80 / 2,
+    borderRadius: 50 / 2,
     marginBottom: 10,
+    borderColor: Colors.orange,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white
   },
   containerName: {
     flex: 1,
