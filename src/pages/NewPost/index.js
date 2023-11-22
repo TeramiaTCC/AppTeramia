@@ -5,11 +5,11 @@ import styles from './styles';
 
 import { Ionicons, MaterialIcons, Entypo, Feather, FontAwesome } from '@expo/vector-icons';
 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import app from '../../config/firebaseconfig';
 import { getAuth, getFirestore, snapshot } from "firebase/auth";
-import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 
 
 import Colors from '../../components/Colors/Colors';
@@ -17,18 +17,24 @@ import Colors from '../../components/Colors/Colors';
 export default function NewPost(props) {
   //console.log('foto que chegou:', props.route.params.image)
   const image = props.route.params.image;
+  
 
   const [legenda, setLegenda]=useState("")
 
   const uploadImage = async () => {
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
     const uri = props.route.params.image;
 
+    const metadata = {
+      contentType: 'image/png'
+    };
+
+
+
     const storage = getStorage();
-    const storageRef = ref(storage, 'publicacoes/');
+    const storageRef = ref(storage, `publicacoes/${credentials.uid}/${Math.random().toString(36)}`);
 
-    const uploadTask = uploadBytesResumable(storageRef, uri);
-
-    
+    const uploadTask = uploadBytesResumable(storageRef, uri, metadata);
 
     uploadTask.on('state_changed', 
       (snapshot) => {
@@ -47,6 +53,8 @@ export default function NewPost(props) {
       }, 
       (error) => {
         // Handle unsuccessful uploads
+        console.error(error);
+        console.log('deu erro pae');
       }, 
       () => {
         // Handle successful uploads on complete
@@ -56,8 +64,7 @@ export default function NewPost(props) {
         });
       }
     );
-
-      console.log(storageRef)
+    
   }
 
     return (
