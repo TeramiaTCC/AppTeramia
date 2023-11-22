@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
@@ -8,10 +8,14 @@ import { FontAwesome, Feather } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
 
 
-export default function UserPrf({ navigation, props }) {
-
+export default function UserPrf(props, { navigation }) {
+  //console.log(props)
   const [userPosts, setUserPosts] = useState([]);
 
+  const nome = props.route.params.nome;
+  const sobrenome = props.route.params.sobrenome;
+  const avatar = props.route.params.avatar;
+  const desc = props.route.params.desc;
 
 return (
 
@@ -21,10 +25,13 @@ return (
 
       <View style={styles.profileInfo}>
         <View style={styles.row}>
-          <FontAwesome
-            style={styles.profileImage}
-            name="user-circle-o" size={80} color="white"
-		      />
+
+          { avatar
+          ?
+            <Image source={{uri: avatar}} style={styles.profileImage}/>
+          :
+            <FontAwesome style={styles.profileImage} name="user-circle-o" size={80} color="white"/>
+          }
            
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
@@ -39,12 +46,19 @@ return (
           </View>
 
         </View>
-      
+          
       </View>
-
+      <View style={{height: 10}} />
       <View>
-          <Text style={styles.textName}>Name</Text>
-          <Text style={styles.textDesc}>Description</Text>
+          <Text style={styles.textName}>{nome} {sobrenome}</Text>
+
+          {desc
+          ?
+          <Text style={styles.textDesc}>{desc}</Text>
+          :
+          <Text />
+          }
+          
       </View>
 
     </View>

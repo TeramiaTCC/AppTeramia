@@ -67,18 +67,29 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   descText: {
-    color: Colors.whiteAlpha,
+    color: Colors.white,
     fontWeight: '300',
     textAlign: 'justify'
   },
   descTextName: {
     color: Colors.whiteAlpha,
-    fontWeight: '400',
+    fontWeight: '900',
     textAlign: 'justify',
     textDecorationLine: 'underline'
   },
   list: {
     flex: 1,
+  },
+  advice: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 25,
+  },
+  adviceText: {
+    color: Colors.brown,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
 });
 
