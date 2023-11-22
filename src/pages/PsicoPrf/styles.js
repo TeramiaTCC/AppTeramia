@@ -196,6 +196,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
+  list: {
+    flex: 1
+  },
+  profilePic: {
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2 ,
+    borderWidth: 2,
+    borderColor: Colors.brown,
+    marginRight: 5
+  }
 });
 
 export default styles;

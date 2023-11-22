@@ -15,9 +15,8 @@ import Community from '../pages/Community';
 import ComentPsico from '../pages/ComentPsico';
 
 const TabArr = [
-    { route: 'Meus seguidores', label: 'seguidores', type: Icons.Entypo, icon: 'home', component: HomePsico, color: Colors.brown, alphaClr: Colors.brownAlpha },
+    { route: 'Avaliações', label: 'Avaliações', type: Icons.Entypo, icon: 'home', component: ComentPsico, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Comunidade', label: 'Comunidade', type: Icons.Ionicons, icon: 'chatbubbles', component: Community, color: Colors.brown, alphaClr: Colors.brownAlpha },
-    { route: 'Avaliações', label: 'Avaliações', type: Icons.AntDesign, icon: 'star', component: ComentPsico, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Meus TeraPets', label: 'TeraPets', type: Icons.Ionicons, icon: 'paw', component: Pett, color: Colors.brown, alphaClr: Colors.brownAlpha },
     { route: 'Perfil', label: 'Perfil', type: Icons.FontAwesome5, icon: 'user-circle', component: UserPsico, color: Colors.brown, alphaClr: Colors.brownAlpha },
   ];

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StatusBar, View, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Text, StatusBar, View, FlatList, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -15,9 +15,9 @@ export default function ComentPsico({ navigation }) {
 
       <View style={styles.avaliCont}>
         <View style={styles.row}>
-          <Text style={styles.titleAv}>Sua avaliação é de: </Text>
-          <AntDesign name='star' size={40} color={Colors.oryelow} />
-          <Text style={styles.starValue}>X.X/5</Text>
+          <Text style={styles.titleAv}>Você possui: </Text>
+          <Text style={styles.starValue}>0</Text>
+          <Text style={styles.starValue}> avaliações</Text>
         </View>
       </View>
 
@@ -29,28 +29,42 @@ export default function ComentPsico({ navigation }) {
 
       <Text style={styles.title}>Avaliações</Text>
 
-
-      <TouchableOpacity
-        style={styles.boxComent}
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('UserPrf')}
-      >
-        <View style={[styles.row2]}>
-          <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
-            <View>
-              <View style={[styles.row]}>
-                <Text style={styles.comentName}>Nome*</Text>
-                <View style={[styles.row]}>
-                  <AntDesign name='star' color={Colors.brownAlpha2} style={styles.comentStar}/>
-                  <Text style={styles.comentDate}>XX/5</Text>
-                </View>
-              </View>
-              <Text style={styles.comentText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
+        <FlatList
+        ListFooterComponent={<View style={{height: 80}} />}
+        ListEmptyComponent={
+          <View style={styles.advice}>
+            <Text style={styles.adviceText}>Não foram encontrados comentários.</Text>
           </View>
-        </View>
-      </TouchableOpacity>
+        }
+        keyExtractor={(item) => item.id}
+        data={''}
+        style={styles.list}
+        renderItem={({item}) => {
+          return (
+            <View style={[styles.margin]}>
+            <View style={styles.boxComent}>
+            <View style={[styles.row2]}>
 
-    </View>
+                { item.avatar
+                ?
+                <Image source={{uri : item.avatar}} style={styles.profilePic} />
+                :
+                <FontAwesome name="user-circle-o" size={40} color={Colors.brown} style={styles.profilePic} />
+                }
+
+                <View>
+                    <View style={[styles.row]}>
+                        <Text style={styles.comentName}>{item.nome}</Text>
+                    </View>
+                    <Text style={styles.comentText}>{item.comentario}</Text>
+                </View>
+            </View>
+            </View>
+          </View>
+          );
+        }}
+      />
+      </View>
  </SafeAreaView>
   );
 }

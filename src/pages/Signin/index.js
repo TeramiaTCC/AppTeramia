@@ -60,7 +60,7 @@ export default function Login ({ navigation }) {
       .then(async (userCredentials) => {
         setErrorLogin(false)
 
-        navigation.navigate('Rotation')
+        navigation.navigate('RotationPsico')
 
        /* if (UserType.UserType == "0"){
           navigation.navigate('Rotation');

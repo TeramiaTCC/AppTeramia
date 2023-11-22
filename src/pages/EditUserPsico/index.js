@@ -5,7 +5,7 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from 
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
-import { FontAwesome, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';

@@ -4,7 +4,7 @@ import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
-import { FontAwesome, Feather, AntDesign } from '@expo/vector-icons';
+import { FontAwesome, Feather, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
 
 

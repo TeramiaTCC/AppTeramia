@@ -85,7 +85,13 @@ return (
           <View style={[styles.margin]}>
           <View style={styles.boxComent}>
           <View style={[styles.row2]}>
-              <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
+                { item.avatar
+                ?
+                <Image source={{uri : item.avatar}} style={styles.profilePic} />
+                :
+                <FontAwesome name="user-circle-o" size={40} color={Colors.brown} style={styles.profilePic} />
+                }
+                
               <View>
                   <View style={[styles.row]}>
                       <Text style={styles.comentName}>item.nome</Text>

@@ -90,6 +90,28 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: Colors.brownAlpha2,
     marginLeft: 2,
+  },
+  advice: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 25,
+  },
+  adviceText: {
+    color: Colors.brown,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  list: {
+    flex: 1
+  },
+  profilePic: {
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2 ,
+    borderWidth: 2,
+    borderColor: Colors.brown,
+    marginRight: 5
   }
 });
 
