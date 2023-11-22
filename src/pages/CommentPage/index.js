@@ -4,11 +4,29 @@ import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeArea
 import styles from './styles';
 import Colors from '../../components/Colors/Colors';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { getFirestore, doc, deleteDoc, setDoc, Firestore } from 'firebase/firestore';
+import app from "../../config/firebaseconfig"
+
 import { FontAwesome, AntDesign, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 
-export default function CommentPage() {
-
+export default function CommentPage({navigation}) {
+    const db = getFirestore(app);
     const [coment, setComent] = useState('');
+
+    async function comentar(){
+
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
+
+    await setDoc(doc(db, "comentarios", credentials.uid), {
+        comentario: coment,
+
+      }).then(() => {
+        navigation.navigate("Club")
+        console.log('foi')
+      })
+    }
 
  return (
    <SafeAreaView style={styles.prmryContainer} >
@@ -31,6 +49,7 @@ export default function CommentPage() {
         />
         <TouchableOpacity
             activeOpacity={0.8}
+            onPress={comentar}
         >
             <Ionicons style={styles.send} name="send" size={15} color={Colors.white} />
         </TouchableOpacity>

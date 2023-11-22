@@ -7,7 +7,7 @@ import Colors from '../../components/Colors/Colors';
 import { MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
 
 
-export default function PetDetails(props, { navigation }) {
+export default function PetDetails(props, { navigation: navigate }) {
  // console.log(props)
 
   const image = props.route.params.foto;
