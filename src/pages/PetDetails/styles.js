@@ -54,10 +54,9 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   textName: {
-    textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: 25,
-    color: Colors.brown,
+    color: Colors.white,
+    fontSize: 17,
   },
   textType: {
     fontWeight: 'bold',

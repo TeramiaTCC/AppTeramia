@@ -5,7 +5,7 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from 
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
-import { FontAwesome, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Ionicons, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
@@ -203,6 +203,15 @@ export default function EditUser({navigation, route}) {
           mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
         />
 
+        <TouchableOpacity
+          style={[styles.buttonPass, styles.cont, styles.row]}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('PasswordAlt')}
+        >
+          <MaterialCommunityIcons name="form-textbox-password" size={24} color={Colors.white} />
+          <Text style={styles.textButtonDelete}>Alterar senha</Text>
+        </TouchableOpacity>
+
         <View style={styles.horizontal}>
 
           <TouchableOpacity
@@ -231,7 +240,8 @@ export default function EditUser({navigation, route}) {
               <Text style={styles.textButtonDelete}>Excluir conta</Text>
           </TouchableOpacity>
 
-      </View>
+        </View>
+
       </ScrollView>
       </KeyboardAvoidingView>
       </View>

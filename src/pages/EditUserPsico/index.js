@@ -214,6 +214,15 @@ export default function EditUserPsico({navigation, route}) {
           mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
         />
 
+        <TouchableOpacity
+          style={[styles.buttonPass, styles.cont, styles.row]}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('PasswordAlt')}
+        >
+          <MaterialCommunityIcons name="form-textbox-password" size={24} color={Colors.white} />
+          <Text style={styles.textButtonDelete}>Alterar senha</Text>
+        </TouchableOpacity>
+
         <View style={styles.horizontal}>
 
           <TouchableOpacity

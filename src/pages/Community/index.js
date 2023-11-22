@@ -23,9 +23,10 @@ export default function Community({ navigation }) {
 
     <FlatList
       ListFooterComponent={<View style={{height: 80}} />}
+      showsVerticalScrollIndicator={false}
+      style={styles.list}
       keyExtractor={(item) => item.id}
       data={''}
-      style={{}}
       renderItem={({item}) => {
         return (
           <View style={styles.post}>

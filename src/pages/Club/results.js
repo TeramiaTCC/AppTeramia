@@ -4,14 +4,16 @@ export default [
     name: 'Beatriz Farias',
     crp: '8350444/7',
     avatar: 'https://i.pravatar.cc/150?img=31',
-    stars: '4.1/5'
+    stars: '4.1/5',
+    desc: 'Olá sou a Beatriz Farias, atuo na área a mais de 5 anos.'
   },
   {
     id: 2,
     name: 'Julia Santos',
     crp: '8350444/7',
     avatar: 'https://i.pravatar.cc/150?img=32',
-    stars: '4/5'
+    stars: '4/5',
+    desc: 'Olá sou a Julia Santos, atuo na área a mais de 2 anos.'
   },
   {
     id: 3,

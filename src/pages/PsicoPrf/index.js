@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, Image } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
-import { FontAwesome, AntDesign, Feather, Ionicons } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { TextComponent } from 'react-native';
 import { CheckBoxIcon } from '@rneui/base/dist/CheckBox/components/CheckBoxIcon';
 
 
-export default function PsicoPrf({ navigation, props }) {
+export default function PsicoPrf(props, { navigation }) {
+  //console.log(props.route)
+  //console.log(image)
 
   const [userPosts, setUserPosts] = useState([]);
+
+  const nome = props.route.params.nome;
+  const crp = props.route.params.crp;
+  const desc = props.route.params.desc;
+  const image = props.route.params.foto;
+
 
 
 return (
@@ -19,81 +27,78 @@ return (
     <SafeAreaView style={styles.prmryContainer}>
 
     <StatusBar barStyle={'default'}/>
+    <TouchableOpacity style= {styles.buttonAddComent}
+      onPress={() => navigation.navigate('AddComent')}
+    >
+      <MaterialIcons name="post-add" size={24} color="#fff" />
+    </TouchableOpacity>
 
       <View style={styles.profileInfo}>
         <View style={styles.row}>
-          <FontAwesome
-            style={styles.profileImage}
-            name="user-circle-o" size={80} color="white"
-		      />
-           
-        <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
-
-        <View style={[styles.justifyCenter, styles.containerPrf]}/>
-
-          <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <AntDesign name="star" size={70} color={Colors.yellowT} style={styles.star} />
-            <Text style={styles.numberNote}>0.0/5</Text>
-          </View>
-
-        </View>
-      
+        { image 
+        ?
+          <Image source={{uri: image}} style={styles.profileImage} />
+        :
+          <FontAwesome style={styles.profileImage} name="user-circle-o" size={80} color="white"
+        />
+        }
       </View>
 
       <View>
-          <Text style={styles.textName}>Name</Text>
-          <Text style={styles.textCRP}>CRP</Text>
+          <Text style={styles.textName}>{nome}</Text>
+          <Text style={styles.textCRP}>{crp}</Text>
       </View>
 
     </View>
 
-    <View style={styles.boxInfo}>
-        <Text style={styles.textDesc}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-    </View>
+    { desc
+    ?
+      <View style={styles.boxInfo}>
+        <Text style={styles.textDesc}>{desc}</Text>
+      </View>
+    :
+      <View style={{height: 15}} />
+    }
+
+
+
    
     <View style={[styles.row, styles.margin, styles.borderBottom]}>
         <FontAwesome name="comment" size={25} color={Colors.orange} />
         <Text style={styles.comentTitle} >Comentários</Text>
     </View>
 
-    <KeyboardAvoidingView
-      keyboardVerticalOffset={90}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={[styles.margin, styles.row, styles.marginBottom]}
-    >
-        <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
-        <TextInput
-            style={styles.comentInput}
-            multiline
-            maxLength={150}
-            placeholder='Adicione um comentário...'
-            placeholderTextColor={Colors.brownAlpha2}
-        />
-        <TouchableOpacity
-            activeOpacity={0.8}
-        >
-            <Ionicons style={styles.send} name="send" size={15} color={Colors.white} />
-        </TouchableOpacity>
-    </KeyboardAvoidingView>
 
-    <View style={[styles.margin]}>
-        <View style={styles.boxComent}>
-        <View style={[styles.row2]}>
-            <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
-            <View>
-                <View style={[styles.row]}>
-                    <Text style={styles.comentName}>Nome*</Text>
-                    <View style={[styles.row]}>
-                      <AntDesign name='star' color={Colors.brownAlpha2} style={styles.comentStar}/>
-                      <Text style={styles.comentDate}>XX/5</Text>
-                    </View>
-                </View>
-                <Text style={styles.comentText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</Text>
-            </View>
 
+    <FlatList
+      ListFooterComponent={<View style={{height: 80}} />}
+      ListEmptyComponent={
+        <View style={styles.advice}>
+          <Text style={styles.adviceText}>Não foram encontrados comentários.</Text>
         </View>
+      }
+      keyExtractor={(item) => item.id}
+      data={''}
+      style={{}}
+      renderItem={({item}) => {
+        return (
+          <View style={[styles.margin]}>
+          <View style={styles.boxComent}>
+          <View style={[styles.row2]}>
+              <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
+              <View>
+                  <View style={[styles.row]}>
+                      <Text style={styles.comentName}>item.nome</Text>
+                  </View>
+                  <Text style={styles.comentText}>item.comentario</Text>
+              </View>
+          </View>
+          </View>
         </View>
-    </View>
+        );
+      }}
+    />
+
     </SafeAreaView >
    
   );

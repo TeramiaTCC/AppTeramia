@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   prmryContainer: {
     flex: 1,
     backgroundColor: Colors.pageBack,
+    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   container: {
     flex: 1,
@@ -80,8 +81,6 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 80 / 2,
     marginBottom: 10,
-    borderWidth: 3,
-    borderColor: Colors.whiteGold
   },
   borderWhite: {
     borderLeftWidth: 2,
@@ -144,57 +143,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignContent: 'center'
-  },
-  boxComent:{
-    padding: 10,
-    backgroundColor: Colors.whiteGold,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: Colors.brown,
-  },
-  comentName: {
-    fontSize: 15,
-    marginLeft: 5,
-    fontWeight: '700',
-    color: Colors.brown
-  },
-  comentText: {
-    fontSize: 12,
-    marginLeft: 5,
-    marginRight: 30,
-    color: Colors.brown,
-    textAlign: 'justify'
-  },
-  comentDate: {
-    fontSize: 12,
-    color: Colors.brownAlpha2,
-    marginLeft: 2,
-  },
-  comentStar: {
-    marginLeft: 10,
-  },
-  buttonAddComent:{
-    width: 50,
-    height: 50,
-    backgroundColor: '#F16520',
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    borderRadius: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-  },
-  advice: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 25,
-  },
-  adviceText: {
-    color: Colors.brown,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center'
   },
 });
 

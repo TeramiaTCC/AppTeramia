@@ -9,7 +9,7 @@ import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 import styles from './style';
 
-export default function Password({ navigation }) {
+export default function PasswordAlt({ navigation }) {
   const [email, setEmail] = useState("");
   const [ErrorPass, setErrorPass] = useState("");
 
@@ -117,7 +117,7 @@ export default function Password({ navigation }) {
       >
         <View style={styles.margin}>
 
-          <Text style={styles.titleModal}>Email de recuperação</Text>
+          <Text style={styles.titleModal}>Email de alteração</Text>
 
           <Text style={styles.textModal}>email enviado para: {email}</Text>
 

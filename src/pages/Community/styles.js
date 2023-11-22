@@ -76,7 +76,10 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     textAlign: 'justify',
     textDecorationLine: 'underline'
-  }
+  },
+  list: {
+    flex: 1,
+  },
 });
 
 export default styles;

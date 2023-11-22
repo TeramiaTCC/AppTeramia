@@ -96,7 +96,21 @@ const styles = StyleSheet.create({
   margin: {
     marginLeft: 10,
     marginRight: 10,
-  }
+  },
+  advice: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: 25,
+  },
+  adviceText: {
+    color: Colors.brown,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  list: {
+    flex: 1,
+  },
 });
 
 export default styles;

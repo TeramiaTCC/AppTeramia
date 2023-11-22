@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginTop: 15,
     elevation: 3,
+    alignItems: 'center'
   },
   itemPhoto: {
     width: 100,

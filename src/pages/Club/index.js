@@ -4,10 +4,10 @@ import styles from './styles';
 import Colors from '../../components/Colors/Colors';
 
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
-
+import { CommonActions } from '@react-navigation/native';
 import results from './results';
 
-export default function Club({ navigation }) {
+export default function Club({ navigation, route }) {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(results);
 
@@ -38,6 +38,7 @@ export default function Club({ navigation }) {
         </View>
         
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={list}
           style={styles.list}
           ListFooterComponent={<View style={{height: 80}} />}
@@ -52,7 +53,14 @@ export default function Club({ navigation }) {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.item}
-                onPress={() => navigation.navigate('Psicologo') }
+                  onPress={() => navigation.navigate('Psicologo', {
+                    id: item.id,
+                    nome: item.name,
+                    crp: item.crp,
+                    desc: item.desc,
+                    foto: item.avatar
+                  })
+              }
               >
 
                 { item.avatar 
@@ -65,10 +73,6 @@ export default function Club({ navigation }) {
                 <View style={styles.itemInfo}>
                   <Text style={styles.itemP1}>{item.name}</Text>
                   <Text style={styles.itemP2}>CRP: {item.crp}</Text>
-                  <View style={styles.row}>
-                    <AntDesign name="star" size={25} color={Colors.yellowT} />
-                    <Text style={styles.itemP3}>{item.stars}</Text>
-                  </View>
                 </View>
               </TouchableOpacity>
             );

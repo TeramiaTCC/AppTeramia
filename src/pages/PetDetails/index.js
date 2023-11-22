@@ -7,9 +7,18 @@ import Colors from '../../components/Colors/Colors';
 import { MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
 
 
-export default function PetDetails({ navigation }) {
+export default function PetDetails(props, { navigation }) {
+ // console.log(props)
 
-  const [image, setImage] = useState('');
+  const image = props.route.params.foto;
+  const nome = props.route.params.nome;
+  const tipo = props.route.params.tipo;
+  const raca = props.route.params.raca;
+  const adestrado = props.route.params.adestrado;
+  const castrado = props.route.params.adestrado;
+  const desc = props.route.params.desc;
+  const genero = props.route.params.genero;
+  const data = props.route.params.data;
 
   const Dicas = [
     { name: 'Alimentação balanceada', description: 'Uma alimentação cuidadosamente planejada, adaptada às especificidades de idade, raça e condição de saúde do seu pet, não apenas promove a saúde física, mas também contribui para uma vida mais longa e vibrante. Consultar regularmente um veterinário para ajustes na dieta garante que as necessidades nutricionais em constante mudança do seu animal sejam atendidas.' },
@@ -63,8 +72,8 @@ export default function PetDetails({ navigation }) {
         <View style={styles.row}>
           { image
           ?
-            <View style={styles.petIcon}>
-              <Image source={{uri: image}} style={styles.petIconImage} />
+            <View>
+              <Image source={{uri: image}} style={styles.petIcon} />
             </View>
           :
             <View style={styles.petIcon}>
@@ -74,7 +83,7 @@ export default function PetDetails({ navigation }) {
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
           <View style={[styles.justifyCenter, styles.containerPet]}>
-            <Text style={styles.textName}></Text>
+            <Text></Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPet2]}>
@@ -87,7 +96,8 @@ export default function PetDetails({ navigation }) {
       </View>
 
       <View>
-          <Text style={styles.textDesc}>Description*</Text>
+          <Text style={styles.textName}>{nome}</Text>
+          <Text style={styles.textDesc}>{desc}</Text>
       </View>
 
       <View style={styles.horizontal}>
@@ -111,12 +121,12 @@ export default function PetDetails({ navigation }) {
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
             <Text style={styles.titleInfo}>Tipo:</Text>
-            <Text style={styles.textInfo}>Felino ou Canino*</Text>
+            <Text style={styles.textInfo}>{tipo}</Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
             <Text style={styles.titleInfo}>Raça:</Text>
-            <Text style={styles.textInfo}>Nome da Raça*</Text>
+            <Text style={styles.textInfo}>{raca}</Text>
           </View>
 
           </View>
@@ -128,12 +138,12 @@ export default function PetDetails({ navigation }) {
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
           <Text style={styles.titleInfo}>Data de Nascimento:</Text>
-            <Text style={styles.textInfo}>00/00/0000*</Text>
+            <Text style={styles.textInfo}>{data}</Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
           <Text style={styles.titleInfo}>Gênero:</Text>
-            <Text style={styles.textInfo}>Gender*</Text>
+            <Text style={styles.textInfo}>{genero}</Text>
           </View>
 
           </View>
@@ -145,12 +155,12 @@ export default function PetDetails({ navigation }) {
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
             <Text style={styles.titleInfo}>Castrado:</Text>
-            <Text style={styles.textInfo}>Sim ou Não*</Text>
+            <Text style={styles.textInfo}>{castrado}</Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPetInfo]}>
             <Text style={styles.titleInfo}>Adestrado:</Text>
-            <Text style={styles.textInfo}>Sim ou Não*</Text>
+            <Text style={styles.textInfo}>{adestrado}</Text>
           </View>
 
           </View>
@@ -181,7 +191,7 @@ export default function PetDetails({ navigation }) {
         }
       )} 
 
-      <View style={{height: 410}} />
+      <View style={{height: 435}} />
 
     </ScrollView>
     </View>
