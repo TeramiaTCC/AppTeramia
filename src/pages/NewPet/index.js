@@ -198,7 +198,6 @@ export default function NewPet({ navigation })  {
     async function addPet(){
 
      const PetId = uuid.v4()
-    
 
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
 
@@ -210,8 +209,8 @@ export default function NewPet({ navigation })  {
         castramento: castrado,
         genero: genero,
         datanascimento: dataNascimento,
-        PetID: PetId
-        
+        PetID: PetId,
+
       }).then(() => {
         handlePresentModalPress()
         

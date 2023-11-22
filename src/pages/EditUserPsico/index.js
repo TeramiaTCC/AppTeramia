@@ -19,11 +19,11 @@ export default function EditUserPsico({navigation, route}) {
 
   const [image, setImage] = useState('');
 
-  const [nome] = useState('Nome*')
-  const [sobrenome] = useState('Sobrenome*')
-  const [data] = useState('00/00/0000*')
-  const [crp, setCrp] = useState('00/00000*')
-  const [telefone, setTelefone] = useState('11912345678');
+  const [nome] = useState('Rodrigo')
+  const [sobrenome] = useState('Silva')
+  const [data] = useState('20/10/1999')
+  const [crp, setCrp] = useState('06/984123')
+  const [telefone, setTelefone] = useState('1203548234');
   const [bio, setBio] = useState('');
 
   const db = getFirestore(app);
@@ -32,6 +32,11 @@ export default function EditUserPsico({navigation, route}) {
   const snapPoints2 = useMemo( () => ["25%", "28%"], []);
 
   const pickImage = async () => {
+
+    await AsyncStorage.setItem("descri", JSON.stringify({
+    bio:bio
+    }));
+
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,

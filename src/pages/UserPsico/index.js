@@ -29,12 +29,12 @@ return (
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
           <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberConst}>03</Text>
             <Text style={styles.numberDesc}>Publicações</Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberConst}>02</Text>
             <Text style={styles.numberDesc}>TeraPets</Text>
           </View>
 
@@ -43,8 +43,8 @@ return (
       </View>
 
       <View>
-          <Text style={styles.textName}>Name</Text>
-          <Text style={styles.textCrp}>CRP</Text>
+          <Text style={styles.textName}>Rodrigo</Text>
+          <Text style={styles.textCrp}>"06/984123</Text>
           <Text style={styles.textDesc}>Description</Text>
       </View>
 

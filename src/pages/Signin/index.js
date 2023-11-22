@@ -60,19 +60,16 @@ export default function Login ({ navigation }) {
       .then(async (userCredentials) => {
         setErrorLogin(false)
 
-        navigation.navigate('RotationPsico')
-
-       /* if (UserType.UserType == "0"){
+       if (UserType.UserType == "0"){
           navigation.navigate('Rotation');
-        }
-        navigation.navigate('RotationPsico'); */
-   
-        
-       /* if (UserType.analizeSitu == "0"){
+        }else{
+        navigation.navigate('RotationPsico');
+      }    
+      if (UserType.analizeSitu == "0"){
           handlePresentModalPress()
-        } /* Não Analizado */ 
-       /* navigation.navigate('RotationPsico'); /* Analizado*/ 
-    
+        } else{ /* Não Analizado */ 
+      navigation.navigate('RotationPsico'); /* Analizado*/ 
+    }
       })
       .catch((error) =>{
         console.log(error)
@@ -97,7 +94,17 @@ export default function Login ({ navigation }) {
         uid: userCredentials.user.uid,
       }));
 
-      navigation.navigate('RotationPsico')
+      if (UserType.UserType == "0"){
+        navigation.navigate('Rotation');
+      }
+      navigation.navigate('RotationPsico'); 
+ 
+      
+    if (UserType.analizeSitu == "0"){
+        handlePresentModalPress()
+      } /* Não Analizado */ 
+    navigation.navigate('RotationPsico'); /* Analizado*/ 
+
     })
     
     .catch((error) => {
