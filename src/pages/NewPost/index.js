@@ -8,16 +8,17 @@ import { Ionicons, MaterialIcons, Entypo, Feather, FontAwesome } from '@expo/vec
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import app from '../../config/firebaseconfig';
-import { getAuth, getFirestore, snapshot } from "firebase/auth";
+import { getAuth, snapshot } from "firebase/auth";
+import { getFirestore, doc, setDoc, addDoc, Firestore, collection, Timestamp, serverTimestamp, FieldValue } from "firebase/firestore";
 import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
-
 
 import Colors from '../../components/Colors/Colors';
 
-export default function NewPost(props) {
+export default function NewPost(props, { navigation }) {
   //console.log('foto que chegou:', props.route.params.image)
+
   const image = props.route.params.image;
-  
+
 
   const [legenda, setLegenda]=useState("")
 
@@ -29,41 +30,55 @@ export default function NewPost(props) {
       contentType: 'image/png'
     };
 
-
+    filename = Math.random().toString(36);
 
     const storage = getStorage();
-    const storageRef = ref(storage, `publicacoes/${credentials.uid}/${Math.random().toString(36)}`);
+    const storageRef = ref(storage, `publicacoes/${credentials.uid}/${filename}`);
 
-    const uploadTask = uploadBytesResumable(storageRef, uri, metadata);
+    const response = await fetch(uri);
+    const blob = await response.blob();
 
-    uploadTask.on('state_changed', 
-      (snapshot) => {
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case 'paused':
-            console.log('Upload is paused');
-            break;
-          case 'running':
-            console.log('Upload is running');
-            break;
-        }
-      }, 
-      (error) => {
-        // Handle unsuccessful uploads
-        console.error(error);
-        console.log('deu erro pae');
-      }, 
-      () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+
+    const taskProgress = snapshot => {
+      console.log(`transferred: ${snapshot.bytesTransferred}`)
+    }
+
+    const taskCompleted = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          savePostData(downloadURL);
           console.log('File available at', downloadURL);
         });
-      }
-    );
+    }
+
+    const taskError = snapshot => {
+      console.log(snapshot)
+      console.log('foi não')
+    }
+
+    uploadTask.on('state_changed', taskProgress, taskError, taskCompleted);
+  
+  }
+
+ 
+
+  async function savePostData (downloadURL)  {
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+    const db = getFirestore(app);
+    const new_date = new Date();
+    dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
+
+    const querry = collection(db, 'publicacoes', credentials.uid, 'userPosts');
+    await addDoc(querry, {        
+      imagem: downloadURL,
+      caption: legenda,
+      date: dataFormatada
+
+    }, { merge: true })
+    .then(async() => {
+      props.navigation.goBack();
+      console.log('foi pro firestore')
+  });
     
   }
 

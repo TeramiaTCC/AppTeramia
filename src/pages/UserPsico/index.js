@@ -1,17 +1,24 @@
-import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
 import { FontAwesome, Feather, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../redux/features/userPosts';
 
 export default function UserPsico({ navigation, props }) {
 
   const [userPosts, setUserPosts] = useState([]);
+  const data = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
+  console.log('Data: ',data)
 
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchPosts());
+  }, [dispatch])
 
 return (
 
@@ -64,29 +71,14 @@ return (
         <FlatList
           numColumns={3}
           horizontal={false}
-          data={userPosts}
+          data={data}
           style={{}}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[styles.containerImage, styles.borderWhite]}
-              onPress={() => props.navigation.navigate("Post", { //item, user 
-              })}>
-                {item.type == 0 ?
-
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURLStill 
-                    }}
-                  />
-                :
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURL
-                     }}
-                  />
-                }
+              activeOpacity={0.8}
+            >
+              <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
             </TouchableOpacity>
         )}
 

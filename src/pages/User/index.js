@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from './styles';
 
+import { connect, useSelector } from 'react-redux';
+
 import Colors from '../../components/Colors/Colors';
 
 import { FontAwesome, Feather } from '@expo/vector-icons';
@@ -10,7 +12,7 @@ import CachedImage from '../../components/CachedImage/CachedImage';
 
 export default function User({ navigation, props }) {
 
-  const [userPosts, setUserPosts] = useState([]);
+
 
 
 return (
@@ -63,7 +65,7 @@ return (
         <FlatList
           numColumns={3}
           horizontal={false}
-          data={userPosts}
+          data={''}
           style={{}}
           renderItem={({ item }) => (
             <TouchableOpacity
