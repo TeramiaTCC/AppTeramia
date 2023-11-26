@@ -5,98 +5,153 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
+  },
+  containerBottom: {
+    flex: 1,
+    backgroundColor: '#FFFDFA',
+  },
+  cont: {
+    flex: 1
+  },
+  margin: {
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 'auto',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    display: 'flex',
+  },
+  picAlt: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
+    marginBottom: 15
   },
-  title: {
-    textAlign: 'center',
-    fontSize: 35,
-    color: '#F16520',
-    marginBottom: '20',
-    fontWeight: 'bold',
+  petImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 100 / 2,
+    marginBottom: 10,
+    borderWidth: 3,
+    borderColor: Colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.whiteGoldAlpha
   },
-  inputTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: -5,
-    paddingTop: 10,
-    marginLeft: '5%',
-    marginRight: 'auto',
-  },
-  input: {
-    width: "90%",
-    height: 40,
-    marginTop: 10,
-    padding: 10,
-    borderWidth: 2,
-    borderColor: '#1F0500',
-    borderRightWidth: 0,
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 10,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    backgroundColor: '#EEE7D9',
-  },
-  buttonAdd: {
-    width: 200,
-    height: 50,
+  buttonLogout: {
+    width: "33%",
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F16520',
-    borderRadius: 50,
-    marginTop: 10,
+    backgroundColor: Colors.brown,
+    borderRadius: 10,
+    marginTop: 30,
+    marginLeft: 4,
+    marginRight: 4, 
     elevation: 5,
-    shadowColor: '#1F0500',
+    padding: 8,
+    shadowColor: Colors.brown,
   },
-  textButtonAdd: {
+  textButtonLogout: {
     color: '#FFFDFA',
     fontWeight: 'bold',
+    marginLeft: 4
   },
-  safeArea: {
-    flex: 1,
-    width:'100%',
+  buttonSave: {
+    width: "50%",
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colors.orange,
+    borderRadius: 10,
+    marginTop: 30,
+    marginRight: 3,
+    elevation: 5,
+    padding: 8,
+    shadowColor: Colors.brown,
   },
-  contentContainer:{
+  textButtonSave: {
+    color: '#FFFDFA',
+    fontWeight: 'bold',
+    marginLeft: 4
+  },
+  buttonDelete: {
+    width: "50%",
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: Colors.redDel,
+    borderRadius: 10,
+    marginTop: 30,
+    marginLeft: 3,
+    elevation: 5,
+    padding: 8,
+    shadowColor: Colors.brown,
   },
-  boxList: {
-    width: 370,
+  textButtonDelete: {
+    color: '#FFFDFA',
+    fontWeight: 'bold',
+    marginLeft: 4
+  },
+  altText: {
+    fontSize: 18,
+    color: Colors.orange
+  },
+  label: {
+    fontSize: 15,
+    color: Colors.brownAlpha2,
+    fontWeight: '300'
+  },
+  input: {
+    marginBottom: 10,
+    padding: 10,
+    borderBottomWidth: 2,
+    borderColor: Colors.brown,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 10,
-    borderBottomRightRadius: 15,
-    borderBottomLeftRadius: 10,
+    backgroundColor: Colors.whiteGoldAlpha,
+    color: Colors.brown
+  },
+  inputHeight: {
+    height: 40,
+  },
+  inputHeight2: {
+    height: 70,
+  },
+  boxList: {
+    borderRadius: 15,
     marginTop: 10,
-    borderColor: '#1F0500',
+    marginBottom: 10,
+    borderColor: Colors.brown,
     borderWidth: 2,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    backgroundColor: '#EEE7D9',
+    backgroundColor: Colors.whiteGoldAlpha,
     alignItems: 'space-between',
     justifyContent: 'space-between',
   },
   dropdownList: {
-    width: 370,
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 10,
-    borderBottomRightRadius: 15,
-    borderBottomLeftRadius: 10,
-    borderColor: '#1F0500',
+    borderRadius: 15,
+    borderColor: Colors.brown,
     borderWidth: 2,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    backgroundColor: '#EEE7D9',
+    backgroundColor: Colors.whiteGoldAlpha,
+    marginBottom: 10,
+    marginTop: -4
   },
   disableItem: {
-    backgroundColor: '#EEE7D9',
+    backgroundColor: Colors.whiteAlpha2,
   },
   disableText: {
-    color: '#1F0500'
+    color: Colors.brown
+  },
+  Button: {
+    backgroundColor: Colors.orange,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 60,
+    elevation: 5
   },
   mdlButton: {
     backgroundColor: Colors.brown,
@@ -108,26 +163,45 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     elevation: 5
   },
+  altButton: {
+    backgroundColor: Colors.brown,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 5,
+  },
   btmText: {
     color: Colors.white,
     textAlign: 'center',
     fontWeight: '700',
     fontSize: 15,
-    paddingLeft: 5
+  },
+  delButton: {
+    backgroundColor: Colors.redDel,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 5,
+    marginLeft: 2,
   },
   titleModal: {
     color: Colors.white,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
-    paddingBottom: 5
   },
   textModal: {
     color: Colors.white,
     textAlign: 'center',
     fontWeight: '300',
     fontSize: 14,
-    paddingBottom: 5
+    padding: 10
   },
   margin: {
     marginLeft: 10,

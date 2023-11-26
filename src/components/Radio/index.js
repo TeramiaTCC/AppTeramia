@@ -1,16 +1,23 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import Colors from "../Colors/Colors";
 
 const Radio = ({options=[], horizontal=false, onChangeSelect, selected}) => {
     return (
-        <View style={horizontal ? styles.horizontal : styles.vertical}>
+        <View style={{marginBottom: 15}}>
             {
                 options.map((opt, index) => (
-                    <TouchableOpacity key={index} onPress={() => onChangeSelect(opt , index)} style={[styles.opContainer, {marginLeft:horizontal ? 10 : 0, marginTop:horizontal ? 10 : 10}]}>
-                        <View style={styles.outlineCircle}>
-                            {selected === index && <View style={styles.innerCircle}/>}
+                    <TouchableOpacity key={index} onPress={() => onChangeSelect(opt , index)} style={[styles.opContainer, {marginTop:horizontal ? 10 : 10}]} activeOpacity={0.8} >
+                    {selected === index
+                    ?
+                        <View style={styles.boxEnable}>
+                            <Text style={styles.textEnable}>{opt}</Text>
                         </View>
-                        <Text style={[styles.text, {color: selected === index ? '#1F0500' : '#777'}]}>{opt}</Text>
+                    :
+                        <View style={styles.boxDisable}>
+                            <Text style={styles.textDisable}>{opt}</Text>
+                        </View>
+                    }
                     </TouchableOpacity>
                 ))
             }
@@ -24,30 +31,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    outlineCircle: {
-        width: 20,
-        height: 20,
-        borderRadius: 10,
+    boxDisable:{
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
         borderWidth: 2,
-        borderColor: '#1F0500',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#EEE7D9',
+        borderRadius:15,
+        borderColor: Colors.brownAlpha2,
     },
-    innerCircle: {
-        width: 13,
-        height: 13,
-        borderRadius: 6,
-        backgroundColor: '#F16520',
+    textDisable:{
+        color: Colors.brownAlpha2
     },
-    text: {
-        fontSize: 16,
-        marginLeft: 4,
-    },
-    horizontal: {
-        flexDirection: 'row',
+    boxEnable:{
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10,
+        borderWidth: 2,
+        borderRadius:15,
+        borderColor: Colors.orange,
+    },
+    textEnable:{
+        color: Colors.orange
     }
 })
 

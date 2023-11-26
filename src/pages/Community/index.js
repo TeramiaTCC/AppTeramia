@@ -26,6 +26,10 @@ export default function Community({ navigation }) {
         </View>
       }
       style={styles.list}
+      refreshing={false}
+      onRefresh={() => (
+        <View/>
+      )}
       keyExtractor={(item) => item.id}
       data={listUsers}
       renderItem={({item}) => {

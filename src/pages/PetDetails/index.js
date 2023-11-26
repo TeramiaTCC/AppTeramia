@@ -104,7 +104,8 @@ export default function PetDetails(props, { navigation }) {
 
         <TouchableOpacity
           style={[styles.editButton, styles.container, styles.row]}
-          onPress={() => navigation.navigate('EditPet')}>
+          onPress={() => navigation.navigate('EditPet')}
+          >
             <Feather name="edit" size={24} color={Colors.white}/>
             <Text style={styles.textButton}>Editar TeraPet</Text>
         </TouchableOpacity>

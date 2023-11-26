@@ -63,7 +63,11 @@ export default function Home({ navigation }) {
 
           <Text style={styles.title}>Atividades</Text>
 
-          <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+          <ScrollView
+            style={styles.scroll}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+          >
 
             <View style={{height: 15}} />
 

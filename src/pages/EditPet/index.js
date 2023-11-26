@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig"
 
 
-export default function EditPet({navigation, route}) {
+export default function EditPet(props, { navigation }) {
 
   const [image, setImage] = useState('');
 

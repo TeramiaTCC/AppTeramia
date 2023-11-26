@@ -1,15 +1,17 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
-import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Pressable, Linking, SafeAreaView, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaskInput from 'react-native-mask-input';
 import { CheckBox } from '@rneui/themed';
+
+import * as ImagePicker from 'expo-image-picker'
 
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 
 
 import styles from './styles';
 import Colors from '../../components/Colors/Colors';
-import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, AntDesign, Ionicons, Feather, MaterialIcons, MaterialCommunityIcons} from '@expo/vector-icons';
 import Radio from '../../components/Radio';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Alert } from 'react-native';
@@ -31,6 +33,9 @@ export default function Signup({ navigation }) {
   const [genero, setGenero] = useState ("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [cell, setCell] = useState("");
+  const [image, setImage] = useState("");
+
+  const [viewPass, setViewPass] = useState(true);
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
@@ -41,53 +46,87 @@ export default function Signup({ navigation }) {
 
   const [errorEmail, setErrorEmail] = useState (null);
   const [errorSenha, setErrorSenha] = useState (null);
+  const [errorNome, setErrorNome] = useState (null);
+  const [errorSobrenome, setErrorSobrenome] = useState (null);
   const [errorTel, setErrorTel] = useState (null);
 
   const UserType = "0";
 
-  const snapPoints = useMemo( () => ["22%", "25%"], []);
-
-  const bottomSheetModalRef = useRef(null);
-
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
-
-  const renderBackdrop = useCallback(
-    props => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-      />
-    ),
-    []
-  );
-
-  const validar = () => {
+  const validarEmail = () => {
     let error = false
     setErrorEmail(null)
 
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     if (!re.test(String(email).toLowerCase())){
-    setErrorEmail('preencha seu email corretamente')
+    setErrorEmail('Preencha seu email corretamente')
+    error = true
+    }
+    return !error
+  }
+
+  const validarSenha = () => {
+    let error = false
+    setErrorSenha(null)
+
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,15}$/;
+
+    if (!re.test(String(senha).toLowerCase())){
+    setErrorSenha('Sua senha deve conter pelo menos 8 caracteres\nSua senha deve possuir ao menos uma letra e um número')
+    error = true
+    }
+    return !error
+  }
+
+  const validarNome = () => {
+    let error = false
+    setErrorNome(null)
+
+    const re = /^([a-zA-Zà-úÀ-Ú\s]){4,}$/;
+
+    if (!re.test(String(nome).toLowerCase())){
+    setErrorNome('Preencha seu nome corretamente')
+    error = true
+    }
+    return !error
+  }
+
+  const validarSobrenome = () => {
+    let error = false
+    setErrorSobrenome(null)
+
+    const re = /^[a-zA-Zà-úÀ-Ú\s]{4,}$/;
+
+    if (!re.test(String(sobrenome).toLowerCase())){
+    setErrorSobrenome('Preencha seu sobrenome corretamente')
+    error = true
+    }
+    return !error
+  }
+
+  const validarTel = () => {
+    let error = false
+    setErrorTel(null)
+
+    const re = /^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$/;
+
+    if (!re.test(String(cell).toLowerCase())){
+    setErrorTel('Preencha seu número corretamente')
     error = true
     }
     return !error
   }
 
   const salvar = () =>{
-    if (validar()){
+    if (validarEmail() & validarSenha() & validarNome() & validarSobrenome() & validarTel()){
       console.log('Salvou')
     }
   }
  
   async function singUpUser(){
     const auth = getAuth(app)
+
+    if (validarEmail() & validarSenha() & validarNome() & validarSobrenome() & validarTel()){
     await createUserWithEmailAndPassword(auth, email, senha)
     .then(async(userCredential)=>{
 
@@ -98,9 +137,10 @@ export default function Signup({ navigation }) {
         datanascimento: dataNascimento,
         cell: cell,
         usertype: UserType,
+        image: ''
         
       }).then(async() => {
-        handlePresentModalPress()
+        handlePresentPress()
         console.log('foi')
  
         await AsyncStorage.setItem("typeUser", JSON.stringify({
@@ -119,10 +159,7 @@ export default function Signup({ navigation }) {
       console.log(error.code)
 
     })
-
-
-    
-  
+    }
   }
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
@@ -144,88 +181,219 @@ export default function Signup({ navigation }) {
     }
   };
 
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    console.log(result);
+
+    if (!result.canceled) {
+      bottomSheetModalRef.current?.dismiss();
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  function noPick() {
+    setImage("");
+    bottomSheetModalRef.current?.dismiss();
+  }
   
+  const snapPoints = useMemo( () => ["22%", "25%"], []);
+
+  const bottomSheetModalRef = useRef(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const dmiss = useCallback(() => {
+    bottomSheetModalRef2.current?.dismiss();
+  }, []);
+
+  const bottomSheetModalRef2 = useRef(null);
+
+  const handlePresentPress = useCallback(() => {
+    bottomSheetModalRef2.current?.present();
+  }, []);
+  const handleChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+
+  const renderBackdrop = useCallback(
+    props => (
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    []
+  );
+
+
+
 
  return (
-
-  <KeyboardAvoidingView
-    keyboardVerticalOffset={60}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+   <SafeAreaView
     style={styles.container}
-  >
-  <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
-    
+   >
+    <StatusBar barStyle={'default'}/>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={100}
+      style={{flex: 1}}
+    >
+      <ScrollView
+        style={[styles.margin]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={{height: 25}}/>
 
-      <StatusBar hidden/>
+        <View style={[styles.horizontal, {marginBottom: 15}]}>
+          <TouchableOpacity
+            style={styles.boxEnable}
+            activeOpacity={1}
+          >
+             <Text style={styles.textEnable}>Paciente</Text>
+          </TouchableOpacity>
 
-      <Text style={styles.title}>Criar uma conta Teramia</Text>
-      <Text style={styles.obrigation}>* significa obrigatório.</Text>
+          <TouchableOpacity
+            style={styles.boxDisable}
+            onPress={() => navigation.navigate('SignupPsico')}
+            activeOpacity={0.8}
+          >
+          <Text style={styles.textDisable}>Psicólogo</Text>
+          </TouchableOpacity>
 
-      <View style={styles.containerOpt}>
-        <TouchableOpacity style={styles.buttonOptLeft} activeOpacity={1}>
-          <Text style={styles.textSelected}>Paciente</Text>
-        </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity style={styles.buttonOptRight} onPress={() => navigation.navigate('SignupPsico')}>
-          <Text style={styles.textNotSelected}>Psicólogo</Text>
-        </TouchableOpacity>
-      </View>
+       <View style={styles.picAlt}>
+        { !image
+        ?
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handlePresentModalPress}
+          >
+            <FontAwesome style={styles.userImage} name="user-circle-o" size={100} color={Colors.brown}/>
+          </TouchableOpacity>
+        :
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handlePresentModalPress}
+          >
+            <Image source={{uri: image}} style={styles.userImage} />
+          </TouchableOpacity>
+        }
+        
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handlePresentModalPress}
+          >
+            <Text style={styles.altText}>Adicionar foto de perfil</Text>
+          </TouchableOpacity>
+        </View>
+       
+        <Text style={styles.label}>Nome*</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Insira seu primeiro nome'
+          maxLength={40}
+          type='text'
+          onChangeText={(text) => {
+            setNome(text)
+            setErrorNome(null)
+          }}
+          value={nome}
+        />
+        { errorNome && (
+          <Text style={styles.errorMessage}>{errorNome}</Text>
+        )}
 
-      <Text style={styles.inputTitle}>Nome*</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Insira seu primeiro nome'
-        type='text'
-        onChangeText={(text) => setNome(text)}
-        value={nome}
-      /> 
+        <Text style={styles.label}>Sobrenome*</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Insira seu sobrenome'
+          maxLength={40}
+          type='text'
+          onChangeText={(text) => {
+            setSobrenome(text)
+            setErrorSobrenome(null)
+          }}
+          value={sobrenome}
+        />
+        { errorSobrenome && (
+          <Text style={styles.errorMessage}>{errorSobrenome}</Text>
+        )}
 
-      <Text style={styles.inputTitle}>Sobrenome*</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Insira seu sobrenome'
-        type='text'
-        onChangeText={(text) => setSobrenome(text)}
-        value={sobrenome}
-      /> 
+        <Text style={styles.label}>E-mail*</Text>
+        <TextInput
+          style={styles.input}
+          placeholder='Insira seu E-mail'
+          type='text'
+          maxLength={35}
+          keyboardType='email-address'
+          onChangeText={(text) => {
+            setEmail(text) 
+            setErrorEmail(null)
+          }}
+          value={email}
+        />
+        { errorEmail && (
+          <Text style={styles.errorMessage}>{errorEmail}</Text>
+        )}
 
-      <Text style={styles.inputTitle}>E-mail*</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='Insira seu E-mail'
-        type='text'
-        keyboardType='email-address'
-        onChangeText={(text) => {
-          setEmail(text) 
-          setErrorEmail(null)
-        }}
-        value={email}
-      /> 
-      <Text style={styles.errorMessage}>{errorEmail}</Text>
+        <Text style={styles.label}>Senha*</Text>
+        <View style={styles.rowInput}>
+          <TextInput
+            secureTextEntry={viewPass}
+            style={styles.input2}
+            placeholder='Insira sua senha'
+            maxLength={15}
+            type='text'
+            onChangeText={(text) => {
+              setSenha(text)
+              setErrorSenha(null)
+            }}
+            value={senha}
+          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => {
+              setViewPass(!viewPass)
+            }}
+          >
+            { viewPass === true
+            ?
+            <Ionicons name='eye' size={20} color={Colors.brownAlpha2} style={styles.eyeIcon} />
+            :
+            <Ionicons name='eye-off' size={20} color={Colors.brownAlpha2} style={styles.eyeIcon} />
+            }
+          </TouchableOpacity>
+        </View>
+        { errorSenha && (
+          <Text style={styles.errorMessage}>{errorSenha}</Text>
+        )}
 
-      <Text style={styles.inputTitle}>Senha*</Text>
-      <TextInput
-        secureTextEntry
-        style={styles.input}
-        placeholder='Insira sua senha'
-        type='text'
-        onChangeText={(text) => setSenha(text)}
-        value={senha}
-      /> 
-      
-      <Text style={styles.inputTitle}>Gênero*</Text>
-      <Radio
-        selected={selected}
-        options={['Masculino', 'Feminino', 'Prefiro não dizer']}
-        horizontal={true}
-        onChangeSelect={(opt, i)=> {
-          setGenero(opt);
-          setSelected(i);
-        }}
-        value={genero}
-      />
+        <Text style={styles.label}>Gênero*</Text>
+        <Radio
+          selected={selected}
+          options={['Masculino', 'Feminino', 'Prefiro não dizer']}
+          horizontal={true}
+          onChangeSelect={(opt, i)=> {
+            setGenero(opt);
+            setSelected(i);
+          }}
+          value={genero}
+        />
 
-      <Text style={styles.inputTitle}>Data de Nascimento*</Text>
+      <Text style={styles.label}>Data de Nascimento*</Text>
 
       {showPicker && (
         <DateTimePicker 
@@ -252,46 +420,59 @@ export default function Signup({ navigation }) {
         </Pressable>
       )}
 
-      <Text style={styles.inputTitle}>Telefone*</Text>
-      <MaskInput
-        placeholder='(99) 99999-9999'
-        keyboardType='numeric'
-        style={styles.input}
-        value={cell}
-        onChangeText={(text) => setCell(text)}
-        mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-      />
+        <Text style={styles.label}>Telefone*</Text>
+        <MaskInput
+          placeholder='(99) 99999-9999'
+          keyboardType='numeric'
+          maxLength={15}
+          style={styles.input}
+          value={cell}
+          onChangeText={(text) => {
+            setCell(text)
+            setErrorTel(null)
+          }}
+          mask={['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        />
+        { errorTel && (
+          <Text style={styles.errorMessage}>{errorTel}</Text>
+        )}
 
-      <CheckBox
-        title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://teramiatcc.github.io/pages/eula');}}>Termos de Uso</Text>*</Text>)}
-        checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
-        uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
-        checked={isChecked}
-        onPress={() => setChecked(!isChecked)}
-      />
+        <View style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+        }}>
+          <CheckBox
+            title={(<Text style={styles.checkText}>Eu li e aceito os <Text style={styles.useTerms} onPress={() => {Linking.openURL('https://teramiatcc.github.io/pages/eula');}}>Termos de Uso</Text>*</Text>)}
+            checkedIcon={(<MaterialCommunityIcons name="check-bold" color={'#F16520'} size={20} />)}
+            uncheckedIcon={(<MaterialCommunityIcons name="square-rounded-outline" color={'#1F0500'} size={20} />)}
+            checked={isChecked}
+            onPress={() => setChecked(!isChecked)}
+          />
+        </View>
 
-    { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNascimento === "" || cell === "" || isChecked === false
-    ?
-      <TouchableOpacity
-        disabled={true}
-        style={styles.buttonRegister}
-      >
-          <Text style={styles.textButtonRegister}>CADASTRAR</Text>
-      </TouchableOpacity>
-    :
-    <TouchableOpacity
-      style={styles.buttonRegister}
-      activeOpacity={0.7}
-      onPress={singUpUser}
-    >
-      <Text style={styles.textButtonRegister}>CADASTRAR</Text>
-    </TouchableOpacity>
-    }
+        { nome === "" || sobrenome === "" || email === "" || senha === "" || genero === "" || dataNascimento === "" || cell === "" || isChecked === false
+        ?
+          <TouchableOpacity
+            disabled={true}
+            style={styles.Button}
+          >
+              <Text style={styles.btmText}>CADASTRAR</Text>
+          </TouchableOpacity>
+        :
+        <TouchableOpacity
+          style={styles.Button}
+          activeOpacity={0.8}
+          onPress={singUpUser}
+        >
+          <Text style={styles.btmText}>CADASTRAR</Text>
+        </TouchableOpacity>
+        }
 
-    <Text style={styles.login}>Já possui cadastro? <Text style={styles.linkLogin} onPress={() => navigation.navigate('Signin')}>Acesse Aqui!</Text>
-    </Text>
-
-    <View style={{height: 50}}/>
+        <Text style={styles.login}>Já possui cadastro? <Text style={styles.linkLogin} onPress={() => navigation.navigate('Signin')}>Acesse Aqui!</Text>
+        </Text>
+        <View style={{height: 50}}/>
+      </ScrollView>
+    </KeyboardAvoidingView>
 
     <BottomSheetModalProvider>
       <BottomSheetModal
@@ -305,20 +486,55 @@ export default function Signup({ navigation }) {
         onChange={handleSheetChanges}
       >
         <View style={styles.margin}>
-
-          <Text style={styles.titleModal}>Cadastro realizado com sucesso!</Text>
-
           <TouchableOpacity
             activeOpacity={0.8}
-            style={styles.mdlButton}
-            onPress={() => navigation.navigate("Signin")}
+            style={[styles.altButton, styles.row]}
+            onPress={pickImage}
           >
-            <Text style={styles.btmText}>Efetuar login</Text>
+            <Feather name="image" size={20} color={Colors.white} />
+            <Text style={styles.btmText}> Adicionar foto</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.delButton, styles.row]}
+            onPress={noPick}
+          >
+            <Feather name="trash-2" size={20} color={Colors.white} />
+            <Text style={styles.btmText}> Remover foto</Text>
           </TouchableOpacity>
         </View>
       </BottomSheetModal>
       </BottomSheetModalProvider>
-  </ScrollView>
-  </KeyboardAvoidingView>
+
+
+      <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef2}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleChanges}
+      >
+        <View style={styles.margin}>
+
+          <Text style={styles.titleModal}>Usuário cadastrado!</Text>
+
+          <Text style={styles.textModal}>Cadastrado com sucesso</Text>
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.mdlButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.btmText}>Ok</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
+
+  </SafeAreaView>
   );
 }

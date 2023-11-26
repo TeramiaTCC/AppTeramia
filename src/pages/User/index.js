@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
 
 import { connect, useSelector } from 'react-redux';
@@ -12,8 +12,8 @@ import CachedImage from '../../components/CachedImage/CachedImage';
 
 export default function User({ navigation, props }) {
 
-
-
+  const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
+  //console.log('DataPosts: ',dataPosts)
 
 return (
 
@@ -65,29 +65,18 @@ return (
         <FlatList
           numColumns={3}
           horizontal={false}
-          data={''}
+          data={dataPosts}
           style={{}}
+          refreshing={false}
+          onRefresh={() => (
+            <View/>
+          )}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[styles.containerImage, styles.borderWhite]}
-              onPress={() => props.navigation.navigate("Post", { //item, user 
-              })}>
-                {item.type == 0 ?
-
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURLStill 
-                    }}
-                  />
-                :
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURL
-                     }}
-                  />
-                }
+              activeOpacity={0.8}
+            >
+              <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
             </TouchableOpacity>
         )}
 

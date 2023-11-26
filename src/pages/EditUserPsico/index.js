@@ -128,14 +128,17 @@ export default function EditUserPsico({navigation, route}) {
  return (
     <SafeAreaView style={styles.container}>
     <StatusBar barStyle={'default'}/>
-
-      <View style={styles.margin}>
         
         <KeyboardAvoidingView
           keyboardVerticalOffset={90}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={{flex: 1}}
         >
-        <ScrollView>
+        <ScrollView
+          style={[styles.margin]}
+          showsVerticalScrollIndicator={false}
+        >
+
+        <View style={{height: 25}}/>
         <View style={styles.picAlt}>
 
           { !image
@@ -252,9 +255,10 @@ export default function EditUserPsico({navigation, route}) {
           </TouchableOpacity>
 
       </View>
+      <View style={{height: 25}}/>
       </ScrollView>
       </KeyboardAvoidingView>
-      </View>
+
 
       <BottomSheetModalProvider>
       <BottomSheetModal

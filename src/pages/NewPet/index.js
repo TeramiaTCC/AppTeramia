@@ -1,13 +1,15 @@
 import React, {useRef, useState, useMemo, useCallback, useEffect} from 'react';
-import { SafeAreaView, View, Text, StatusBar, TextInput, TouchableOpacity, KeyboardAvoidingView, Pressable, } from 'react-native';
+import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Image, Pressable} from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as ImagePicker from 'expo-image-picker';
 
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, AntDesign, Ionicons, Feather, MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
 
-import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, deleteDoc, addDoc, collection } from 'firebase/firestore';
+import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig";
@@ -37,6 +39,8 @@ export default function NewPet({ navigation })  {
     const [selectedAdes, setSelectedAdes] = useState ('');
     const [castrado, setCastrado] = useState('');
     const [selectedCast, setSelectedCast] = useState ('');
+    const [image, setImage] = useState('');
+    const [bio, setBio] = useState('');
 
     const [date, setDate] = useState(new Date());
     const [showPicker, setShowPicker] = useState(false);
@@ -195,25 +199,85 @@ export default function NewPet({ navigation })  {
       }
     };
 
-    async function addPet(){
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+      console.log(result);
+  
+      if (!result.canceled) {
+        bottomSheetModalRef.current?.dismiss();
+        setImage(result.assets[0].uri);
+      }
+    };
+  
+    function noPick() {
+      setImage("");
+      bottomSheetModalRef.current?.dismiss();
+    }
 
-     const PetId = uuid.v4()
+    const uploadImage = async () => {
+      const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+      const uri = image;
+  
+      const metadata = {
+        contentType: 'image/png'
+      };
+  
+      filename = Math.random().toString(36);
+  
+      const storage = getStorage();
+      const storageRef = ref(storage, `pets/${credentials.uid}/${filename}`);
+  
+      const response = await fetch(uri);
+      const blob = await response.blob();
+  
+      const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+  
+      const taskProgress = snapshot => {
+        console.log(`transferred: ${snapshot.bytesTransferred}`)
+      }
+  
+      const taskCompleted = () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            addPetData(downloadURL);
+            console.log('File available at', downloadURL);
+          });
+      }
+  
+      const taskError = snapshot => {
+        console.log(snapshot)
+        console.log('foi não')
+      }
+  
+      uploadTask.on('state_changed', taskProgress, taskError, taskCompleted);
     
+    }
 
+
+
+    async function addPetData(downloadURL){
+
+     //const PetId = uuid.v4()
+    
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
 
-      await setDoc(doc(db, "pet", credentials.uid), {
+      await addDoc(collection(db, "pet", credentials.uid, 'userPets'), {
         nome: nome,
+        description: bio,
         tipo: tipo,
         raca: raca,
         adestramento: adestramento,
         castramento: castrado,
         genero: genero,
         datanascimento: dataNascimento,
-        PetID: PetId
-        
+        imagem: downloadURL,
       }).then(() => {
-        handlePresentModalPress()
+        handlePresentPress()
         
       }).catch(async(error) => {
         console.log(error)
@@ -225,7 +289,7 @@ export default function NewPet({ navigation })  {
     const snapPoints = useMemo( () => ["22%", "25%"], []);
 
     const bottomSheetModalRef = useRef(null);
-  
+
     const handlePresentModalPress = useCallback(() => {
       bottomSheetModalRef.current?.present();
     }, []);
@@ -233,9 +297,19 @@ export default function NewPet({ navigation })  {
       console.log('handleSheetChanges', index);
     }, []);
   
-    const close = useCallback(() => {
-      bottomSheetModalRef.current?.dismisss();
+    const dmiss = useCallback(() => {
+      bottomSheetModalRef2.current?.dismiss();
     }, []);
+  
+    const bottomSheetModalRef2 = useRef(null);
+  
+    const handlePresentPress = useCallback(() => {
+      bottomSheetModalRef2.current?.present();
+    }, []);
+    const handleChanges = useCallback((index: number) => {
+      console.log('handleSheetChanges', index);
+    }, []);
+  
   
     const renderBackdrop = useCallback(
       props => (
@@ -250,27 +324,67 @@ export default function NewPet({ navigation })  {
 
 
  return (
-    <KeyboardAvoidingView
-    keyboardVerticalOffset={60}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <SafeAreaView
     style={styles.container}
     >
-   <SafeAreaView style={styles.safeArea} contentContainerStyle={styles.contentContainer}>
     <StatusBar barStyle={'default'}/>
-        
-    <Text style={styles.title}>Adicionar novo TeraPet</Text>
-    <Text style={styles.obrigation}>* significa obrigatório.</Text>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={190}
+        >
+        <ScrollView 
+          style={[styles.margin, {paddingTop: Platform.OS === 'ios' ? 0 : 25,}]}
+          showsVerticalScrollIndicator={false}
+        >
+        <View style={styles.picAlt}>
 
-        <Text style={styles.inputTitle}>Nome*</Text>
+          { !image
+          ?
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handlePresentModalPress}
+            >
+              <View style={styles.petImage}>
+                <MaterialIcons name="pets" size={90} color={Colors.brown}/>
+              </View>
+            </TouchableOpacity>
+          :
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={handlePresentModalPress}
+            >
+              <Image source={{uri: image}} style={styles.petImage} />
+            </TouchableOpacity>
+          }
+
+
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={handlePresentModalPress}
+          >
+            <Text style={styles.altText}>Adicionar foto de perfil</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.label}>Nome*</Text>
         <TextInput
-        style={styles.input}
-        placeholder='Insira o nome do seu pet'
-        type='text'
-        onChangeText={(text) => setNome(text)}
-        value={nome}
+          style={[styles.input, styles.inputHeight]}
+          placeholder='Insira o nome do seu pet'
+          onChangeText={(text) => setNome(text)}
+          value={nome}
         />
 
-        <Text style={styles.inputTitle}>Data de Nascimento*</Text>
+        <Text style={styles.label}>Descrição</Text>
+        <TextInput
+          style={[styles.input, styles.inputHeight2]}
+          multiline
+          placeholder='Insira uma descrição'
+          numberOfLines={3}
+          maxLength={150}
+          onChangeText={(text) => setBio(text)}
+          value={bio}
+        />
+
+        <Text style={styles.label}>Data de Nascimento*</Text>
         {showPicker && (
         <DateTimePicker 
           mode='date' 
@@ -281,25 +395,25 @@ export default function NewPet({ navigation })  {
           minimumDate={new Date(1950, 0, 1)}
           maximumDate={new Date(2023, 11, 31)}
         />
-      )}
+        )}
 
-      {!showPicker && (
-        <Pressable
-          onPress={toggleDatepicker}
-          style={styles.input}
-        >
-          <TextInput
-            style={{color: '#000',}}
-            placeholder='Selecione a data de nascimento'
-            autoComplete='birthdate-full'
-            onChangeText={setDataNascimento}
-            value={dataNascimento}
-            editable={false}
-          />
-        </Pressable>
-      )}
+        {!showPicker && (
+          <Pressable
+            onPress={toggleDatepicker}
 
-        <Text style={styles.inputTitle}>Tipo*</Text>
+          >
+            <TextInput
+              placeholder='Selecione a data de nascimento'
+              autoComplete='birthdate-full'
+              onChangeText={setDataNascimento}
+              value={dataNascimento}
+              editable={false}
+              style={[styles.input, styles.inputHeight]}
+            />
+          </Pressable>
+        )}
+
+        <Text style={styles.label}>Tipo*</Text>
         <PetTypeRadio
         selected={selectedTipo}
         options={['Felino', 'Canino']}
@@ -311,7 +425,7 @@ export default function NewPet({ navigation })  {
         value={tipo}
         />
 
-        <Text style={styles.inputTitle}>Raça*</Text>
+        <Text style={styles.label}>Raça*</Text>
         {tipo === 'Canino'
         ?
         <SelectList
@@ -326,6 +440,8 @@ export default function NewPet({ navigation })  {
           closeicon={<FontAwesome name="close" size={15} color={'#F16520'} />}
           boxStyles= {styles.boxList}
           dropdownStyles= {styles.dropdownList}
+          disabledItemStyles = {styles.disableItem}
+          disabledTextStyles={styles.disableText}
         />
         : 
         tipo === 'Felino'
@@ -342,6 +458,8 @@ export default function NewPet({ navigation })  {
           closeicon={<FontAwesome name="close" size={15} color={'#F16520'} />}
           boxStyles= {styles.boxList}
           dropdownStyles= {styles.dropdownList}
+          disabledItemStyles = {styles.disableItem}
+          disabledTextStyles={styles.disableText}
         />
         :
         <SelectList
@@ -360,7 +478,7 @@ export default function NewPet({ navigation })  {
         />
         }
 
-        <Text style={styles.inputTitle}>Gênero*</Text>
+        <Text style={styles.label}>Gênero*</Text>
         <PetGenRadio
         selected={selectedGen}
         options={['Macho', 'Fêmea']}
@@ -372,7 +490,7 @@ export default function NewPet({ navigation })  {
         value={genero}
         />
 
-        <Text style={styles.inputTitle}>Possui adestramento?*</Text>
+        <Text style={styles.label}>Possui adestramento?*</Text>
         <PetAdesRadio
         selected={selectedAdes}
         options={['Sim', 'Não']}
@@ -384,7 +502,7 @@ export default function NewPet({ navigation })  {
         value={adestramento}
         />
 
-        <Text style={styles.inputTitle}>Já foi castrado(a)?*</Text>
+        <Text style={styles.label}>Já foi castrado(a)?*</Text>
         <PetCastRadio
         selected={selectedCast}
         options={['Sim', 'Não']}
@@ -396,29 +514,31 @@ export default function NewPet({ navigation })  {
         value={castrado}
         />
 
-        <View style={{height: 25}}/>
-
         { nome === "" || genero === "" || adestramento === "" || castrado === "" || raca === "" || dataNascimento === ""
         ?
         <TouchableOpacity
-            disabled={true}
-            style={styles.buttonAdd}
+          activeOpacity={0.8}
+          style={[styles.Button, styles.row]}
+          disabled={true}
         >
-            <Text style={styles.textButtonAdd}>ADICIONAR</Text>
+            <Feather name="check" size={20} color={Colors.white}/>
+            <Text style={styles.btmText}> Cadastrar TeraPet</Text>
         </TouchableOpacity>
         :
         <TouchableOpacity
-        style={styles.buttonAdd}
-        activeOpacity={0.7}
-        onPress={addPet}
+          activeOpacity={0.8}
+          style={[styles.Button, styles.row]}
+          onPress={uploadImage}
         >
-        <Text style={styles.textButtonAdd}>ADICIONAR</Text>
+            <Feather name="check" size={20} color={Colors.white}/>
+            <Text style={styles.btmText}> Cadastrar TeraPet</Text>
         </TouchableOpacity>
         }
 
-   </SafeAreaView>
+      </ScrollView>
+      </KeyboardAvoidingView>
 
-   <BottomSheetModalProvider>
+      <BottomSheetModalProvider>
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
@@ -428,6 +548,39 @@ export default function NewPet({ navigation })  {
         enablePanDownToClose={true}
         backdropComponent={renderBackdrop}
         onChange={handleSheetChanges}
+      >
+        <View style={styles.margin}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.altButton, styles.row]}
+            onPress={pickImage}
+          >
+            <Feather name="image" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Adicionar foto</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={[styles.delButton, styles.row]}
+            onPress={noPick}
+          >
+            <Feather name="trash-2" size={20} color={Colors.white} />
+            <Text style={styles.btmText}>Remover foto</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetModal>
+      </BottomSheetModalProvider>
+
+
+   <BottomSheetModalProvider>
+      <BottomSheetModal
+        ref={bottomSheetModalRef2}
+        index={0}
+        snapPoints={snapPoints}
+        backgroundStyle={{backgroundColor: Colors.orange}}
+        handleIndicatorStyle={{backgroundColor: Colors.brown}}
+        enablePanDownToClose={true}
+        backdropComponent={renderBackdrop}
+        onChange={handleChanges}
       >
         <View style={styles.margin}>
 
@@ -445,6 +598,6 @@ export default function NewPet({ navigation })  {
         </View>
       </BottomSheetModal>
       </BottomSheetModalProvider>
-   </KeyboardAvoidingView>
+   </SafeAreaView>
   );
 }

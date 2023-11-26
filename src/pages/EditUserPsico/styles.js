@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   containerBottom: {
     flex: 1,

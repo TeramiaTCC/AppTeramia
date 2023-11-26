@@ -5,82 +5,84 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFDFA',
+    },
+    label: {
+        fontSize: 15,
+        color: Colors.brownAlpha2,
+        fontWeight: '300'
+    },
+    row: {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: Platform.OS === 'ios' ? 0 : 50,
+        height: 'auto',
+    },
+    horizontal: {
+      flexDirection: 'row',
+      display: 'flex',
+    },
+    justifyCenter2: {
+      justifyContent: 'center',
     },
     input: {
-        width: '90%',
         height: 40,
-        marginTop: 10,
+        marginBottom: 10,
         padding: 10,
         borderWidth: 2,
-        borderColor: '#1F0500',
+        borderColor: Colors.brown,
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 10,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        backgroundColor: '#EEE7D9',
+        backgroundColor: Colors.whiteGoldAlpha,
     },
     buttonLogin: {
         width: 200,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F16520',
+        backgroundColor: Colors.orange,
         borderRadius: 50,
         marginTop: 30,
         elevation: 5,
-        shadowColor: '#1F0500',
+        shadowColor: Colors.brown,
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     textButtonLogin: {
-        color: '#FFFDFA',
+        color: Colors.white,
         fontWeight: 'bold',
-    },
-    contentAlert: {
-        marginTop: 20,
-        flexDirection: 'roll',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    warningAlert: {
-        paddingLeft: 10,
-        color: '#F16520',
-        fontSize: 16,
     },
     registration: {
         marginTop: 20,
-        color: '#4d5156',
+        color: Colors.brownAlpha2,
     },
     linkSubscribe: {
-        color: '#F16520',
-        fontSize: 16,
+        color: Colors.orange,
         textDecorationLine: 'underline',
-    },
-    inputTitle: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginBottom: -5,
-      paddingTop: 10,
-      marginLeft: '5%',
-      marginRight: 'auto',
     },
     imageLogo: {
         borderRadius: 150,
-        padding: 90
+        padding: 90,
+        marginLeft: 'auto',
+        marginRight: 'auto',
     },
     viewLogo: {
-        flex: 1,
         justifyContent: 'center',
-        margin: 90,
+        alignContent: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        paddingBottom: 40,
     },
     linkForget: {
-        color: '#F16520',
+        color: Colors.orange,
         marginLeft: 'auto',
-        marginRight: '5%',
         textDecorationLine: 'underline',
     },
+    justifyCenter: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     mdlButton: {
         backgroundColor: Colors.brown,
         padding: 15,
@@ -115,7 +117,45 @@ const styles = StyleSheet.create({
       margin: {
         marginLeft: 10,
         marginRight: 10,
-      }
+      },
+
+
+      errorMessage: {
+        color: Colors.redDel2,
+        marginTop: -10,
+        marginBottom: 4,
+        fontWeight: '300',
+        fontStyle: 'italic',
+      },
+      errorPass: {
+        color: Colors.redDel2,
+        fontWeight: '400',
+        fontStyle: 'italic',
+      },
+      rowInput: {
+        flexDirection: 'row',
+        width: '100%',
+        height: 40,
+        marginBottom: 10,
+        borderWidth: 2,
+        borderColor: Colors.brown,
+        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 10,
+        backgroundColor: Colors.whiteGoldAlpha,
+        alignItems: 'center'
+      },
+      input2: {
+        width: '93.8%',
+        height: 45,
+        padding: 10,
+      },
+      eyeIcon:{
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+
   });
 
 export default styles;

@@ -22,28 +22,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
-  contextAllPets: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
-  },
-  deletePet: {
-    justifyContent: 'center',
-    paddingLeft: 150
-  },
-  descriptionPet: {
-    width: '75%',
-    alignContent: 'flex-start',
-    backgroundColor: Colors.whiteGold,
-    padding: 12,
-    paddingHorizontal: 20,
-    marginBottom: 5,
-  },
   petInfo: {
     paddingLeft: 25,
     paddingRight: 25,
-    paddingBottom: 10,
     paddingTop: 10,
     flexDirection: 'column',
     backgroundColor: Colors.whiteGold,
@@ -84,9 +65,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textName:{
-    fontSize: 24,
+    fontSize: 25,
     color: Colors.brown,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textDesc: {
     fontWeight: '300',

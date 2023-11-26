@@ -11,9 +11,11 @@ import { fetchPosts } from '../../redux/features/userPosts';
 
 export default function UserPsico({ navigation, props }) {
 
-  const [userPosts, setUserPosts] = useState([]);
-  const data = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
-  console.log('Data: ',data)
+  const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
+  //console.log('DataPosts: ',dataPosts)
+
+  const dataUser = useSelector((state) => state.userData.userData.usuarioArray);
+  console.log('DataUser: ',dataUser)
 
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -71,8 +73,12 @@ return (
         <FlatList
           numColumns={3}
           horizontal={false}
-          data={data}
+          data={dataPosts}
           style={{}}
+          refreshing={false}
+          onRefresh={() => (
+            <View/>
+          )}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={[styles.containerImage, styles.borderWhite]}

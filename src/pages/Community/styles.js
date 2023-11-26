@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   buttonNewPost:{
     width: 50,
     height: 50,
-    backgroundColor: '#F16520',
+    backgroundColor: Colors.orange,
     position: 'absolute',
     bottom: 80,
     right: 20,
@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     borderWidth: 4,
     borderColor: Colors.orange,
-    borderRadius: 20
   },
   horizontal: {
     flexDirection: 'row',
@@ -48,31 +47,31 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   post: {
-    backgroundColor: Colors.brown,
-    borderRadius: 20,
-    marginTop: 25,
-    marginLeft: 10,
-    marginRight: 10
+    backgroundColor: '#FFFDFA',
+    borderBottomWidth: 4,
+    borderBottomColor: Colors.brown
   },
   header: {
     paddingTop: 15,
     paddingBottom: 15,
     paddingLeft: 10,
     paddingRight: 10,
+    backgroundColor: Colors.brown
   },
   description: {
     paddingTop: 15,
     paddingBottom: 15,
     paddingLeft: 10,
     paddingRight: 10,
+    backgroundColor: Colors.whiteGold
   },
   descText: {
-    color: Colors.white,
+    color: Colors.brown,
     fontWeight: '300',
     textAlign: 'justify'
   },
   descTextName: {
-    color: Colors.whiteAlpha,
+    color: Colors.brownAlpha2,
     fontWeight: '900',
     textAlign: 'justify',
     textDecorationLine: 'underline'

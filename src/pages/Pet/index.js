@@ -3,20 +3,22 @@ import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, FlatList, Image 
 
 import { Feather, Entypo, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 
+import { useDispatch, useSelector } from 'react-redux';
+
 import Colors from '../../components/Colors/Colors';
 import styles from './styles';
-import results from './results';
+import { fetchPets } from '../../redux/features/userPets';
 
 
 export default function Pett({ navigation }) {
-  const [teraPet, setTeraPet] = useState('')
+  const dataPets = useSelector((state) => state.userPets.userPets.petsArray);
+  //console.log('Data: ',dataPets)
 
-  const listPets = results;
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchPets());
+  }, [dispatch])
 
-  //aqui tu vai fazer uns trampo do banco de dados vê no video ai: https://www.youtube.com/watch?v=0AM6AXlFwxM
-  useEffect (() =>{
-
-  }, [])
 
   return (
   <SafeAreaView style={styles.prmyContainer}>
@@ -25,22 +27,26 @@ export default function Pett({ navigation }) {
     <FlatList
       showsVerticalScrollIndicator={false}
       styles={styles.list}
-      data={listPets}
+      data={dataPets}
       ListFooterComponent={<View style={{height: 80}} />}
       ListEmptyComponent={
         <View style={styles.advice}>
           <Text style={styles.adviceText}>Não foram encontrados TeraPets.</Text>
         </View>
       }
+      refreshing={false}
+      onRefresh={() => (
+        <View/>
+      )}
       keyExtractor={(item) => item.id}
       renderItem={({item}) => {
       return (
         <View style={[styles.petInfo, styles.margin]}>
         <View style={styles.row}>
           <View>
-            { item.foto
+            { item.imagem
             ?
-            <Image source={{ uri: item.foto }} style={styles.petIcon} />
+            <Image source={{ uri: item.imagem }} style={styles.petIcon} />
             :
             <View style={styles.petIcon}>
               <MaterialIcons name="pets" size={35} color={Colors.backColor}/>
@@ -51,21 +57,21 @@ export default function Pett({ navigation }) {
             <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
               <View style={[styles.justifyCenter, styles.containerName]}>
-                <Text style={styles.textName}>{item.name}</Text>
+                <Text style={styles.textName}>{item.nome}</Text>
               </View>
 
               <View style={[styles.justifyCenter, styles.containerIcons]}>
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate ('PetDetails', {
-                      nome: item.name,
-                      desc: item.desc,
+                      nome: item.nome,
+                      desc: item.description,
                       tipo: item.tipo,
-                      adestrado: item.adestrado,
-                      castrado: item.castrado,
+                      adestrado: item.adestramento,
+                      castrado: item.castramento,
                       raca: item.raca,
-                      foto: item.foto,
-                      data: item.data,
+                      foto: item.imagem,
+                      data: item.datanascimento,
                       genero: item.genero
                     })
                   }}
@@ -78,11 +84,13 @@ export default function Pett({ navigation }) {
 
           </View>
 
-          <View>
-            <Text style={styles.textDesc}>
-              {item.desc}
-            </Text>
-          </View>
+          { item.description && (
+            <View style={{paddingBottom: 10}}>
+              <Text style={styles.textDesc}>
+                {item.description}
+              </Text>
+            </View>
+          )}
 
       </View>
       )

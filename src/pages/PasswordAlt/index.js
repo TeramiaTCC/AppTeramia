@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react';
-import {  View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Alert } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, StatusBar, Alert } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colors from '../../components/Colors/Colors';
@@ -7,26 +7,41 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBot
 
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';  
 
-import styles from './style';
+import styles from './styles';
 
 export default function PasswordAlt({ navigation }) {
   const [email, setEmail] = useState("");
-  const [ErrorPass, setErrorPass] = useState("");
+  const [errorLogin, setErrorLogin] = useState("");
+  const [errorEmail, setErrorEmail] = useState (null);
+
+  const validarEmail = () => {
+    let error = false
+    setErrorEmail(null)
+
+    const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+    if (!re.test(String(email).toLowerCase())){
+    setErrorEmail('Insira um email valido')
+    error = true
+    }
+    return !error
+  }
 
   async function VerificaEmail(){
     const auth = getAuth()
-    
+      if (validarEmail()){
         await sendPasswordResetEmail(auth, email)
         .then(function(){
-          setErrorPass(false)
+          setErrorLogin(false)
             handlePresentModalPress()
         }).catch(function(erro){
-        setErrorPass(true)
+          setErrorLogin(true)
           console.log("Ocorreu um erro ao enviar o email", erro)
       })
+    }
   }
 
-  const snapPoints = useMemo( () => ["22%", "25%"], []);
+  const snapPoints = useMemo( () => ["35%", "45%"], []);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -54,55 +69,59 @@ export default function PasswordAlt({ navigation }) {
 
   return (
   
-  <KeyboardAvoidingView 
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+  <SafeAreaView 
     style={styles.container}
   >
-
-    <StatusBar hidden/>
-
-    <Text style={styles.inputTitle}>Informe o seu endereço de E-mail</Text>
-    <TextInput
-      style={styles.input}
-      placeholder='Insira seu E-mail'
-      type='text'
-      keyboardType='email-address'
-      autoComplete='email'
-      onChangeText={(text) => setEmail (text)} 
-      value={email}
-    />
-
-    {ErrorPass === true
-      ?
-      <View style={styles.contentAlert}>
-        <MaterialCommunityIcons
-          name='alert-circle'
-          size={24}
-          color={'#F16520'}
-        />
-        <Text style={styles.warningAlert}>E-mail de usuario não encontrado.</Text>
-      </View>
-      :
-      <View/>
-    }
-
-    { email === ""
-    ?
-      <TouchableOpacity
-        disabled={true}
-        style={styles.buttonBusca}
-      >
-          <Text style={styles.textButtonBusca}>BUSCAR</Text>
-      </TouchableOpacity>
-    :
-    <TouchableOpacity
-      style={styles.buttonBusca}
-      activeOpacity={0.7}
-      onPress={VerificaEmail}
+  <StatusBar barStyle={'default'}/>
+    <KeyboardAvoidingView
+      keyboardVerticalOffset={100}
+      style={{flex: 1, marginLeft: 10, marginRight: 10, paddingTop: Platform.OS === 'ios' ? 0 : 25,}}
     >
-      <Text style={styles.textButtonBusca}>Solicitar</Text>
-    </TouchableOpacity>
-    }
+      <Text style={styles.label}>E-mail</Text>
+      <TextInput
+        style={styles.input}
+        placeholder='Insira seu E-mail'
+        type='text'
+        keyboardType='email-address'
+        autoComplete='email'
+        onChangeText={(text) => {
+          setEmail (text)
+          setErrorEmail(null)
+          setErrorLogin(null)
+        }} 
+        value={email}
+      />
+      { errorEmail && (
+        <Text style={styles.errorMessage}>{errorEmail}</Text>
+      )}
+
+
+      { errorLogin && (
+        <View style={[{marginTop: 15}, styles.row, styles.justifyCenter]}>
+          <MaterialCommunityIcons name='alert-circle' size={20} color={Colors.redDel2} />
+          <Text style={styles.errorPass}> Email não encontrado em nossa base de dados</Text>
+        </View>
+      )}
+
+        { email === "" 
+        ?
+          <TouchableOpacity
+            disabled={true}
+            style={styles.buttonBusca}
+          >
+              <Text style={styles.textButtonBusca}>ENTRAR</Text>
+          </TouchableOpacity>
+        :
+          <TouchableOpacity
+            style={styles.buttonBusca}
+            activeOpacity={0.8}
+            onPress={VerificaEmail}
+          >
+            <Text style={styles.textButtonBusca}>ENTRAR</Text>
+          </TouchableOpacity>
+        }
+
+    </KeyboardAvoidingView>
 
     <BottomSheetModalProvider>
       <BottomSheetModal
@@ -117,7 +136,7 @@ export default function PasswordAlt({ navigation }) {
       >
         <View style={styles.margin}>
 
-          <Text style={styles.titleModal}>Email de alteração</Text>
+          <Text style={styles.titleModal}>Email de recuperação</Text>
 
           <Text style={styles.textModal}>email enviado para: {email}</Text>
 
@@ -131,6 +150,7 @@ export default function PasswordAlt({ navigation }) {
         </View>
       </BottomSheetModal>
       </BottomSheetModalProvider>
-    </KeyboardAvoidingView>
+
+  </SafeAreaView>
   );
 }
