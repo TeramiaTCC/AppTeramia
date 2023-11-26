@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   containerBottom: {
     flex: 1,
@@ -32,13 +31,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 15
   },
-  profileImage: {
+  petImage: {
     width: 100,
     height: 100,
     borderRadius: 100 / 2,
     marginBottom: 10,
-    borderWidth: 2,
-    borderColor: Colors.orange
+    borderWidth: 3,
+    borderColor: Colors.orange,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.whiteGoldAlpha
   },
   buttonLogout: {
     width: "33%",
@@ -149,6 +151,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+
+  saveNtf: {
+    color: Colors.orange,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontWeight: '400'
   }
 });
 

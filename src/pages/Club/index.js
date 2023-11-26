@@ -7,9 +7,15 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons';
 import { CommonActions } from '@react-navigation/native';
 import results from './results';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../redux/features/userPosts';
+
 export default function Club({ navigation, route }) {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState(results);
+
+  const dataPosts = useSelector((state) => state.usersData.usersData);
+  console.log('DataPosts: ',dataPosts)
 
   useEffect(() => {
     if (searchText === '') {

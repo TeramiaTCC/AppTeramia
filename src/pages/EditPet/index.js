@@ -5,7 +5,7 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from 
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
-import { FontAwesome, FontAwesome5, AntDesign, Ionicons, Feather } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5, AntDesign, Ionicons, Feather, MaterialIcons } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 
 import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
@@ -14,16 +14,30 @@ import auth from '../../config/firebaseAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig"
 
+import PetCastRadio from '../../components/PetCastRadio';
+import PetAdesRadio from '../../components/PetAdesRadio';
+
 
 export default function EditPet(props, { navigation }) {
+  //console.log(props.route.params)
 
   const [image, setImage] = useState('');
 
-  const [nome] = useState('Nome*')
-  const [tipo] = useState('Tipo*')
-  const [data] = useState('00/00/0000*')
+  const [photo, setPhoto] = useState(props.route.params.imagem);
+  //console.log(photo)
+
+  const [nome] = useState(props.route.params.nome);
+  const [tipo] = useState(props.route.params.tipo);
+  const [raca] = useState(props.route.params.raca);
+  const [data] = useState(props.route.params.data);
+  const [genero] = useState(props.route.params.genero);
+  const [adestramento, setAdestranmento] = useState('');
+  const [selectedAdes, setSelectedAdes] = useState ('');
+  const [castrado, setCastrado] = useState('');
+  const [selectedCast, setSelectedCast] = useState ('');
   const [bio, setBio] = useState('');
 
+  const [save, setSave] = useState(null);
   const db = getFirestore(app);
 
   const snapPoints = useMemo( () => ["22%", "25%"], []);
@@ -46,7 +60,11 @@ export default function EditPet(props, { navigation }) {
   };
 
   function noPick() {
-    setImage("");
+    if (image){
+      setImage("");
+    } else {
+      setPhoto("");
+    }
     bottomSheetModalRef.current?.dismiss();
   }
 
@@ -89,60 +107,74 @@ export default function EditPet(props, { navigation }) {
     console.log('Deteltado');
   }
 
-  async function exit(){
-    await AsyncStorage.clear();
-    navigation.reset({
-      index:0, 
-      routes: [{
-        name:"Signin"
-      }]
-    })
+  async function salvarAlt(){
+    setSave(!save);
   }
+
 
  return (
     <SafeAreaView style={styles.container}>
     <StatusBar barStyle={'default'}/>
-
-      <View style={styles.margin}>
         
         <KeyboardAvoidingView
-          keyboardVerticalOffset={90}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={190}
         >
-        <ScrollView>
-        <View style={styles.picAlt}>
+        <ScrollView
+          style={[styles.margin, {paddingTop: Platform.OS === 'ios' ? 0 : 25}]}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.picAlt}>
 
-          { !image
-          ?
+            { !photo
+            ?
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={handlePresentModalPress}
+              >
+                <View style={styles.petImage}>
+                  <MaterialIcons name="pets" size={90} color={Colors.brown}/>
+                </View>
+              </TouchableOpacity>
+            :
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={handlePresentModalPress}
+              >
+                { !image
+                ?
+                 <Image source={{uri: photo}} style={styles.petImage} />
+                :
+                  <Image source={{uri: image}} style={styles.petImage} />
+                }
+              </TouchableOpacity>
+            }
+
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={handlePresentModalPress}
             >
-              <FontAwesome style={styles.profileImage} name="user-circle-o" size={100} color={Colors.brown}/>
+              <Text style={styles.altText}>Alterar foto de perfil</Text>
             </TouchableOpacity>
-          :
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={handlePresentModalPress}
-            >
-              <Image source={{uri: image}} style={styles.profileImage} />
-            </TouchableOpacity>
-          }
-
-
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={handlePresentModalPress}
-          >
-            <Text style={styles.altText}>Alterar foto de perfil</Text>
-          </TouchableOpacity>
-        </View>
+          </View>
 
         <Text style={styles.label}>Nome</Text>
         <TextInput
           style={[styles.input, styles.inputHeight]}
           editable={false}
           value={nome}
+        />
+
+        <Text style={styles.label}>Descrição</Text>
+        <TextInput
+          style={[styles.input, styles.inputHeight2]}
+          multiline
+          numberOfLines={3}
+          maxLength={150}
+          onChangeText={(text) => {
+            setBio(text)
+            setSave(null)
+          }}
+          value={bio}
         />
 
         <Text style={styles.label}>Tipo</Text>
@@ -152,6 +184,20 @@ export default function EditPet(props, { navigation }) {
           value={tipo}
         />
 
+        <Text style={styles.label}>Gênero</Text>
+        <TextInput
+          style={[styles.input, styles.inputHeight]}
+          editable={false}
+          value={genero}
+        />
+
+        <Text style={styles.label}>Raça</Text>
+        <TextInput
+          style={[styles.input, styles.inputHeight]}
+          editable={false}
+          value={raca}
+        />
+
         <Text style={styles.label}>Data de nascimento</Text>
         <TextInput
           style={[styles.input, styles.inputHeight]}
@@ -159,15 +205,35 @@ export default function EditPet(props, { navigation }) {
           value={data}
         />
 
-        <Text style={styles.label}>Bio</Text>
-        <TextInput
-          style={[styles.input, styles.inputHeight2]}
-          multiline
-          numberOfLines={3}
-          maxLength={150}
-          onChangeText={(text) => setBio(text)}
-          value={bio}
+        <Text style={styles.label}>Adestrado(a)?*</Text>
+        <PetAdesRadio
+        selected={selectedAdes}
+        options={['Sim', 'Não']}
+        horizontal={true}
+        onChangeSelect={(opt, i)=> {
+          setAdestranmento(opt);
+          setSelectedAdes(i);
+          setSave(null);
+        }}
+        value={adestramento}
         />
+
+        <Text style={styles.label}>Castrado(a)?*</Text>
+        <PetCastRadio
+        selected={selectedCast}
+        options={['Sim', 'Não']}
+        horizontal={true}
+        onChangeSelect={(opt, i)=> {
+          setCastrado(opt);
+          setSelectedCast(i);
+          setSave(null);
+        }}
+        value={castrado}
+        />
+
+        { setSave && (
+          <Text style={styles.saveNtf}>As alterações foram salvas com sucesso</Text>
+        )}
 
 
         <View style={styles.horizontal}>
@@ -175,6 +241,7 @@ export default function EditPet(props, { navigation }) {
           <TouchableOpacity
             style={[styles.buttonSave, styles.cont, styles.row]}
             activeOpacity={0.8}
+            onPress={salvarAlt}
           >
             <Feather name="check" size={24} color={Colors.white} />
             <Text style={styles.textButtonSave}>Salvar</Text>
@@ -190,10 +257,12 @@ export default function EditPet(props, { navigation }) {
           </TouchableOpacity>
 
         </View>
+        <View style={{height:60}}/>
+        
 
       </ScrollView>
       </KeyboardAvoidingView>
-      </View>
+
 
       <BottomSheetModalProvider>
       <BottomSheetModal

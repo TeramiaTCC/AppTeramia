@@ -48,8 +48,7 @@ const styles = StyleSheet.create({
   },
   post: {
     backgroundColor: '#FFFDFA',
-    borderBottomWidth: 4,
-    borderBottomColor: Colors.brown
+
   },
   header: {
     paddingTop: 15,
