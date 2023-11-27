@@ -63,6 +63,8 @@ return (
 
     <View style={[styles.borderTopGray]}>
         <FlatList
+          ListFooterComponent={<View style={{height: 305}} />}
+          showsVerticalScrollIndicator={false}
           numColumns={3}
           horizontal={false}
           data={dataPosts}
@@ -75,6 +77,7 @@ return (
             <TouchableOpacity
               style={[styles.containerImage, styles.borderWhite]}
               activeOpacity={0.8}
+              onPress={navigation.navigate('Post')}
             >
               <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
             </TouchableOpacity>

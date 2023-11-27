@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   },
   post: {
     backgroundColor: '#FFFDFA',
-
   },
   header: {
     paddingTop: 15,

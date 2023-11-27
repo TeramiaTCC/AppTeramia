@@ -18,7 +18,7 @@ export default function Community({ navigation }) {
 
 
     <FlatList
-      ListFooterComponent={<View style={{height: 80}} />}
+      ListFooterComponent={<View style={{height: 75}} />}
       showsVerticalScrollIndicator={false}
       ListEmptyComponent={
         <View style={styles.advice}>

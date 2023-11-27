@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, getDoc, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, getDoc, getDocs, getFirestore, orderBy } from 'firebase/firestore';
 import app from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

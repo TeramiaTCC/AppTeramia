@@ -286,7 +286,7 @@ export default function NewPet({ navigation })  {
       })
     }
     
-    const snapPoints = useMemo( () => ["22%", "25%"], []);
+    const snapPoints = useMemo( () => ["25%", "27%"], []);
 
     const bottomSheetModalRef = useRef(null);
 
