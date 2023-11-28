@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity, View, Image, Animated } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import results from './results';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllPosts } from '../../redux/features/posts';
 
 export default function Community({ navigation }) {
+  const posts = useSelector((state) => state.posts.posts.postsArray);
+  //console.log('DataPosts: ',posts)
 
-  const listUsers = results
+  const listUsers = posts
 
   const scrollY = new Animated.Value(0)
 
@@ -17,6 +20,11 @@ export default function Community({ navigation }) {
     inputRange:[0, 45],
     outputRange:[0, 20]
   })
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchAllPosts());
+  }, [dispatch])
 
  return (
   <SafeAreaView style={styles.container}>
@@ -47,7 +55,7 @@ export default function Community({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => navigation.navigate('UserPrf', {
-                id: item.id,
+                id: item.userid,
                 nome: item.nome,
                 sobrenome: item.sobrenome,
                 avatar: item.avatar,
@@ -66,7 +74,7 @@ export default function Community({ navigation }) {
           </View>
     
           <View style={styles.imagepost} >
-            <Image source={{ uri : item.imagePost }} style={styles.imageSize} />
+            <Image source={{ uri : item.imagem }} style={styles.imageSize} />
           </View>
     
           <View style={styles.description}>
@@ -94,7 +102,7 @@ export default function Community({ navigation }) {
       <TouchableOpacity style= {styles.buttonNewPost}
         onPress={() => navigation.navigate('Camera')}
       >
-        <MaterialIcons name="post-add" size={24} color="#fff" />
+        <MaterialCommunityIcons name="camera-plus-outline" size={24} color="#fff" />
       </TouchableOpacity>
     </Animated.View>
 

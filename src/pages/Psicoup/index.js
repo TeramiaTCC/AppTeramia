@@ -221,7 +221,7 @@ export default function Psicoup({ navigation }) {
   }
 
 
-  const snapPoints = useMemo( () => ["22%", "25%"], []);
+  const snapPoints = useMemo( () => ["25%", "28%"], []);
 
   const bottomSheetModalRef = useRef(null);
 
@@ -256,6 +256,15 @@ export default function Psicoup({ navigation }) {
     ),
     []
   );
+
+  async function goBacks(){
+    navigation.reset({
+      index:0, 
+      routes: [{
+        name:"Signin"
+      }]
+    })
+  }
  
   return (
 <SafeAreaView
@@ -561,7 +570,7 @@ export default function Psicoup({ navigation }) {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.mdlButton}
-            onPress={navigation.navigate('Signin')}
+            onPress={goBacks}
           >
             <Text style={styles.btmText}>Ok</Text>
           </TouchableOpacity>

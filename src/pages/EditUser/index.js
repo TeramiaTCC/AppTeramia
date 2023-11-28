@@ -27,8 +27,8 @@ export default function EditUser({navigation, route}) {
 
   const db = getFirestore(app);
 
-  const snapPoints = useMemo( () => ["22%", "25%"], []);
-  const snapPoints2 = useMemo( () => ["25%", "28%"], []);
+  const snapPoints = useMemo( () => ["25%", "28%"], []);
+  const snapPoints2 = useMemo( () => ["28%", "31%"], []);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library

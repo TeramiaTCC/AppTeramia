@@ -46,7 +46,7 @@ export default function NewPost(props, { navigation }) {
 
     const taskCompleted = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          savePostData(downloadURL);
+          savePostData2(downloadURL);
           console.log('File available at', downloadURL);
         });
     }
@@ -86,6 +86,7 @@ export default function NewPost(props, { navigation }) {
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
     const db = getFirestore(app);
     const new_date = new Date();
+    uid = credentials.uid;
     dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
 
     const querry = collection(db, 'postagens');
@@ -93,7 +94,7 @@ export default function NewPost(props, { navigation }) {
       imagem: downloadURL,
       caption: legenda,
       date: dataFormatada,
-      uid: credentials.uid
+      userid: uid
     }, { merge: true })
     .then(async() => {
       props.navigation.goBack('Community');

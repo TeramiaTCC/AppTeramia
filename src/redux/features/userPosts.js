@@ -9,16 +9,23 @@ const db = getFirestore(app);
 //fecth posts
 export const fetchPosts = createAsyncThunk(
     'publicacoes/fetchPosts',
-    async ()=> {
-        const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+    async () => {
+        const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
+        const uid = credentials.uid;
+        const querySnapshot = await getDocs(collection(db, 'postagens'));
 
-        const querySnapshot = await getDocs(collection(db,'publicacoes', credentials.uid, 'userPosts'), orderBy('date', 'asc'));
-
-        const uPosts = querySnapshot.docs.map((doc) =>({
+        const uPosts = querySnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         }));
-        return uPosts;
+
+        // Filtro dos posts com base no userID
+        const filteredPosts = uPosts.filter(post => post.userid === uid);
+
+        // Ordenar posts por data (assumindo que 'data' é uma propriedade nos objetos de postagem)
+        const sortedPosts = filteredPosts.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+        return sortedPosts;
     }
 )
 

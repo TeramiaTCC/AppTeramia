@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Colors from '../../components/Colors/Colors';
 
@@ -8,23 +9,28 @@ import { FontAwesome, Feather, AntDesign, MaterialCommunityIcons } from '@expo/v
 import CachedImage from '../../components/CachedImage/CachedImage';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../redux/features/userPosts';
+import { fetchUser } from '../../redux/features/user';
 
 
 export default function User({ navigation }) {
 
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
-  //console.log('DataPosts: ',dataPosts)
+  //console.log('DataPostsUser: ',dataPosts)
 
   const dataUser = useSelector((state) => state.userData.userData.usuarioArray);
   //console.log('DataUser: ',dataUser)
 
-  const credentials = async ()=> {JSON.parse( await AsyncStorage.getItem("userId"))};
   const [crp] = useState('')
 
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(fetchPosts());
   }, [dispatch])
+
+  const dispatch2 = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchUser());
+  }, [dispatch2])
 
 
 return (

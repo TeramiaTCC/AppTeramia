@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { rootUserPosts, rootUserPets, rootUserData, rootUsersData } from './reducers';
+import { rootUserPosts, rootUserPets, rootUserData, rootUsersData, rootPosts } from './reducers';
 
 const store = configureStore({
     reducer: {
@@ -7,6 +7,7 @@ const store = configureStore({
         userPets: rootUserPets,
         userData: rootUserData,
         usersData: rootUsersData,
+        posts: rootPosts,
     },
 })
 
