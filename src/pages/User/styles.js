@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
   },
+  textCrp: {
+    fontWeight: '400',
+    color: Colors.white,
+    fontSize: 16,
+  },
   editButton: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,6 +95,10 @@ const styles = StyleSheet.create({
   ico: {
     marginRight: 5
   },
+  star: {
+    justifyContent: 'center',
+    alignSelf: 'center'
+  }
 });
 
 export default styles;

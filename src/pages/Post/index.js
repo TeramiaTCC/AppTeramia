@@ -19,11 +19,6 @@ export default function Post() {
     <FlatList
       ListFooterComponent={<View style={{}} />}
       showsVerticalScrollIndicator={false}
-      ListEmptyComponent={
-        <View style={styles.advice}>
-          <Text style={styles.adviceText}>Não foram encontrados posts.</Text>
-        </View>
-      }
       style={styles.list}
       refreshing={false}
       onRefresh={() => (

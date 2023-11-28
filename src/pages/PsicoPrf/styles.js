@@ -62,11 +62,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
   },
-  editButton: {
+  followButton: {
     justifyContent: 'center',
     alignItems: 'center',
     padding: 8,
     backgroundColor: Colors.brown,
+    borderRadius: 8,
+  },
+  unfollowButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8,
+    backgroundColor: Colors.brownAlpha2,
     borderRadius: 8,
   },
   textEdit: {
@@ -179,6 +186,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#F16520',
     position: 'absolute',
     bottom: 20,
+    right: 20,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+  },
+  buttonChat:{
+    width: 50,
+    height: 50,
+    backgroundColor: '#F16520',
+    position: 'absolute',
+    bottom: 80,
     right: 20,
     borderRadius: 30,
     justifyContent: 'center',

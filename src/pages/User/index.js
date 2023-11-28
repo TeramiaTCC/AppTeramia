@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
 
-import { connect, useSelector } from 'react-redux';
-
 import Colors from '../../components/Colors/Colors';
 
-import { FontAwesome, Feather } from '@expo/vector-icons';
+import { FontAwesome, Feather, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import CachedImage from '../../components/CachedImage/CachedImage';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPosts } from '../../redux/features/userPosts';
 
 
-export default function User({ navigation, props }) {
+export default function User({ navigation }) {
 
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
   //console.log('DataPosts: ',dataPosts)
+
+  const dataUser = useSelector((state) => state.userData.userData.usuarioArray);
+  //console.log('DataUser: ',dataUser)
+
+  const credentials = async ()=> {JSON.parse( await AsyncStorage.getItem("userId"))};
+  const [crp] = useState('')
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(fetchPosts());
+  }, [dispatch])
+
 
 return (
 
@@ -46,13 +58,25 @@ return (
 
       <View>
           <Text style={styles.textName}>Name</Text>
+          {crp && (
+            <Text style={styles.textCrp}>{crp}</Text>
+          )}
           <Text style={styles.textDesc}>Description</Text>
       </View>
 
       <View style={styles.horizontal}>
         <TouchableOpacity
           style={[styles.editButton, styles.container, styles.row]}
-          onPress={() => navigation.navigate('EditUser')}>
+          onPress={() => {
+            {!crp
+            ?
+            navigation.navigate('EditUser')
+            :
+            navigation.navigate('EditUserPsico')
+            }
+          }}
+          activeOpacity={0.8}
+        >
             <Feather name="edit" size={24} color={Colors.white} style={styles.ico}/>
             <Text style={styles.textEdit}>Editar perfil</Text>
         </TouchableOpacity>
@@ -63,7 +87,7 @@ return (
 
     <View style={[styles.borderTopGray]}>
         <FlatList
-          ListFooterComponent={<View style={{height: 305}} />}
+          ListFooterComponent={<View style={{height: 325}} />}
           showsVerticalScrollIndicator={false}
           numColumns={3}
           horizontal={false}
@@ -74,13 +98,14 @@ return (
             <View/>
           )}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[styles.containerImage, styles.borderWhite]}
-              activeOpacity={0.8}
-              onPress={navigation.navigate('Post')}
-            >
-              <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
-            </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.containerImage, styles.borderWhite]}
+            activeOpacity={0.8}
+            onPress={() => navigation.navigate('Post')}
+          >
+            <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
+          </TouchableOpacity>
         )}
 
       />

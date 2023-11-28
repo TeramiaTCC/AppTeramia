@@ -52,14 +52,15 @@ export default function Home({ navigation }) {
 
   ];
 
+
  return (
    <SafeAreaView style={styles.container}>
         <StatusBar barStyle={'default'}/>
 
         <View style={styles.containerContent}>
-          <View style={styles.boxPropaganda}>
-            <Text>Propaganda</Text>
-          </View>
+        <View style={styles.boxPropaganda}>
+          <Text>Propaganda</Text>
+        </View>
 
           <Text style={styles.title}>Atividades</Text>
 

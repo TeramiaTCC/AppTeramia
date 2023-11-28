@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity, View, Image } from 'react-native';
+import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity, View, Image, Animated } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
@@ -11,11 +11,16 @@ export default function Community({ navigation }) {
 
   const listUsers = results
 
+  const scrollY = new Animated.Value(0)
+
+  const translateY = scrollY.interpolate({
+    inputRange:[0, 45],
+    outputRange:[0, 20]
+  })
+
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar barStyle={'default'}/>
-
-
 
     <FlatList
       ListFooterComponent={<View style={{height: 75}} />}
@@ -32,6 +37,9 @@ export default function Community({ navigation }) {
       )}
       keyExtractor={(item) => item.id}
       data={listUsers}
+      onScroll={(e) => {
+        scrollY.setValue(e.nativeEvent.contentOffset.y)
+      }}
       renderItem={({item}) => {
         return (
           <View style={styles.post}>
@@ -76,11 +84,20 @@ export default function Community({ navigation }) {
       }}
     />
 
-    <TouchableOpacity style= {styles.buttonNewPost}
-      onPress={() => navigation.navigate('Camera')}
+    <Animated.View
+      style={{
+        transform:[
+          {translateY}
+        ]
+      }}
     >
-      <MaterialIcons name="post-add" size={24} color="#fff" />
-    </TouchableOpacity>
+      <TouchableOpacity style= {styles.buttonNewPost}
+        onPress={() => navigation.navigate('Camera')}
+      >
+        <MaterialIcons name="post-add" size={24} color="#fff" />
+      </TouchableOpacity>
+    </Animated.View>
+
 
 
    </SafeAreaView>

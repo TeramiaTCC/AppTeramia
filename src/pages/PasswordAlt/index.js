@@ -109,7 +109,7 @@ export default function PasswordAlt({ navigation }) {
             disabled={true}
             style={styles.buttonBusca}
           >
-              <Text style={styles.textButtonBusca}>ENTRAR</Text>
+              <Text style={styles.textButtonBusca}>SOLICITAR ALTERAÇÃ0</Text>
           </TouchableOpacity>
         :
           <TouchableOpacity
@@ -117,7 +117,7 @@ export default function PasswordAlt({ navigation }) {
             activeOpacity={0.8}
             onPress={VerificaEmail}
           >
-            <Text style={styles.textButtonBusca}>ENTRAR</Text>
+            <Text style={styles.textButtonBusca}>SOLICITAR ALTERAÇÃO</Text>
           </TouchableOpacity>
         }
 
@@ -136,7 +136,7 @@ export default function PasswordAlt({ navigation }) {
       >
         <View style={styles.margin}>
 
-          <Text style={styles.titleModal}>Email de recuperação</Text>
+          <Text style={styles.titleModal}>Email de Alteração</Text>
 
           <Text style={styles.textModal}>email enviado para: {email}</Text>
 

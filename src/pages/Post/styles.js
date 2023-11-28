@@ -34,8 +34,7 @@ const styles = StyleSheet.create({
   },
   imageSize: {
     aspectRatio: 1,
-    borderWidth: 4,
-    borderColor: Colors.orange,
+    borderRadius: 15
   },
   horizontal: {
     flexDirection: 'row',
@@ -47,8 +46,7 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   post: {
-    backgroundColor: '#FFFDFA',
-
+    backgroundColor: Colors.whiteGold,
   },
   header: {
     paddingTop: 15,
@@ -56,6 +54,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     backgroundColor: Colors.brown
+  },
+  imagepost:{
+    padding: 10,
+    borderBottomWidth: 2,
+    borderColor: Colors.brown
   },
   description: {
     paddingTop: 15,

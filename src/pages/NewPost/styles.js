@@ -5,11 +5,6 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#FFFDFA',
-      paddingTop: Platform.OS === 'ios' ? 0 : 25,
-    },
-    cameraContainer: {
-      flexDirection: 'row',
-      backgroundColor: '#000',
     },
     fixedRatio: {
       flex: 1,
@@ -97,59 +92,27 @@ const styles = StyleSheet.create({
       send: {
         backgroundColor: Colors.backColor,
         padding: 15,
-        borderRadius: 25,
+        borderRadius: 15,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
         elevation: 5,
         marginTop: 25
       },
-      marginTop: {
-        marginTop: 25,
-      },
-      textHeader: {
-        color: Colors.white,
-        fontWeight: 'bold',
-        fontSize: 20,
-        marginLeft: 8
-      },
-      mdlButton: {
-        backgroundColor: Colors.brown,
-        padding: 15,
-        borderRadius: 15,
-        justifyContent: 'center',
-        alignContent: 'center',
-        marginTop: 10,
-        marginBottom: 10,
-        elevation: 5
-      },
-      btmText: {
-        color: Colors.white,
-        textAlign: 'center',
-        fontWeight: '700',
-        fontSize: 15,
-        paddingLeft: 5
-      },
-      titleModal: {
-        color: Colors.white,
-        textAlign: 'center',
-        fontWeight: 'bold',
-        fontSize: 18,
-        paddingBottom: 5
-      },
-      textModal:{
-        color: Colors.white,
-        textAlign: 'center',
-        fontWeight: '300',
-        fontSize: 15,
-        paddingBottom: 5
-      },
       saveText: {
         color: Colors.white,
         marginRight: 10,
         fontWeight: 'bold',
         fontSize: 18
-      }
+      },
+
+      viewImage: {
+        justifyContent: 'center',
+        alignContent: 'center',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        paddingBottom: 40,
+    },
   });
 
   export default styles;

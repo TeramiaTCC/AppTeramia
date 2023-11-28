@@ -12,7 +12,7 @@ export const fetchPosts = createAsyncThunk(
     async ()=> {
         const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
 
-        const querySnapshot = await getDocs(collection(db,'publicacoes', credentials.uid, 'userPosts'));
+        const querySnapshot = await getDocs(collection(db,'publicacoes', credentials.uid, 'userPosts'), orderBy('date', 'asc'));
 
         const uPosts = querySnapshot.docs.map((doc) =>({
             id: doc.id,

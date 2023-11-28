@@ -20,6 +20,12 @@ export default function PetDetails(props, { navigation }) {
   const genero = props.route.params.genero;
   const data = props.route.params.data;
 
+  React.useEffect(() => {
+    props.navigation.setOptions({
+      title: nome === '' ? 'No title' : nome,
+    });
+  }, [navigation, nome]);
+
   const Dicas = [
     { name: 'Alimentação balanceada', description: 'Uma alimentação cuidadosamente planejada, adaptada às especificidades de idade, raça e condição de saúde do seu pet, não apenas promove a saúde física, mas também contribui para uma vida mais longa e vibrante. Consultar regularmente um veterinário para ajustes na dieta garante que as necessidades nutricionais em constante mudança do seu animal sejam atendidas.' },
 
@@ -96,7 +102,6 @@ export default function PetDetails(props, { navigation }) {
       </View>
 
       <View>
-          <Text style={styles.textName}>{nome}</Text>
           <Text style={styles.textDesc}>{desc}</Text>
       </View>
 

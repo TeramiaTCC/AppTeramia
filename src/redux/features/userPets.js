@@ -18,7 +18,7 @@ export const fetchPets = createAsyncThunk(
             id: doc.id,
             ...doc.data(),
         }));
-        return uPets;
+        return uPets.sort((a, b) => a.nome.localeCompare(b.nome));
     }
 )
 

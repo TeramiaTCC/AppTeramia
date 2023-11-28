@@ -561,7 +561,7 @@ export default function Psicoup({ navigation }) {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.mdlButton}
-            onPress={() => navigation.navigate("Signin")}
+            onPress={navigation.navigate('Signin')}
           >
             <Text style={styles.btmText}>Ok</Text>
           </TouchableOpacity>

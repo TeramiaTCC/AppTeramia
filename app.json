@@ -32,5 +32,9 @@
         "projectId": "284b92b0-c84b-4f23-91d3-85094d62e2a2"
       }
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-7750224798416325~3764481036",
+    "ios_app_id": "ca-app-pub-7750224798416325~3764481036"
   }
 }

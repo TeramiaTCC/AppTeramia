@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { Button, Text, TouchableOpacity, View, Image, Modal, TextInput, SafeAreaView, TouchableHighlight, StatusBar, KeyboardAvoidingView } from 'react-native';
+import { Button, Text, TouchableOpacity, View, Image, Modal, TextInput, SafeAreaView, TouchableHighlight, StatusBar, KeyboardAvoidingView, Animated, Keyboard } from 'react-native';
 
 import styles from './styles';
 
@@ -82,33 +82,104 @@ export default function NewPost(props, { navigation }) {
     
   }
 
+  async function savePostData2 (downloadURL)  {
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+    const db = getFirestore(app);
+    const new_date = new Date();
+    dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
+
+    const querry = collection(db, 'postagens');
+    await addDoc(querry, {        
+      imagem: downloadURL,
+      caption: legenda,
+      date: dataFormatada,
+      uid: credentials.uid
+    }, { merge: true })
+    .then(async() => {
+      props.navigation.goBack('Community');
+      console.log('foi pro firestore')
+  });
+    
+  }
+
+
+  const [logo] = useState(new Animated.ValueXY({x: 370, y: 370}));
+
+
+
+  useEffect(() => {
+    keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide);
+  });
+
+
+
+  function keyboardDidShow(){
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 250,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 250,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
+  function keyboardDidHide(){
+    Animated.parallel([
+      Animated.timing(logo.x, {
+        toValue: 370,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+      Animated.timing(logo.y, {
+        toValue: 370,
+        duration: 100,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
     return (
       <SafeAreaView style={styles.container}>
+      <StatusBar barStyle={'default'}/>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={100}
+          style={{flex: 1,paddingTop: Platform.OS === 'ios' ? 0 : 25,}}
+        >
 
-            <View style={styles.margin}> 
-              <Image source={{uri: image}} style={[styles.imageSize]}/>
+          <View style={styles.margin}>
 
-
+            <View style={styles.viewImage}>
+            <Animated.Image  style={[
+                styles.imageSize, {
+                  height: logo.x, 
+                  width: logo.y,
+              }
+              ]} 
+              source={{uri: image}}/>
+            </View>
+            
             <View style={styles.row}>
-            <KeyboardAvoidingView
-              keyboardVerticalOffset={90}
-              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={[styles.margin, styles.row, styles.marginTop]}
-            >
-                <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Adicione uma legenda..."
-                  placeholderTextColor={Colors.brownAlpha2}
-                  multiline
-                  maxLength={50}
-                  numberOfLines={3}
-                  onChangeText={(text) => setLegenda(text)}
-                  value={legenda}
-                />
-            </KeyboardAvoidingView>
+
+            <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
+            <TextInput
+              style={styles.input}
+              placeholder="Adicione uma legenda..."
+              placeholderTextColor={Colors.brownAlpha2}
+              multiline
+              maxLength={50}
+              numberOfLines={3}
+              onChangeText={(text) => setLegenda(text)}
+              value={legenda}
+            />
 
             </View>
+
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.send}
@@ -119,7 +190,12 @@ export default function NewPost(props, { navigation }) {
                 <Ionicons name="send" size={18} color={Colors.white} />
               </View>
             </TouchableOpacity>
-            </View>
+
+
+          </View>
+
+        </KeyboardAvoidingView>
+
       </SafeAreaView>
     );
 }

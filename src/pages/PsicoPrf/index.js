@@ -20,18 +20,19 @@ export default function PsicoPrf(props, { navigation }) {
   const desc = props.route.params.desc;
   const image = props.route.params.foto;
 
+  const [follow, setFollow] = useState(null);
 
+  React.useEffect(() => {
+    props.navigation.setOptions({
+      title: nome === '' ? 'No title' : nome,
+    });
+  }, [navigation, nome]);
 
 return (
 
     <SafeAreaView style={styles.prmryContainer}>
 
     <StatusBar barStyle={'default'}/>
-    <TouchableOpacity style= {styles.buttonAddComent}
-      onPress={() => navigation.navigate('AddComent')}
-    >
-      <MaterialIcons name="post-add" size={24} color="#fff" />
-    </TouchableOpacity>
 
       <View style={styles.profileInfo}>
         <View style={styles.row}>
@@ -45,9 +46,33 @@ return (
       </View>
 
       <View>
-          <Text style={styles.textName}>{nome}</Text>
           <Text style={styles.textCRP}>{crp}</Text>
       </View>
+
+      <View style={styles.horizontal}>
+        { follow === true
+        ?
+          <TouchableOpacity
+            style={[styles.unfollowButton, styles.container, styles.row]}
+            onPress={()=>setFollow(false)}
+            activeOpacity={0.8}
+          >
+            <Feather name="user-minus" size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textEdit}>Deixar de seguir</Text>
+          </TouchableOpacity>
+        :
+          <TouchableOpacity
+            style={[styles.followButton, styles.container, styles.row]}
+            onPress={()=>setFollow(true)}
+            activeOpacity={0.8}
+          >
+              <Feather name="user-plus" size={24} color={Colors.white} style={styles.ico}/>
+              <Text style={styles.textEdit}>Seguir</Text>
+          </TouchableOpacity>
+        }
+
+      </View>
+
 
     </View>
 
@@ -65,7 +90,7 @@ return (
    
     <View style={[styles.row, styles.margin, styles.borderBottom]}>
         <FontAwesome name="comment" size={25} color={Colors.orange} />
-        <Text style={styles.comentTitle} >Comentários</Text>
+        <Text style={styles.comentTitle}>Comentários</Text>
     </View>
 
 
@@ -104,6 +129,26 @@ return (
         );
       }}
     />
+
+    {follow && (
+      <TouchableOpacity
+        style= {styles.buttonChat}
+        onPress={() => props.navigation.navigate('Chat', {nome: nome})}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="chatbubble-ellipses-outline"  size={24} color="#fff" />
+      </TouchableOpacity>
+    )}
+
+
+    
+    <TouchableOpacity
+      style= {styles.buttonAddComent}
+      onPress={() => props.navigation.navigate('AddComent')}
+      activeOpacity={0.8}
+    >
+      <MaterialIcons name='post-add' size={24} color="#fff" />
+    </TouchableOpacity>
 
     </SafeAreaView >
    
