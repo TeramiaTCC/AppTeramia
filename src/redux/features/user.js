@@ -1,38 +1,43 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { collection, doc, getDoc, getDocs, getFirestore } from 'firebase/firestore';
+import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import app from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const db = getFirestore(app);
 
-//fecth posts
-export const fetchUser = createAsyncThunk(
-    'usuario/fetchUser',
-    async ()=> {
-        const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+// fetch user
+export const fetchUser = createAsyncThunk('usuario/fetchUser', async () => {
+  try {
+    const credentials = JSON.parse(await AsyncStorage.getItem('userId'));
 
-        const querySnapshot = await getDoc(doc(db,'usuario', credentials.uid));
+    const docRef = doc(db, 'usuario', credentials.uid);
+    const docSnap = await getDoc(docRef);
 
-        const uData = querySnapshot.docs.map((doc) =>({
-            id: doc.id,
-            ...doc.data(),
-        }));
-        return uData;
+    if (docSnap.exists()) {
+      return {
+        id: docSnap.id,
+        ...docSnap.data(),
+      };
+    } else {
+      console.log('No such document!');
+      return null; // You may want to handle the case where the document doesn't exist
     }
-)
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw error;
+  }
+});
 
 const userDataSlice = createSlice({
-    name: 'usuario',
-    initialState: {
-        usuarioArray: [],
-    },
-    extraReducers: (builder) => {
-        builder
-        .addCase(fetchUser.fulfilled, (state, action) => {
-            state.usuarioArray = action.payload;
-        })
-    }
-})
+  name: 'usuario',
+  initialState: {
+    usuarioData: null,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUser.fulfilled, (state, action) => {
+      state.usuarioData = action.payload;
+    });
+  },
+});
 
 export default userDataSlice.reducer;

@@ -15,10 +15,16 @@ export default function Pett({ navigation }) {
   //console.log('Data: ',dataPets)
 
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchPets());
-  }, [dispatch])
 
+  // Periodically fetch posts every 5 minutes (adjust the interval as needed)
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPets());
+    }, 15000); // 15 seconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
 
   return (
   <SafeAreaView style={styles.prmyContainer}>

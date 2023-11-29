@@ -6,10 +6,14 @@ import Colors from '../../components/Colors/Colors';
 import { MaterialIcons, FontAwesome, Entypo } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
-export default function Post() {
+export default function Post(props) {
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
   //console.log('DataPosts: ',dataPosts)
 
+  //console.log(props.route.params)
+
+  const nome = props.route.params.nome;
+  const sobrenome = props.route.params.sobrenome;
 
 
  return (
@@ -39,7 +43,7 @@ export default function Post() {
                   :
                   <FontAwesome style={styles.profileImage} name="user-circle-o" size={30} color={Colors.orange} />
                 }
-                <Text style={styles.name}>Nome Sobrenome</Text>
+                <Text style={styles.name}>{nome} {sobrenome}</Text>
                 <TouchableOpacity
                   activeOpacity={0.8}
                   style={{justifyContent: 'flex-end'}}
@@ -56,7 +60,7 @@ export default function Post() {
           <View style={styles.description}>
             { item.caption && (
               <View style={styles.horizontal}>
-                <Text style={styles.descText}><Text style={styles.descTextName}>Nome:</Text> {item.caption}</Text>
+                <Text style={styles.descText}><Text style={styles.descTextName}>{nome}:</Text> {item.caption}</Text>
               </View>
             )}
           </View>

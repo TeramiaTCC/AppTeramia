@@ -7,7 +7,40 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 
+import { useDispatch } from 'react-redux';
+import { fetchPosts } from '../../redux/features/userPosts';
+import { fetchUser } from '../../redux/features/user';
+import { fetchPets } from '../../redux/features/userPets';
+
 export default function Home({ navigation }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPosts());
+    }, 10000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUser());
+    }, 10000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPets());
+    }, 10000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
 
   const Atividades = [
     { name: 'Passeio no Parque', description: 'Levar seu pet para um passeio no parque é uma excelente maneira de proporcionar estimulação sensorial. Seu pet terá a oportunidade de explorar novos ambientes, interagir com outros animais e desfrutar do ar livre. Esse tempo de qualidade ajuda a manter a saúde física e mental do seu companheiro peludo, fortalecendo o vínculo entre vocês.', time: '30 minutos a 1 hora', image: '', },

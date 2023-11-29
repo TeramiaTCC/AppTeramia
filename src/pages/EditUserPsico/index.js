@@ -15,16 +15,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import app from "../../config/firebaseconfig"
 
 
-export default function EditUserPsico({navigation, route}) {
+export default function EditUserPsico(props, {navigation, route}) {
+
+  //console.log(props.route.params)
 
   const [image, setImage] = useState('');
 
-  const [nome] = useState('Nome*')
-  const [sobrenome] = useState('Sobrenome*')
-  const [data] = useState('00/00/0000*')
-  const [crp, setCrp] = useState('00/00000*')
-  const [telefone, setTelefone] = useState('11912345678');
-  const [bio, setBio] = useState('');
+  const uid = props.route.params.id;
+  console.log(uid)
+
+  const [nome] = useState(props.route.params.nome)
+  const [sobrenome] = useState(props.route.params.sobrenome)
+  const [crp, setCrp] = useState(props.route.params.crp)
+  const [data] = useState(props.route.params.data)
+  const [telefone, setTelefone] = useState(props.route.params.cell);
+  const [bio, setBio] = useState(props.route.params.bio);
 
   const db = getFirestore(app);
 
@@ -117,7 +122,7 @@ export default function EditUserPsico({navigation, route}) {
 
   async function exit(){
     await AsyncStorage.clear();
-    navigation.reset({
+    props.navigation.reset({
       index:0, 
       routes: [{
         name:"Signin"

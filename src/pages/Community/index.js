@@ -20,12 +20,17 @@ export default function Community({ navigation }) {
     inputRange:[0, 45],
     outputRange:[0, 20]
   })
-
+  
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchAllPosts());
-  }, [dispatch])
 
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchAllPosts());
+    }, 5000); // 5 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar barStyle={'default'}/>

@@ -17,20 +17,32 @@ export default function User({ navigation }) {
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
   //console.log('DataPostsUser: ',dataPosts)
 
-  const dataUser = useSelector((state) => state.userData.userData.usuarioArray);
+  const dataUser = useSelector((state) => state.userData.userData.usuarioData);
   //console.log('DataUser: ',dataUser)
 
-  const [crp] = useState('')
+  const [crp] = useState(dataUser.crp)
+  const [bio] = useState(dataUser.bio)
 
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchPosts());
-  }, [dispatch])
 
-  const dispatch2 = useDispatch();
-  useEffect(()=>{
-    dispatch(fetchUser());
-  }, [dispatch2])
+  // Periodically fetch posts every 5 minutes (adjust the interval as needed)
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPosts());
+    }, 15000); // 30 seconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUser());
+    }, 15000); // 15 seconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
 
 
 return (
@@ -63,11 +75,16 @@ return (
       </View>
 
       <View>
-          <Text style={styles.textName}>Name</Text>
+          <Text style={styles.textName}>{dataUser.nome} {dataUser.sobrenome}</Text>
           {crp && (
-            <Text style={styles.textCrp}>{crp}</Text>
+            <Text style={styles.textCrp}>{dataUser.crp}</Text>
           )}
-          <Text style={styles.textDesc}>Description</Text>
+          {bio 
+          ?
+            <Text style={styles.textDesc}>{bio}</Text>
+          :
+            <View style={{height: 10}} />
+          }
       </View>
 
       <View style={styles.horizontal}>
@@ -76,9 +93,28 @@ return (
           onPress={() => {
             {!crp
             ?
-            navigation.navigate('EditUser')
+            navigation.navigate('EditUser', {
+              id: dataUser.id,
+              cell: dataUser.cell,
+              data: dataUser.datanascimento,
+              genero: dataUser.genero,
+              nome: dataUser.nome,
+              sobrenome: dataUser.sobrenome,
+              imagem: dataUser.Imagem,
+              bio: dataUser.bio,
+              })
             :
-            navigation.navigate('EditUserPsico')
+            navigation.navigate('EditUserPsico', {
+              id: dataUser.id,
+              cell: dataUser.cell,
+              data: dataUser.datanascimento,
+              genero: dataUser.genero,
+              nome: dataUser.nome,
+              sobrenome: dataUser.sobrenome,
+              imagem: dataUser.Imagem,
+              bio: dataUser.bio,
+              crp: dataUser.crp
+              })
             }
           }}
           activeOpacity={0.8}
@@ -108,7 +144,11 @@ return (
           <TouchableOpacity
             style={[styles.containerImage, styles.borderWhite]}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Post')}
+            onPress={() => navigation.navigate('Post', {
+              nome: dataUser.nome,
+              sobrenome: dataUser.sobrenome,
+              imagem: dataUser.Imagem,
+            })}
           >
             <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
           </TouchableOpacity>
