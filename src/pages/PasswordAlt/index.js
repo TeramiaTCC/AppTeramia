@@ -6,6 +6,7 @@ import Colors from '../../components/Colors/Colors';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, useBottomSheetModal } from '@gorhom/bottom-sheet'
 
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';  
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
 

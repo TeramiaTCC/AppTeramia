@@ -5,10 +5,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFDFA',
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
+
   },
   containerContent: {
-    flex: 1,
     marginLeft: 10,
     marginRight: 10,
   },
@@ -25,15 +24,22 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.orange,
     fontWeight: 'bold',
-    fontSize: 25,
+    fontSize: 22,
     borderBottomWidth: 2,
     borderColor: Colors.brown,
     marginBottom: 10,
     paddingBottom: 5,
   },
+  sub: {
+    color: Colors.brown,
+    fontWeight: '700',
+    fontSize: 20,
+  },
   desc: {
     color: Colors.brown,
-    textAlign: 'justify'
+    textAlign: 'justify',
+    fontSize: 17,
+    fontWeight: 'normal'
   },
   imageStyle:{
     width: 390,
@@ -62,7 +68,7 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   time: {
-    color: Colors.brown,
+    color: Colors.brownAlpha2,
     textAlign: 'right',
     fontWeight: '400',
     paddingLeft: 5
@@ -72,7 +78,8 @@ const styles = StyleSheet.create({
     padding: 25,
     borderRadius: 15,
     color: Colors.white,
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 20,
   },
 });
 

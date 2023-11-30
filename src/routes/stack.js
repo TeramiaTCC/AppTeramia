@@ -45,7 +45,7 @@ const StackR = [
   { route: 'Camera', hdrOpt: false, component: CameraP, },
   {route: 'Activity', title: 'Atividades', type: Icons.Feather, icon: 'arrow-left-circle', component: Activity, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'Psicologo', title: 'Psicólogo', type: Icons.Feather, icon: 'arrow-left-circle', component: PsicoPrf, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
-  {route: 'AddComent', title: 'Adicionar Comentário', type: Icons.Feather, icon: 'arrow-left-circle', component: CommentPage, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
+  {route: 'AddComent', title: 'Adicionar Avaliação', type: Icons.Feather, icon: 'arrow-left-circle', component: CommentPage, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20 },
   {route: 'Post', title: 'Meus Posts', type: Icons.Feather, icon: 'arrow-left-circle', component: Post, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20  },
   {route: 'Chat', title: 'Chat', type: Icons.Feather, icon: 'arrow-left-circle', component: Chat, color: Colors.white, bckgClr: Colors.backColor, mrgRgt: -20  }
 ];

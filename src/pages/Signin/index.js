@@ -143,6 +143,11 @@ export default function Login ({ navigation }) {
       }
     }
 
+    function goPass() {
+      if (validarEmail()){
+        navigation.navigate('Password', {email: email})
+      }
+    }
   
 
   const [logo] = useState(new Animated.ValueXY({x: 250, y: 250}));
@@ -258,7 +263,7 @@ export default function Login ({ navigation }) {
 
         <Text
           style={styles.linkForget}
-          onPress={() => navigation.navigate('Password')}
+          onPress={() => goPass()}
         >
           Esqueci minha senha
         </Text>

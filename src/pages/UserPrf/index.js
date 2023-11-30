@@ -1,21 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, Image } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
 import { FontAwesome, Feather } from '@expo/vector-icons';
-import CachedImage from '../../components/CachedImage/CachedImage';
+
+import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
+import app from '../../config/firebaseconfig';
 
 
 export default function UserPrf(props, { navigation }) {
-  //console.log(props)
+  //console.log(props.route.params)
   const [userPosts, setUserPosts] = useState([]);
 
+  const id = props.route.params.id
   const nome = props.route.params.nome;
   const sobrenome = props.route.params.sobrenome;
   const avatar = props.route.params.avatar;
-  const desc = props.route.params.desc;
+  const bio =  props.route.params.bio;
+  const crp = props.route.params.crp;
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      title: nome === '' || sobrenome === '' ? 'No title' : nome + ' ' + sobrenome,
+    });
+  }, [navigation, nome]);
+
+  const db = getFirestore(app);
+  const postagensRef = collection(db, 'postagens');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(postagensRef, where('userid', '==', id));
+      const querySnapshot = await getDocs(q);
+
+      const postsData = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        postsData.push({
+          id: doc.id,
+          ...data // replace with your actual field name
+        });
+      });
+
+      setUserPosts(postsData);
+    };
+
+    fetchData();
+  }, [id]);
 
 return (
 
@@ -51,14 +84,15 @@ return (
       <View style={{height: 10}} />
       <View>
           <Text style={styles.textName}>{nome} {sobrenome}</Text>
-
-          {desc
+          {crp && (
+            <Text style={styles.textCrp}>{crp}</Text>
+          )}
+          {bio 
           ?
-          <Text style={styles.textDesc}>{desc}</Text>
+            <Text style={styles.textDesc}>{bio}</Text>
           :
-          <Text />
+            <View style={{height: 10}} />
           }
-          
       </View>
 
     </View>
@@ -67,32 +101,31 @@ return (
 
     <View style={[styles.borderTopGray]}>
         <FlatList
+          ListFooterComponent={<View style={{height: 325}} />}
+          showsVerticalScrollIndicator={false}
           numColumns={3}
           horizontal={false}
           data={userPosts}
           style={{}}
+          keyExtractor={(item) => item.id}
+          refreshing={false}
+          onRefresh={() => (
+            <View/>
+          )}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={[styles.containerImage, styles.borderWhite]}
-              onPress={() => props.navigation.navigate("Post", { //item, user 
-              })}>
-                {item.type == 0 ?
 
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURLStill 
-                    }}
-                  />
-                :
-                  <CachedImage
-                    cacheKey={''}
-                    style={container.image}
-                    source={{ //uri: item.downloadURL
-                     }}
-                  />
-                }
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.containerImage, styles.borderWhite]}
+            activeOpacity={0.8}
+            onPress={() => props.navigation.navigate('Post', {
+              nome: item.nome,
+              sobrenome: item.sobrenome,
+              uid: item.userid,
+              pfp: item.pfp
+            })}
+          >
+            <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />
+          </TouchableOpacity>
         )}
 
       />

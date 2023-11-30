@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, Image } from 'react-native';
 import styles from './styles';
 
@@ -15,16 +15,18 @@ export default function PsicoPrf(props, { navigation }) {
 
   const [userPosts, setUserPosts] = useState([]);
 
+  const uid = props.route.params.id;
   const nome = props.route.params.nome;
+  const sobrenome = props.route.params.sobrenome;
   const crp = props.route.params.crp;
   const desc = props.route.params.desc;
   const image = props.route.params.foto;
 
   const [follow, setFollow] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.navigation.setOptions({
-      title: nome === '' ? 'No title' : nome,
+      title: nome === '' || sobrenome === '' ? 'No title' : nome + ' ' + sobrenome,
     });
   }, [navigation, nome]);
 
@@ -133,7 +135,11 @@ return (
     {follow && (
       <TouchableOpacity
         style= {styles.buttonChat}
-        onPress={() => props.navigation.navigate('Chat', {nome: nome})}
+        onPress={() => props.navigation.navigate('Chat', {
+          nome: nome,
+          sobrenome: sobrenome,
+          uid: uid
+        })}
         activeOpacity={0.8}
       >
         <Ionicons name="chatbubble-ellipses-outline"  size={24} color="#fff" />
@@ -144,7 +150,13 @@ return (
     
     <TouchableOpacity
       style= {styles.buttonAddComent}
-      onPress={() => props.navigation.navigate('AddComent')}
+      onPress={() => props.navigation.navigate('AddComent', {
+        nome: nome,
+        sobrenome: sobrenome,
+        uid: uid,
+        foto: image,
+        crp: crp
+      })}
       activeOpacity={0.8}
     >
       <MaterialIcons name='post-add' size={24} color="#fff" />

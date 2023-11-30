@@ -5,7 +5,7 @@ import { View } from 'react-native';
 
 export default function Chat(props, {navigation}) {
     console.log(props.route.params)
-    const value = props.route.params.nome
+    const value = props.route.params.nome + ' ' + props.route.params.sobrenome
 
     useEffect(() => {
         props.navigation.setOptions({

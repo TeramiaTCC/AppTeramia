@@ -8,22 +8,33 @@ import { CommonActions } from '@react-navigation/native';
 import results from './results';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../../redux/features/userPosts';
+import { fetchUsers } from '../../redux/features/usersData';
 
 export default function Club({ navigation, route }) {
   const [searchText, setSearchText] = useState('');
-  const [list, setList] = useState(results);
+  const [list, setList] = useState(dataUsers);
 
-  const dataPosts = useSelector((state) => state.usersData.usersData);
-  console.log('DataPosts: ',dataPosts)
+  const dataUsers = useSelector((state) => state.usersData.usersData.usuariosArray);
+  //console.log('UsersData: ',dataUsers)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUsers());
+    }, 5 * 60 * 1000); // 5 miliseconds interval
+
+     //Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
 
   useEffect(() => {
     if (searchText === '') {
-      setList(results);
+      setList(dataUsers);
     } else {
          
       setList(
-        results.filter((item) => item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1),
+        dataUsers.filter((item) => item.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1),
       );
       
     } 
@@ -43,9 +54,10 @@ export default function Club({ navigation, route }) {
           />
         </View>
         
+
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={list}
+          data={dataUsers}
           style={styles.list}
           ListFooterComponent={<View style={{height: 80}} />}
           ListEmptyComponent={
@@ -61,23 +73,24 @@ export default function Club({ navigation, route }) {
                 style={styles.item}
                   onPress={() => navigation.navigate('Psicologo', {
                     id: item.id,
-                    nome: item.name,
+                    nome: item.nome,
+                    sobrenome: item.sobrenome,
                     crp: item.crp,
-                    desc: item.desc,
-                    foto: item.avatar
+                    desc: item.bio,
+                    foto: item.imagem
                   })
               }
               >
 
-                { item.avatar 
+                { item.imagem 
                 ?
-                  <Image source={{ uri: item.avatar }} style={styles.itemPhoto} />
+                  <Image source={{ uri: item.imagem }} style={styles.itemPhoto} />
                 :
                   <FontAwesome name="user-circle-o" size={100} color={Colors.orange} style={styles.itemPhoto}/>
                 }
 
                 <View style={styles.itemInfo}>
-                  <Text style={styles.itemP1}>{item.name}</Text>
+                  <Text style={styles.itemP1}>{item.nome} {item.sobrenome}</Text>
                   <Text style={styles.itemP2}>CRP: {item.crp}</Text>
                 </View>
               </TouchableOpacity>

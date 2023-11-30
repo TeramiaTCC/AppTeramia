@@ -285,6 +285,32 @@ export default function NewPet({ navigation })  {
           
       })
     }
+
+    async function addPetData2(){
+
+      //const PetId = uuid.v4()
+     
+       const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+ 
+       await addDoc(collection(db, "pet", credentials.uid, 'userPets'), {
+         nome: nome,
+         description: bio,
+         tipo: tipo,
+         raca: raca,
+         adestramento: adestramento,
+         castramento: castrado,
+         genero: genero,
+         datanascimento: dataNascimento,
+         imagem: '',
+       }).then(() => {
+         handlePresentPress()
+         
+       }).catch(async(error) => {
+         console.log(error)
+         await deleteDoc(doc(db, "pet", credentials.uid))
+           
+       })
+     }
     
     const snapPoints = useMemo( () => ["25%", "27%"], []);
 
@@ -528,7 +554,14 @@ export default function NewPet({ navigation })  {
         <TouchableOpacity
           activeOpacity={0.8}
           style={[styles.Button, styles.row]}
-          onPress={uploadImage}
+          onPress={() =>{
+            { !image
+            ?
+              addPetData2()
+            :
+              uploadImage()
+            }
+          }}
         >
             <Feather name="check" size={20} color={Colors.white}/>
             <Text style={styles.btmText}> Cadastrar TeraPet</Text>

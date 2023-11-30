@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect, } from 'react';
 import { Button, Text, TouchableOpacity, View, Image, Modal, TextInput, SafeAreaView, TouchableHighlight, StatusBar, KeyboardAvoidingView, Animated, Keyboard } from 'react-native';
 
 import styles from './styles';
@@ -9,8 +9,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import app from '../../config/firebaseconfig';
 import { getAuth, snapshot } from "firebase/auth";
-import { getFirestore, doc, setDoc, addDoc, Firestore, collection, Timestamp, serverTimestamp, FieldValue } from "firebase/firestore";
+import { getFirestore, doc, setDoc, addDoc, Firestore, collection, Timestamp, serverTimestamp, FieldValue, getDoc, } from "firebase/firestore";
 import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '../../redux/features/user';
 
 import Colors from '../../components/Colors/Colors';
 
@@ -19,8 +22,31 @@ export default function NewPost(props, { navigation }) {
 
   const image = props.route.params.image;
 
-
   const [legenda, setLegenda]=useState("")
+
+  const dataUser = useSelector((state) => state.userData.userData.usuarioData);
+  console.log('DataUser: ',dataUser)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchUser());
+  }, [dispatch]);
+
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => { uploadImage() }} 
+            activeOpacity={0.4}
+            style={{}}
+          >
+            <Ionicons style={{ padding: 20 }} name="send" size={17.7} color={Colors.white} />
+          </TouchableOpacity>
+
+        ),
+    });
+  }, [legenda]);
 
   const uploadImage = async () => {
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
@@ -46,7 +72,7 @@ export default function NewPost(props, { navigation }) {
 
     const taskCompleted = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          savePostData2(downloadURL);
+          savePostData(downloadURL);
           console.log('File available at', downloadURL);
         });
     }
@@ -60,41 +86,31 @@ export default function NewPost(props, { navigation }) {
   
   }
 
- 
-
   async function savePostData (downloadURL)  {
     const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
     const db = getFirestore(app);
     const new_date = new Date();
-    dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
-
-    const querry = collection(db, 'publicacoes', credentials.uid, 'userPosts');
-    await addDoc(querry, {        
-      imagem: downloadURL,
-      caption: legenda,
-      date: dataFormatada
-
-    }, { merge: true })
-    .then(async() => {
-      props.navigation.goBack();
-      console.log('foi pro firestore')
-  });
-    
-  }
-
-  async function savePostData2 (downloadURL)  {
-    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
-    const db = getFirestore(app);
-    const new_date = new Date();
     uid = credentials.uid;
-    dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
+  
+    const uNome = dataUser.nome;
+    const uSobrenome = dataUser.sobrenome;
+    const uPfp = dataUser.imagem;
+    const uBio = dataUser.bio;
+    const uCrp = dataUser.crp;
 
+    dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
+  
     const querry = collection(db, 'postagens');
     await addDoc(querry, {        
       imagem: downloadURL,
       caption: legenda,
-      date: dataFormatada,
-      userid: uid
+      timestamp: dataFormatada,
+      userid: uid,
+      nome: uNome,
+      sobrenome: uSobrenome,
+      pfp: uPfp,
+      bio: uBio,
+      crp: uCrp,
     }, { merge: true })
     .then(async() => {
       props.navigation.goBack('Community');
@@ -165,9 +181,8 @@ export default function NewPost(props, { navigation }) {
               source={{uri: image}}/>
             </View>
             
-            <View style={styles.row}>
 
-            <FontAwesome name="user-circle-o" size={40} color={Colors.brown} />
+
             <TextInput
               style={styles.input}
               placeholder="Adicione uma legenda..."
@@ -179,18 +194,9 @@ export default function NewPost(props, { navigation }) {
               value={legenda}
             />
 
-            </View>
+            
 
-            <TouchableOpacity
-              activeOpacity={0.8}
-              style={styles.send}
-              onPress={uploadImage}
-            >
-              <View style={styles.row}>
-                <Text style={styles.saveText}>Publicar</Text>
-                <Ionicons name="send" size={18} color={Colors.white} />
-              </View>
-            </TouchableOpacity>
+
 
 
           </View>

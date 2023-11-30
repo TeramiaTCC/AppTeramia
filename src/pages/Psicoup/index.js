@@ -12,6 +12,7 @@ import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider } from 
 
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from 'firebase/auth'; 
 import { getFirestore, doc, deleteDoc, setDoc, Firestore } from 'firebase/firestore';
+import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 import app from "../../config/firebaseconfig"
 
 import Colors from '../../components/Colors/Colors';
@@ -87,7 +88,7 @@ export default function Psicoup({ navigation }) {
     let error = false
     setErrorNome(null)
 
-    const re = /^([a-zA-Zà-úÀ-Ú\s]){4,}$/;
+    const re = /^([a-zA-Zà-úÀ-Ú\s]){3,}$/;
 
     if (!re.test(String(nome).toLowerCase())){
     setErrorNome('Preencha seu nome corretamente')
@@ -100,7 +101,7 @@ export default function Psicoup({ navigation }) {
     let error = false
     setErrorSobrenome(null)
 
-    const re = /^[a-zA-Zà-úÀ-Ú\s]{4,}$/;
+    const re = /^[a-zA-Zà-úÀ-Ú\s]{3,}$/;
 
     if (!re.test(String(sobrenome).toLowerCase())){
     setErrorSobrenome('Preencha seu sobrenome corretamente')
@@ -134,7 +135,64 @@ export default function Psicoup({ navigation }) {
     }
     return !error
   }
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    console.log(result);
 
+    if (!result.canceled) {
+      bottomSheetModalRef.current?.dismiss();
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  function noPick() {
+    setImage("");
+    bottomSheetModalRef.current?.dismiss();
+  }
+
+  const uploadImage = async () => {
+    const credentials = JSON.parse(await AsyncStorage.getItem("userId"))
+    const uri = image;
+
+    const metadata = {
+      contentType: 'image/png'
+    };
+
+    filename = Math.random().toString(36);
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `pets/${credentials.uid}/${filename}`);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+
+    const taskProgress = snapshot => {
+      console.log(`transferred: ${snapshot.bytesTransferred}`)
+    }
+
+    const taskCompleted = () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          addPsicoData(downloadURL);
+          console.log('File available at', downloadURL);
+        });
+    }
+
+    const taskError = snapshot => {
+      console.log(snapshot)
+      console.log('foi não')
+    }
+
+    uploadTask.on('state_changed', taskProgress, taskError, taskCompleted);
+  
+  }
 
   const salvar = () =>{
     if (validarEmail() & validarSenha() & validarNome() & validarSobrenome() & validarCrp() & validarTel()){
@@ -157,7 +215,52 @@ export default function Psicoup({ navigation }) {
         crp: crp,
         usertype: UserType,
         analizeSitu: Analize,
-        imagem: ('')
+        imagem: '',
+        bio: '',
+        crp: ''
+
+      }).then(async() => {
+        handlePresentPress()
+        console.log('foi')
+
+        await AsyncStorage.setItem("typeUser", JSON.stringify({
+          UserType: UserType,
+          analizeSitu: Analize,
+         
+        }));
+
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuario", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+  }
+  }
+
+  async function addPsicoData(downloadURL){
+    const auth = getAuth(app)
+    if (validarEmail() & validarSenha() & validarNome() & validarSobrenome() & validarCrp() & validarTel()){
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
+
+      await setDoc(doc(db, "usuario", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNascimento,
+        cell: cell,
+        crp: crp,
+        usertype: UserType,
+        analizeSitu: Analize,
+        imagem: downloadURL,
+        bio: '',
+        crp: ''
 
       }).then(async() => {
         handlePresentPress()
@@ -199,26 +302,7 @@ export default function Psicoup({ navigation }) {
     }
   };
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-    console.log(result);
 
-    if (!result.canceled) {
-      bottomSheetModalRef.current?.dismiss();
-      setImage(result.assets[0].uri);
-    }
-  };
-
-  function noPick() {
-    setImage("");
-    bottomSheetModalRef.current?.dismiss();
-  }
 
 
   const snapPoints = useMemo( () => ["25%", "28%"], []);
@@ -506,7 +590,14 @@ export default function Psicoup({ navigation }) {
       <TouchableOpacity
         style={styles.Button}
         activeOpacity={0.8}
-        onPress={signUpPsico}
+        onPress={() =>{
+          { !image
+          ?
+            signUpPsico()
+          :
+            uploadImage()
+          }
+        }}
       >
         <Text style={styles.btmText}>CADASTRAR</Text>
       </TouchableOpacity>

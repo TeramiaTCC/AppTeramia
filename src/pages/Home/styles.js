@@ -32,37 +32,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderColor: Colors.orange,
   },
-  boxActivity: {
-    backgroundColor: Colors.whiteGold,
-    padding: 25,
-    borderRadius: 15,
-    color: Colors.white,
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginBottom: 20,
-    borderWidth: 2,
-    borderColor: Colors.brown,
-    elevation: 2,
-  },
-  titleAct: {
-    color: Colors.orange,
-    fontWeight: 'bold',
-    fontSize: 25,
-    borderBottomWidth: 2,
-    borderColor: Colors.brown,
-    marginBottom: 5,
-    paddingBottom: 5,
-    textAlign: 'left'
-  },
   time: {
-    color: Colors.brown,
+    color: Colors.brownAlpha2,
     textAlign: 'right',
     fontWeight: '400',
     paddingLeft: 5
-  },
-  imageStyle:{
-    width: 180,
-    height: 180,
   },
   row: {
     flexDirection: 'row',
@@ -79,7 +53,34 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     justifyContent: 'center',
-  }
+  },
+  boxArt: {
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderBottomWidth: 2,
+    borderColor: Colors.brown,
+    marginBottom: 10,
+    paddingBottom: 10,
+  },
+  article: {
+    padding: 10,
+  },
+  imageArt: {
+    width: 115,
+    aspectRatio: 1,
+    borderRadius: 25,
+    marginRight: 5,
+    borderWidth: 4,
+    borderColor: Colors.orange
+  },
+  titleArt: {
+    color: Colors.orange,
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginBottom: 5,
+    paddingBottom: 5,
+    textAlign: 'left'
+  },
 });
 
 export default styles;

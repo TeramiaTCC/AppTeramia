@@ -8,6 +8,9 @@ import results from './results';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllPosts } from '../../redux/features/posts';
 
+import { store } from '../../redux/store/store'; // Import your Redux store
+
+
 export default function Community({ navigation }) {
   const posts = useSelector((state) => state.posts.posts.postsArray);
   //console.log('DataPosts: ',posts)
@@ -23,14 +26,8 @@ export default function Community({ navigation }) {
   
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchInterval = setInterval(() => {
-      dispatch(fetchAllPosts());
-    }, 5000); // 5 miliseconds interval
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(fetchInterval);
-  }, [dispatch]);
+  
  return (
   <SafeAreaView style={styles.container}>
   <StatusBar barStyle={'default'}/>
@@ -63,14 +60,15 @@ export default function Community({ navigation }) {
                 id: item.userid,
                 nome: item.nome,
                 sobrenome: item.sobrenome,
-                avatar: item.avatar,
-                desc: item.description
+                avatar: item.pfp,
+                bio: item.bio,
+                crp: item.crp,
               })} //tira as '' dos ngcs
               style={styles.row}
             >
-                { item.avatar
+                { item.pfp
                   ?
-                  <Image source={{uri : item.avatar }} style={styles.profileImage}/>
+                  <Image source={{uri : item.pfp }} style={styles.profileImage}/>
                   :
                   <FontAwesome style={styles.profileImage} name="user-circle-o" size={30} color={Colors.orange} />
                 }
@@ -83,14 +81,11 @@ export default function Community({ navigation }) {
           </View>
     
           <View style={styles.description}>
-            { item.caption
-              ?
+            { item.caption && (
               <View style={styles.horizontal}>
                 <Text style={styles.descText}><Text style={styles.descTextName}>{item.nome}:</Text> {item.caption}</Text>
               </View>
-              :
-              <Text></Text>
-            }
+            )}
           </View>
         </View>
         );

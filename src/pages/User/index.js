@@ -20,30 +20,11 @@ export default function User({ navigation }) {
   const dataUser = useSelector((state) => state.userData.userData.usuarioData);
   //console.log('DataUser: ',dataUser)
 
+  const [photo] = useState(dataUser.imagem)
   const [crp] = useState(dataUser.crp)
   const [bio] = useState(dataUser.bio)
 
   const dispatch = useDispatch();
-
-  // Periodically fetch posts every 5 minutes (adjust the interval as needed)
-  useEffect(() => {
-    const fetchInterval = setInterval(() => {
-      dispatch(fetchPosts());
-    }, 15000); // 30 seconds interval
-
-    // Clear the interval when the component unmounts
-    return () => clearInterval(fetchInterval);
-  }, [dispatch]);
-
-  useEffect(() => {
-    const fetchInterval = setInterval(() => {
-      dispatch(fetchUser());
-    }, 15000); // 15 seconds interval
-
-    // Clear the interval when the component unmounts
-    return () => clearInterval(fetchInterval);
-  }, [dispatch]);
-
 
 return (
 
@@ -53,10 +34,13 @@ return (
 
       <View style={styles.profileInfo}>
         <View style={styles.row}>
-          <FontAwesome
-            style={styles.profileImage}
-            name="user-circle-o" size={80} color="white"
-		      />
+
+          { photo
+          ?
+          <Image source={{uri : photo}} style={styles.profileImage}/>
+          :
+          <FontAwesome style={styles.profileImage} name="user-circle-o" size={80} color="white"/>
+          }
            
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
@@ -145,9 +129,10 @@ return (
             style={[styles.containerImage, styles.borderWhite]}
             activeOpacity={0.8}
             onPress={() => navigation.navigate('Post', {
-              nome: dataUser.nome,
-              sobrenome: dataUser.sobrenome,
-              imagem: dataUser.Imagem,
+              uid: item.userid,
+              nome: item.nome,
+              sobrenome: item.sobrenome,
+              imagem: item.nome
             })}
           >
             <Image source={{uri: item.imagem}} style={{aspectRatio: 1}} />

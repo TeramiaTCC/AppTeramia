@@ -188,7 +188,11 @@ export default function PetDetails(props, { navigation }) {
     <View style={{marginLeft:10, marginRight:10}}>
     <Text style={styles.title}>Dicas</Text>
 
-    <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent}>
+    <ScrollView
+      style={styles.scroll}
+      contentContainerStyle={styles.scrollContent}
+      showsVerticalScrollIndicator={false}
+    >
 
       <View style={{height: 15}} />
 

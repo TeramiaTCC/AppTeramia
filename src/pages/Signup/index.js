@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getAuth, createUserWithEmailAndPassword, deleteUser } from 'firebase/auth'; 
 import { getFirestore, doc, deleteDoc, setDoc } from 'firebase/firestore';
+import { getStorage, uploadString, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import app from "../../config/firebaseconfig"
 
@@ -82,7 +83,7 @@ export default function Signup({ navigation }) {
     let error = false
     setErrorNome(null)
 
-    const re = /^([a-zA-Zà-úÀ-Ú\s]){4,}$/;
+    const re = /^([a-zA-Zà-úÀ-Ú\s]){3,}$/;
 
     if (!re.test(String(nome).toLowerCase())){
     setErrorNome('Preencha seu nome corretamente')
@@ -95,7 +96,7 @@ export default function Signup({ navigation }) {
     let error = false
     setErrorSobrenome(null)
 
-    const re = /^[a-zA-Zà-úÀ-Ú\s]{4,}$/;
+    const re = /^[a-zA-Zà-úÀ-Ú\s]{3,}$/;
 
     if (!re.test(String(sobrenome).toLowerCase())){
     setErrorSobrenome('Preencha seu sobrenome corretamente')
@@ -122,7 +123,65 @@ export default function Signup({ navigation }) {
       console.log('Salvou')
     }
   }
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    console.log(result);
+
+    if (!result.canceled) {
+      bottomSheetModalRef.current?.dismiss();
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  function noPick() {
+    setImage("");
+    bottomSheetModalRef.current?.dismiss();
+  }
  
+  const uploadImage = async () => {
+    const uri = image;
+
+    const metadata = {
+      contentType: 'image/png'
+    };
+
+    filename = Math.random().toString(36);
+
+    const storage = getStorage();
+    const storageRef = ref(storage, `usuario/${filename}`);
+
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+
+    const taskProgress = snapshot => {
+      console.log(`transferred: ${snapshot.bytesTransferred}`)
+    }
+
+    const taskCompleted = () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          addUserData(downloadURL);
+          console.log('File available at', downloadURL);
+        });
+    }
+
+    const taskError = snapshot => {
+      console.log(snapshot)
+      console.log('foi não')
+    }
+
+    uploadTask.on('state_changed', taskProgress, taskError, taskCompleted);
+  
+  }
+
   async function singUpUser(){
     const auth = getAuth(app)
 
@@ -137,7 +196,9 @@ export default function Signup({ navigation }) {
         datanascimento: dataNascimento,
         cell: cell,
         usertype: UserType,
-        image: ''
+        imagem: '',
+        bio: '',
+        crp: ''
         
       }).then(async() => {
         handlePresentPress()
@@ -161,6 +222,48 @@ export default function Signup({ navigation }) {
     })
     }
   }
+
+  async function addUserData(downloadURL){
+    const auth = getAuth(app)
+
+    if (validarEmail() & validarSenha() & validarNome() & validarSobrenome() & validarTel()){
+    await createUserWithEmailAndPassword(auth, email, senha)
+    .then(async(userCredential)=>{
+
+      await setDoc(doc(db, "usuario", userCredential.user.uid), {
+        nome: nome,
+        sobrenome: sobrenome,
+        genero: genero,
+        datanascimento: dataNascimento,
+        cell: cell,
+        usertype: UserType,
+        imagem: downloadURL,
+        bio: '',
+        crp: ''
+        
+      }).then(async() => {
+        handlePresentPress()
+        console.log('foi')
+ 
+        await AsyncStorage.setItem("typeUser", JSON.stringify({
+          UserType: UserType,      
+        }));
+        
+        
+      }).catch(async(error) => {
+        console.log(error.code)
+            await deleteDoc(doc(db, "usuario", userCredential.user.uid))
+            await deleteUser(userCredential.user)
+      })
+      
+          
+    }).catch(error => {
+      console.log(error.code)
+
+    })
+    }
+  }
+
   const toggleDatepicker = () => {
     setShowPicker(!showPicker);
   };
@@ -180,27 +283,6 @@ export default function Signup({ navigation }) {
       toggleDatepicker();
     }
   };
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-    console.log(result);
-
-    if (!result.canceled) {
-      bottomSheetModalRef.current?.dismiss();
-      setImage(result.assets[0].uri);
-    }
-  };
-
-  function noPick() {
-    setImage("");
-    bottomSheetModalRef.current?.dismiss();
-  }
   
   const snapPoints = useMemo( () => ["22%", "25%"], []);
 
@@ -462,7 +544,14 @@ export default function Signup({ navigation }) {
         <TouchableOpacity
           style={styles.Button}
           activeOpacity={0.8}
-          onPress={singUpUser}
+          onPress={() =>{
+            { !image
+            ?
+              singUpUser()
+            :
+              uploadImage()
+            }
+          }}
         >
           <Text style={styles.btmText}>CADASTRAR</Text>
         </TouchableOpacity>

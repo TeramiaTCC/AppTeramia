@@ -9,8 +9,10 @@ import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 import styles from './styles';
 
-export default function Password({ navigation }) {
-  const [email, setEmail] = useState("");
+export default function Password(props, { navigation }) {
+  console.log(props.route.params.email)
+
+  const [email, setEmail] = useState(props.route.params.email);
   const [errorLogin, setErrorLogin] = useState("");
   const [errorEmail, setErrorEmail] = useState (null);
 
@@ -143,7 +145,7 @@ export default function Password({ navigation }) {
           <TouchableOpacity
             activeOpacity={0.8}
             style={styles.mdlButton}
-            onPress={() => navigation.goBack()}
+            onPress={() => props.navigation.goBack()}
           >
             <Text style={styles.btmText}>Ok</Text>
           </TouchableOpacity>

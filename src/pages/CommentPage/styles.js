@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
   prmryContainer: {
     flex: 1,
     backgroundColor: Colors.pageBack,
-    paddingTop: Platform.OS === 'ios' ? 0 : 25,
   },
   container: {
     flex: 1,
@@ -77,10 +76,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   profileImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 80 / 2,
-    marginBottom: 10,
+    width: 55,
+    height: 55,
+    borderRadius: 40 / 2,
   },
   borderWhite: {
     borderLeftWidth: 2,
@@ -131,7 +129,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginRight: 5,
     color: Colors.brown,
-    width: '78%',
+    width: '97.7%',
     height: 40,
     borderBottomWidth: 2,
     borderColor: Colors.brown,
@@ -143,6 +141,75 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignContent: 'center'
+  },
+  psicoName: {
+    marginLeft: 5,
+    color: Colors.orange,
+    fontWeight: 'bold',
+    fontSize: 24
+  },
+  backPs: {
+    backgroundColor: Colors.whiteGold,
+    padding: 15,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignContent: 'center',
+    borderColor: Colors.brown,
+    borderWidth: 2,
+    elevation: 5,
+    marginBottom: 25,
+  },
+  psicoCrp: {
+    marginLeft: 5,
+    color: Colors.brownAlpha2,
+  },
+  title: {
+    marginBottom: 15,
+    color: Colors.orange,
+    fontWeight: 'bold',
+    fontSize: 24,
+    marginLeft:'auto',
+    marginRight: 'auto',
+    textDecorationLine: 'underline'
+  },
+  errorMessage: {
+    color: Colors.redDel2,
+    marginBottom: 4,
+    marginLeft: 5,
+    fontWeight: '300',
+    fontStyle: 'italic',
+    },
+
+  mdlButton: {
+    backgroundColor: Colors.brown,
+    padding: 15,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    marginTop: 10,
+    marginBottom: 10,
+    elevation: 5
+  },
+  btmText: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '700',
+    fontSize: 15,
+    paddingLeft: 5
+  },
+  titleModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
+    paddingBottom: 5
+  },
+  textModal: {
+    color: Colors.white,
+    textAlign: 'center',
+    fontWeight: '300',
+    fontSize: 14,
+    paddingBottom: 5
   },
 });
 
