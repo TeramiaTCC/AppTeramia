@@ -20,11 +20,36 @@ export default function User({ navigation }) {
   const dataUser = useSelector((state) => state.userData.userData.usuarioData);
   //console.log('DataUser: ',dataUser)
 
+  const dataPets = useSelector((state) => state.userPets.userPets.petsArray);
+  //console.log('Data: ',dataPets)
+
   const [photo] = useState(dataUser.imagem)
   const [crp] = useState(dataUser.crp)
   const [bio] = useState(dataUser.bio)
 
   const dispatch = useDispatch();
+
+
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUser());
+    }, 60 * 1000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPosts());
+    }, 60 * 1000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
 
 return (
 
@@ -43,15 +68,30 @@ return (
           }
            
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
-
           <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
-            <Text style={styles.numberDesc}>Publicações</Text>
+            <Text style={styles.numberConst}></Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberConst}>{dataPosts.length}</Text>
+            {dataPosts.length === 1
+            ?
+            <Text style={styles.numberDesc}>Publicação</Text>
+            :
+            <Text style={styles.numberDesc}>Publicações</Text>
+            }
+
+          </View>
+          
+
+          <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}>{dataPets.length}</Text>
+            {dataPets.length === 1
+            ?
+            <Text style={styles.numberDesc}>TeraPet</Text>
+            :
             <Text style={styles.numberDesc}>TeraPets</Text>
+            }
           </View>
 
         </View>

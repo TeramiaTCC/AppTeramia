@@ -91,26 +91,46 @@ export default function CommentPage(props, { navigation }) {
         const userImg = dataUser.imagem;
         const userNm = dataUser.nome;
         const userSn = dataUser.sobrenome;
-    
-        const querry = collection(db, 'comentarios');
 
-        if (coment !== ""){
-        await addDoc(querry, {        
-            psicoid: psId,
-            data: dataFormatada,
-            pfp: userImg,
-            nome: userNm,
-            sobrenome: userSn,
-            userId: uid,
-        }, { merge: true })
-        .then(async() => {
-            handlePresentModalPress();
-        });  
-        } else {
-            setErrorCmt(true)
-        }
+
     
-    }
+        const querry = collection(db, 'avaliacoes', psicoid, 'comentarios');
+        const docRef = doc(querry, credentials.uid); // Definindo o ID do documento como credentials.uid
+
+        try {
+          const existingDocSnapshot = await getDoc(docRef);
+      
+          if (existingDocSnapshot.exists()) {
+            // Se o documento já existir, atualizar o conteúdo
+            await setDoc(docRef, {
+              psicoid: psId,
+              data: dataFormatada,
+              pfp: userImg || '',
+              nome: userNm,
+              sobrenome: userSn,
+              userId: uid,
+              comentario: coment,
+            });
+          } else {
+            // Se o documento não existir, adicionar um novo
+            await setDoc(docRef, {  // Usando setDoc para garantir que o documento tenha o ID definido
+              psicoid: psId,
+              data: dataFormatada,
+              pfp: userImg || '',
+              nome: userNm,
+              sobrenome: userSn,
+              userId: uid,
+              comentario: coment,
+            });
+          }
+      
+          // Ação comum para ambas as operações bem-sucedidas
+          handlePresentModalPress();
+        } catch (error) {
+          console.error('Erro ao adicionar ou atualizar o comentário:', error);
+          setErrorCmt(true);
+        }
+      }
 
  return (
    <SafeAreaView style={styles.prmryContainer} >

@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   comentDate: {
     fontSize: 12,
     color: Colors.brownAlpha2,
-    marginLeft: 2,
+    marginLeft: 5,
   },
   comentStar: {
     marginLeft: 10,

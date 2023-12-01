@@ -17,7 +17,50 @@ import { fetchAllPosts } from '../../redux/features/posts';
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchAllPosts());
+    }, 60 * 1000); // 1 miliseconds interval
 
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUser());
+    }, 60 * 1000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPets());
+    }, 60 * 1000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchUsers());
+    }, 60 * 1000); // 5 miliseconds interval
+
+     //Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchInterval = setInterval(() => {
+      dispatch(fetchPosts());
+    }, 60 * 1000); // 1 miliseconds interval
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(fetchInterval);
+  }, [dispatch]);
 
   const Atividades = [
     { 

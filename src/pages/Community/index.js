@@ -4,7 +4,6 @@ import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 import { MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-import results from './results';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllPosts } from '../../redux/features/posts';
 
@@ -20,8 +19,9 @@ export default function Community({ navigation }) {
   const scrollY = new Animated.Value(0)
 
   const translateY = scrollY.interpolate({
-    inputRange:[0, 45],
-    outputRange:[0, 20]
+    inputRange: [0, 150],
+    outputRange: [1, 0.3],
+    extrapolate: 'identity',
   })
   
   const dispatch = useDispatch();

@@ -19,14 +19,7 @@ export default function Club({ navigation, route }) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchInterval = setInterval(() => {
-      dispatch(fetchUsers());
-    }, 5 * 60 * 1000); // 5 miliseconds interval
 
-     //Clear the interval when the component unmounts
-    return () => clearInterval(fetchInterval);
-  }, [dispatch]);
 
   useEffect(() => {
     if (searchText === '') {

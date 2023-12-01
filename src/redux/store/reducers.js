@@ -4,6 +4,7 @@ import petSlice from '../features/userPets'
 import userDataSlice from '../features/user'
 import usersDataSlice from '../features/usersData'
 import postSlice from '../features/posts'
+import comentSlice from '../features/userComents'
 
 export const rootUserPosts = combineReducers({
     userPosts: userPSlice,
@@ -23,4 +24,8 @@ export const rootUserData = combineReducers({
 
 export const rootUsersData = combineReducers({
     usersData: usersDataSlice,
+});
+
+export const rootUsersComents = combineReducers({
+    comentsData: comentSlice,
 });

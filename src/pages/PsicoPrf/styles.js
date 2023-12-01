@@ -135,29 +135,13 @@ const styles = StyleSheet.create({
   marginBottom: {
     marginBottom: 25
   },
-  comentInput: {
-    marginLeft: 5,
-    marginRight: 5,
-    color: Colors.brown,
-    width: '78%',
-    height: 40,
-    borderBottomWidth: 2,
-    borderColor: Colors.brown,
-    fontSize: 12,
-  },
-  send: {
-    backgroundColor: Colors.backColor,
-    padding: 10,
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
   boxComent:{
     padding: 10,
     backgroundColor: Colors.whiteGold,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: Colors.brown,
+    marginBottom: 10
   },
   comentName: {
     fontSize: 15,
@@ -168,14 +152,14 @@ const styles = StyleSheet.create({
   comentText: {
     fontSize: 12,
     marginLeft: 5,
-    marginRight: 30,
+    marginRight: 40,
     color: Colors.brown,
     textAlign: 'justify'
   },
   comentDate: {
     fontSize: 12,
     color: Colors.brownAlpha2,
-    marginLeft: 2,
+    marginLeft: 5,
   },
   comentStar: {
     marginLeft: 10,

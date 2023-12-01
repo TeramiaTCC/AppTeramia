@@ -8,6 +8,9 @@ import { FontAwesome, AntDesign, Feather, Ionicons, MaterialIcons } from '@expo/
 import { TextComponent } from 'react-native';
 import { CheckBoxIcon } from '@rneui/base/dist/CheckBox/components/CheckBoxIcon';
 
+import { getFirestore, collection, getDocs, onSnapshot } from 'firebase/firestore';
+import app from '../../config/firebaseconfig';
+
 
 export default function PsicoPrf(props, { navigation }) {
   //console.log(props.route)
@@ -23,6 +26,27 @@ export default function PsicoPrf(props, { navigation }) {
   const image = props.route.params.foto;
 
   const [follow, setFollow] = useState(null);
+
+  const [coments, setComents] = useState(null);
+
+  useEffect(() => {
+    const db = getFirestore(app);
+    const comentariosRef = collection(db, 'avaliacoes', uid, 'comentarios');
+  
+    const unsubscribe = onSnapshot(comentariosRef, (querySnapshot) => {
+      const comentariosData = [];
+      querySnapshot.forEach((doc) => {
+        comentariosData.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      setComents(comentariosData);
+    });
+  
+    // Cleanup the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -105,25 +129,26 @@ return (
         </View>
       }
       keyExtractor={(item) => item.id}
-      data={''}
+      data={coments}
       style={{}}
       renderItem={({item}) => {
         return (
           <View style={[styles.margin]}>
           <View style={styles.boxComent}>
           <View style={[styles.row2]}>
-                { item.avatar
+                { item.pfp
                 ?
-                <Image source={{uri : item.avatar}} style={styles.profilePic} />
+                <Image source={{uri : item.pfp}} style={styles.profilePic} />
                 :
                 <FontAwesome name="user-circle-o" size={40} color={Colors.brown} style={styles.profilePic} />
                 }
                 
               <View>
                   <View style={[styles.row]}>
-                      <Text style={styles.comentName}>item.nome</Text>
+                      <Text style={styles.comentName}>{item.nome} {item.sobrenome}</Text>
+                      <Text style={styles.comentDate}>{item.data}</Text>
                   </View>
-                  <Text style={styles.comentText}>item.comentario</Text>
+                  <Text style={styles.comentText}>{item.comentario}</Text>
               </View>
           </View>
           </View>
