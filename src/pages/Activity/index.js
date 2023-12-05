@@ -4,6 +4,7 @@ import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 import { Feather } from '@expo/vector-icons';
+import Banner from '../../components/Ads/banner';
 
 export default function Activity(props, {navigation}) {
     //console.log(props.route.params.desc);
@@ -42,8 +43,9 @@ export default function Activity(props, {navigation}) {
           <Image source={{uri : image}} style={{aspectRatio: 1, borderRadius: 15, borderWidth: 4, borderColor: Colors.orange}} />
 
           <View style={styles.boxPropaganda}>
-            <Text>Propaganda</Text>
+            <Banner/>
           </View>
+
 
           <Text style={styles.desc}>{props.route.params.desc}</Text>
           <View style={{height: 20}} />

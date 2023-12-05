@@ -108,9 +108,9 @@ export default function NewPost(props, { navigation }) {
       userid: uid,
       nome: uNome,
       sobrenome: uSobrenome,
-      pfp: uPfp,
-      bio: uBio,
-      crp: uCrp,
+      pfp: uPfp || "",
+      bio: uBio || "",
+      crp: uCrp || "",
     }, { merge: true })
     .then(async() => {
       props.navigation.goBack('Community');

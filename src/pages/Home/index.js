@@ -14,6 +14,9 @@ import { fetchPets } from '../../redux/features/userPets';
 import { fetchUsers } from '../../redux/features/usersData';
 import { fetchAllPosts } from '../../redux/features/posts';
 
+import Banner from '../../components/Ads/banner';
+import Interstical from '../../components/Ads/interstical';
+
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
 
@@ -178,15 +181,15 @@ export default function Home({ navigation }) {
 
   ];
 
-
  return (
    <SafeAreaView style={styles.container}>
         <StatusBar barStyle={'default'}/>
 
         <View style={styles.containerContent}>
-        <View style={styles.boxPropaganda}>
-          <Text>Propaganda</Text>
-        </View>
+          <View style={styles.boxPropaganda}>
+            <Banner/>
+          </View>
+
 
           <Text style={styles.title}>Atividades</Text>
 

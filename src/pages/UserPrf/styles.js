@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15,
   },
+  textCrp: {
+    fontWeight: '400',
+    color: Colors.white,
+    fontSize: 16,
+  },
   editButton: {
     justifyContent: 'center',
     alignItems: 'center',

@@ -168,7 +168,7 @@ return (
           <TouchableOpacity
             style={[styles.containerImage, styles.borderWhite]}
             activeOpacity={0.8}
-            onPress={() => navigation.navigate('Post', {
+            onPress={() => navigation.navigate('Posts', {
               uid: item.userid,
               nome: item.nome,
               sobrenome: item.sobrenome,

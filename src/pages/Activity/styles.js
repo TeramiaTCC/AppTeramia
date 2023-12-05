@@ -74,12 +74,11 @@ const styles = StyleSheet.create({
     paddingLeft: 5
   },
   boxPropaganda:{
-    backgroundColor: Colors.brown,
-    padding: 25,
-    borderRadius: 15,
-    color: Colors.white,
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
+    width:'100%',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

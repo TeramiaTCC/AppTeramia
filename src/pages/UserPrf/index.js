@@ -68,6 +68,11 @@ return (
            
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
+         <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}>00</Text>
+            <Text style={styles.numberDesc}>TeraPets</Text>
+          </View>
+
           <View style={[styles.justifyCenter, styles.containerPrf]}>
             <Text style={styles.numberConst}>{userPosts.length}</Text>
             {userPosts.length === 1

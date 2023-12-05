@@ -3,14 +3,14 @@ import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity, View, Image 
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
-import { MaterialIcons, FontAwesome, Entypo } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome, Entypo, Feather } from '@expo/vector-icons';
 import { useSelector } from 'react-redux';
 
-import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, query, where, getDocs, getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import app from '../../config/firebaseconfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Post(props, { navigation }) {
+export default function UserPost(props, { navigation }) {
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
   //console.log('DataPosts: ',dataPosts)
 
@@ -19,7 +19,6 @@ export default function Post(props, { navigation }) {
   const nome = props.route.params.nome;
   const sobrenome = props.route.params.sobrenome;
 
-  const [uid, setUid] = useState(null);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -27,31 +26,14 @@ export default function Post(props, { navigation }) {
     });
   }, [navigation, nome]);
 
-  const db = getFirestore(app);
-  const postagensRef = collection(db, 'postagens');
-  const [userPosts, setUserPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
-      setUid(credentials.uid)
-      const q = query(postagensRef, where('userid', '==', id));
-      const querySnapshot = await getDocs(q);
-
-      const postsData = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        postsData.push({
-          id: doc.id,
-          ...data // replace with your actual field name
-        });
-      });
-
-      setUserPosts(postsData);
-    };
-
-    fetchData();
-  }, [id]);
+  async function deletePost(id){
+    const db = getFirestore(app);
+    await deleteDoc(doc(db, "postagens", id))
+    .then(
+        console.log("Foi deletado")
+    )
+  }
+    
 
 
  return (
@@ -67,7 +49,7 @@ export default function Post(props, { navigation }) {
         <View/>
       )}
       keyExtractor={(item) => item.id}
-      data={userPosts}
+      data={dataPosts}
       renderItem={({item}) => {
         return (
           <View style={styles.post}>
@@ -95,6 +77,9 @@ export default function Post(props, { navigation }) {
                 <Text style={styles.descText}><Text style={styles.descTextName}>{nome}:</Text> {item.caption}</Text>
               </View>
             )}
+          </View>
+          <View style={[styles.excluir]}>
+            <Feather name="trash-2" size={24} color={Colors.redDel} style={{marginLeft: 'auto', marginRight: 'auto'}} onPress={() => deletePost(item.id)}/>
           </View>
         </View>
         );
