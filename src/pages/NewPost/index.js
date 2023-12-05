@@ -101,6 +101,10 @@ export default function NewPost(props, { navigation }) {
     dataFormatada = new_date.getDate() + "/" + (new_date.getMonth() + 1) + "/" + new_date.getFullYear();
   
     const querry = collection(db, 'postagens');
+
+    const posts = useSelector((state) => state);
+    console.log('posts: ',posts)
+
     await addDoc(querry, {        
       imagem: downloadURL,
       caption: legenda,

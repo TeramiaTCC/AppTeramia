@@ -27,11 +27,18 @@ const postSlice = createSlice({
   initialState: {
     postsArray: [],
   },
+  reducers: {
+    updatePosts: (action) => {
+      state.postsArray = action.payload
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAllPosts.fulfilled, (state, action) => {
       state.postsArray = action.payload;
     });
   },
 });
+
+export const { updatePosts } = postSlice.actions;
 
 export default postSlice.reducer;

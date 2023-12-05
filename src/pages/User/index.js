@@ -15,10 +15,8 @@ import { fetchUser } from '../../redux/features/user';
 export default function User({ navigation }) {
 
   const dataPosts = useSelector((state) => state.userPosts.userPosts.publicacoesArray);
-  //console.log('DataPostsUser: ',dataPosts)
 
   const dataUser = useSelector((state) => state.userData.userData.usuarioData);
-  //console.log('DataUser: ',dataUser)
 
   const [photo] = useState(dataUser.imagem)
   const [crp] = useState(dataUser.crp)

@@ -3,10 +3,12 @@ import { SafeAreaView, Text, StatusBar, View, TouchableOpacity, Image, ScrollVie
 import styles from './styles';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../components/Colors/Colors';
 
+import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { fetchPosts } from '../../redux/features/userPosts';
 import { fetchUser } from '../../redux/features/user';
@@ -15,10 +17,6 @@ import { fetchUsers } from '../../redux/features/usersData';
 import { fetchAllPosts } from '../../redux/features/posts';
 
 export default function Home({ navigation }) {
-  const dispatch = useDispatch();
-
-
-
   const Atividades = [
     { 
       name: 'Passeio no Parque', 
@@ -137,6 +135,7 @@ export default function Home({ navigation }) {
 
 
  return (
+
    <SafeAreaView style={styles.container}>
         <StatusBar barStyle={'default'}/>
 

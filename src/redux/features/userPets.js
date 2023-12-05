@@ -27,6 +27,7 @@ const petSlice = createSlice({
     initialState: {
         petsArray: [],
     },
+    
     extraReducers: (builder) => {
         builder
         .addCase(fetchPets.fulfilled, (state, action) => {

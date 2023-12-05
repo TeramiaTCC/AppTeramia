@@ -12,9 +12,17 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
+import { fetchPosts } from '../../redux/features/userPosts';
+import { fetchUser } from '../../redux/features/user';
+import { fetchPets } from '../../redux/features/userPets';
+import { fetchUsers } from '../../redux/features/usersData';
+import { fetchAllPosts } from '../../redux/features/posts';
+
 import { Splash } from '../../components/Splash/Splash';
 
 export default function Login ({ navigation }) {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
@@ -29,7 +37,7 @@ export default function Login ({ navigation }) {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 
@@ -89,8 +97,14 @@ export default function Login ({ navigation }) {
 
         await signInWithEmailAndPassword(auth, credentials.email, credentials.senha)
       .then(async (userCredentials) => {
-        setErrorLogin(false)
 
+        dispatch(fetchPosts());
+        dispatch(fetchAllPosts());
+        dispatch(fetchUser());
+        dispatch(fetchUsers());
+        dispatch(fetchPets());
+
+        setErrorLogin(false)
         navigation.navigate('RotationPsico')
         navigation.navigate('Rotation')
 
