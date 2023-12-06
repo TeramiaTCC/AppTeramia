@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, Image } from 'react-native';
+import { Text, StatusBar, View, ScrollView, FlatList, TouchableOpacity, SafeAreaView, TextInput, KeyboardAvoidingView, Image, Alert, Clipboard  } from 'react-native';
 import styles from './styles';
 
 import Colors from '../../components/Colors/Colors';
 
-import { FontAwesome, AntDesign, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome, AntDesign, Feather, Ionicons, MaterialIcons, Foundation } from '@expo/vector-icons';
 import { TextComponent } from 'react-native';
 import { CheckBoxIcon } from '@rneui/base/dist/CheckBox/components/CheckBoxIcon';
 
@@ -54,6 +54,17 @@ export default function PsicoPrf(props, { navigation }) {
     });
   }, [navigation, nome]);
 
+  const [copiedText, setCopiedText] = useState('');
+
+  const handleCopyToClipboard = () => {
+    const textToCopy = "+55" + " " + props.route.params.tel;
+    
+    Clipboard.setString(textToCopy);
+    setCopiedText(textToCopy);
+    
+    Alert.alert('Número copiado para área de transfrerência', `Adicione o número copiado na sua lista de contatos.\nNúmero copiado: ${textToCopy}`);
+  };
+
 return (
 
     <SafeAreaView style={styles.prmryContainer}>
@@ -76,27 +87,14 @@ return (
       </View>
 
       <View style={styles.horizontal}>
-        { follow === true
-        ?
-          <TouchableOpacity
-            style={[styles.unfollowButton, styles.container, styles.row]}
-            onPress={()=>setFollow(false)}
-            activeOpacity={0.8}
-          >
-            <Feather name="user-minus" size={24} color={Colors.white} style={styles.ico}/>
-            <Text style={styles.textEdit}>Deixar de seguir</Text>
-          </TouchableOpacity>
-        :
           <TouchableOpacity
             style={[styles.followButton, styles.container, styles.row]}
-            onPress={()=>setFollow(true)}
+            onPress={handleCopyToClipboard}
             activeOpacity={0.8}
           >
-              <Feather name="user-plus" size={24} color={Colors.white} style={styles.ico}/>
-              <Text style={styles.textEdit}>Seguir</Text>
+            <Foundation name="telephone" size={24} color={Colors.white} style={styles.ico}/>
+            <Text style={styles.textEdit}>Contatar</Text>
           </TouchableOpacity>
-        }
-
       </View>
 
 
@@ -157,22 +155,6 @@ return (
       }}
     />
 
-    {follow && (
-      <TouchableOpacity
-        style= {styles.buttonChat}
-        onPress={() => props.navigation.navigate('Chat', {
-          nome: nome,
-          sobrenome: sobrenome,
-          uid: uid
-        })}
-        activeOpacity={0.8}
-      >
-        <Ionicons name="chatbubble-ellipses-outline"  size={24} color="#fff" />
-      </TouchableOpacity>
-    )}
-
-
-    
     <TouchableOpacity
       style= {styles.buttonAddComent}
       onPress={() => props.navigation.navigate('AddComent', {
