@@ -12,7 +12,7 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchPosts } from '../../redux/features/userPosts';
 import { fetchUser } from '../../redux/features/user';
 import { fetchPets } from '../../redux/features/userPets';
@@ -22,12 +22,7 @@ import { fetchAllPosts } from '../../redux/features/posts';
 import { Splash } from '../../components/Splash/Splash';
 
 export default function Login ({ navigation }) {
-  /*const dataUser = useSelector((state) => state.userData.userData.usuarioData);
- /const [situ] = useState(dataUser.analizeSitu)
-  const [tp] = useState(dataUser.usertype)*/
-
   const dispatch = useDispatch();
-
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
@@ -96,6 +91,8 @@ export default function Login ({ navigation }) {
     (async()=>{
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
 
+      const UserType = JSON.parse(await AsyncStorage.getItem("typeUser"));
+
       if(credentials !== null){
 
         await signInWithEmailAndPassword(auth, credentials.email, credentials.senha)
@@ -108,15 +105,19 @@ export default function Login ({ navigation }) {
         dispatch(fetchPets());
 
         setErrorLogin(false)
+        navigation.navigate('RotationPsico')
+        navigation.navigate('Rotation')
 
-       if (tp == "0"){
+       /* if (UserType.UserType == "0"){
           navigation.navigate('Rotation');
         }
-      
-       if (situ == "0"){
+        navigation.navigate('RotationPsico'); */
+   
+        
+       /* if (UserType.analizeSitu == "0"){
           handlePresentModalPress()
-        } 
-       navigation.navigate('RotationPsico');
+        } /* Não Analizado */ 
+       /* navigation.navigate('RotationPsico'); /* Analizado*/ 
     
       })
       .catch((error) =>{
@@ -127,6 +128,7 @@ export default function Login ({ navigation }) {
 
   });
 
+
   useFocusEffect(callback);
 
   async function singIn(){
@@ -135,12 +137,6 @@ export default function Login ({ navigation }) {
       await signInWithEmailAndPassword(auth, email, senha)
       .then(async (userCredentials) => {
 
-        dispatch(fetchPosts());
-        dispatch(fetchAllPosts());
-        dispatch(fetchUser());
-        dispatch(fetchUsers());
-        dispatch(fetchPets());
-
         setErrorLogin(false)
         await AsyncStorage.setItem("userId", JSON.stringify({
           email: email,
@@ -148,16 +144,9 @@ export default function Login ({ navigation }) {
           uid: userCredentials.user.uid,
         }));
 
-        if (tp === "0"){
-          navigation.navigate('Rotation');
-        }else{
-      
-       if (situ !== "1"){
-          handlePresentModalPress()
-        } else {
-       navigation.navigate('RotationPsico'); 
-
-      }}})
+        navigation.navigate('RotationPsico')
+        navigation.navigate('Rotation')
+      })
       
       .catch((error) => {
         console.log(error)
