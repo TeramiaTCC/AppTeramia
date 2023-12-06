@@ -21,7 +21,7 @@ export default function CameraP({ navigation }) {
 
   const bottomSheetRef = useRef(null);
 
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 

@@ -87,7 +87,7 @@ export default function EditPet(props, { navigation }) {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 
@@ -100,7 +100,7 @@ export default function EditPet(props, { navigation }) {
   const handlePresentPress = useCallback(() => {
     bottomSheetModalRef2.current?.present();
   }, []);
-  const handleChanges = useCallback((index: number) => {
+  const handleChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 

@@ -42,7 +42,7 @@ export default function Login ({ navigation }) {
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 
@@ -92,7 +92,7 @@ export default function Login ({ navigation }) {
 
 
 
-  /*const callback = useCallback(() => {
+  const callback = useCallback(() => {
     (async()=>{
       const credentials = JSON.parse(await AsyncStorage.getItem("userId"));
 
@@ -128,7 +128,7 @@ export default function Login ({ navigation }) {
   });
 
   useFocusEffect(callback);
-*/ 
+
   async function singIn(){
  
     if (validarEmail()){
@@ -148,7 +148,7 @@ export default function Login ({ navigation }) {
           uid: userCredentials.user.uid,
         }));
 
-      /*  if (tp === "0"){
+        if (tp === "0"){
           navigation.navigate('Rotation');
         }else{
       
@@ -157,7 +157,7 @@ export default function Login ({ navigation }) {
         } else {
        navigation.navigate('RotationPsico'); 
 
-      }}*/})
+      }}})
       
       .catch((error) => {
         console.log(error)

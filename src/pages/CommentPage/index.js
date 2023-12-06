@@ -59,7 +59,7 @@ export default function CommentPage(props, { navigation }) {
     const handlePresentModalPress = useCallback(() => {
       bottomSheetModalRef.current?.present();
     }, []);
-    const handleSheetChanges = useCallback((index: number) => {
+    const handleSheetChanges = useCallback((index) => {
       console.log('handleSheetChanges', index);
     }, []);
   
