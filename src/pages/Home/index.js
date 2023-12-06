@@ -23,7 +23,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       dispatch(fetchAllPosts());
-    }, 60 * 1000); // 1 miliseconds interval
+    }, 15 * 1000); // 1 miliseconds interval
 
     // Clear the interval when the component unmounts
     return () => clearInterval(fetchInterval);
@@ -32,7 +32,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       dispatch(fetchUser());
-    }, 60 * 1000); // 1 miliseconds interval
+    }, 15  * 1000); // 1 miliseconds interval
 
     // Clear the interval when the component unmounts
     return () => clearInterval(fetchInterval);
@@ -41,7 +41,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       dispatch(fetchPets());
-    }, 60 * 1000); // 1 miliseconds interval
+    }, 15  * 1000); // 1 miliseconds interval
 
     // Clear the interval when the component unmounts
     return () => clearInterval(fetchInterval);
@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       dispatch(fetchUsers());
-    }, 60 * 1000); // 5 miliseconds interval
+    }, 15  * 1000); // 5 miliseconds interval
 
      //Clear the interval when the component unmounts
     return () => clearInterval(fetchInterval);
@@ -59,7 +59,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     const fetchInterval = setInterval(() => {
       dispatch(fetchPosts());
-    }, 60 * 1000); // 1 miliseconds interval
+    }, 15  * 1000); // 1 miliseconds interval
 
     // Clear the interval when the component unmounts
     return () => clearInterval(fetchInterval);

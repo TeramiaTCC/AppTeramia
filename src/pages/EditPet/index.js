@@ -24,6 +24,7 @@ export default function EditPet(props, { navigation }) {
   const [image, setImage] = useState('');
 
   const [photo, setPhoto] = useState(props.route.params.imagem);
+
   //console.log(photo)
 
   const [nome] = useState(props.route.params.nome);
@@ -37,6 +38,8 @@ export default function EditPet(props, { navigation }) {
   const [selectedCast, setSelectedCast] = useState ('');
   const [bio, setBio] = useState('');
 
+  const petid = props.route.params.id;
+  
   const [save, setSave] = useState(null);
   const db = getFirestore(app);
 
@@ -101,16 +104,31 @@ export default function EditPet(props, { navigation }) {
     console.log('handleSheetChanges', index);
   }, []);
 
-
-
-  async function deletePet(){
-    console.log('Deteltado');
+ 
+  async function deletePet() {
+    try {
+      // Obtenha as credenciais do usuário do AsyncStorage
+      const credentials = JSON.parse(await AsyncStorage.getItem('userId'));
+  
+      // Construa a referência do documento do pet
+      const petRef = doc(db, 'pet', credentials.uid, 'userPets', petid);
+  
+      // Exclua o documento do pet
+      await deleteDoc(petRef)
+        
+      console.log('Pet excluído com sucesso!')
+      props.navigation.navigate('Meus Terapets')
+    } catch (error) {
+      console.error('Erro ao excluir o pet:', error);
+    }
   }
+
 
   async function salvarAlt(){
     setSave(!save);
   }
 
+    
 
  return (
     <SafeAreaView style={styles.container}>

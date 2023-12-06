@@ -21,13 +21,11 @@ const styles = StyleSheet.create({
     height: 'auto',
   },
   boxPropaganda:{
-    backgroundColor: Colors.brown,
-    padding: 25,
-    borderRadius: 15,
-    color: Colors.white,
-    justifyContent: 'center',
-    alignContent: 'center',
-    marginBottom: 20,
+    marginTop: -10,
+    marginBottom: 10,
+    width:'100%',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     color: Colors.orange,

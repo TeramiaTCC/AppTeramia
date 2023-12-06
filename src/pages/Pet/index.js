@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Colors from '../../components/Colors/Colors';
 import styles from './styles';
 import { fetchPets } from '../../redux/features/userPets';
+import { SignInMethod } from 'firebase/auth';
 
 
 export default function Pett({ navigation }) {
@@ -62,6 +63,7 @@ export default function Pett({ navigation }) {
                 <TouchableOpacity
                   onPress={() => {
                     navigation.navigate ('PetDetails', {
+                      id: item.id,
                       nome: item.nome,
                       desc: item.description,
                       tipo: item.tipo,

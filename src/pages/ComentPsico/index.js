@@ -10,6 +10,8 @@ import { FontAwesome, AntDesign, Feather, Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchComents } from '../../redux/features/userComents'
 
+import Banner from '../../components/Ads/banner';
+
 export default function ComentPsico({ navigation }) {
   const coments = useSelector((state) => state.coments.comentsData.comentsArray);
   console.log(coments.length)
@@ -31,11 +33,12 @@ export default function ComentPsico({ navigation }) {
         </View>
       </View>
 
-    <View style={styles.containerContent}>
-      
-      <View style={styles.boxPropaganda}>
-        <Text>Propaganda</Text>
-      </View>
+  <StatusBar barStyle={'default'}/>
+
+  <View style={styles.containerContent}>
+    <View style={styles.boxPropaganda}>
+      <Banner/>
+    </View>
 
       <Text style={styles.title}>Avaliações</Text>
 

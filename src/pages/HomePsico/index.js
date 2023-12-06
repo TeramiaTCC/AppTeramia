@@ -11,6 +11,9 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchComents } from '../../redux/features/userComents'
 
+import Banner from '../../components/Ads/banner';
+import Interstical from '../../components/Ads/interstical';
+
 export default function HomePsico({ navigation }) {
 
   const [numberFollows] = useState('10');
@@ -20,13 +23,13 @@ export default function HomePsico({ navigation }) {
 
 
  return (
-   <SafeAreaView style={styles.container}>
-    <StatusBar barStyle={'default'}/>
-      <View style={styles.containerContent}>
+  <SafeAreaView style={styles.container}>
+  <StatusBar barStyle={'default'}/>
 
-        <View style={styles.boxPropaganda}>
-          <Text>Propaganda</Text>
-        </View>
+  <View style={styles.containerContent}>
+    <View style={styles.boxPropaganda}>
+      <Banner/>
+    </View>
 
         <Text style={styles.title}>Seguidores: {numberFollows} </Text>
 

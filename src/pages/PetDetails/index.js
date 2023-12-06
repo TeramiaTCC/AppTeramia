@@ -10,6 +10,7 @@ import { MaterialIcons, FontAwesome5, Feather } from '@expo/vector-icons';
 export default function PetDetails(props, { navigation }) {
  // console.log(props)
 
+  const petid = props.route.params.id;
   const image = props.route.params.foto;
   const nome = props.route.params.nome;
   const tipo = props.route.params.tipo;
@@ -92,11 +93,6 @@ export default function PetDetails(props, { navigation }) {
             <Text></Text>
           </View>
 
-          <View style={[styles.justifyCenter, styles.containerPet2]}>
-            <Text style={styles.numberConst}>00</Text>
-            <Text style={styles.numberDesc}>Anos</Text>
-          </View>
-
         </View>
       
       </View>
@@ -110,6 +106,7 @@ export default function PetDetails(props, { navigation }) {
         <TouchableOpacity
           style={[styles.editButton, styles.container, styles.row]}
           onPress={() => props.navigation.navigate('EditPet', {
+            id: petid,
             nome: nome,
             desc: desc,
             tipo: tipo,
