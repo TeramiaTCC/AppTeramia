@@ -22,7 +22,8 @@
         "foregroundImage": "./assets/img/logo/AdaptativeIcon.png",
         "backgroundColor": "#F16520"
       },
-      "package": "com.teramia.teramia"
+      "package": "com.teramia.teramia",
+      "blockedPermissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./assets/img/logo/favicon.ico"

@@ -69,8 +69,13 @@ return (
         <View style={[styles.container, styles.horizontal, styles.justifyCenter]}>
 
          <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
-            <Text style={styles.numberDesc}>TeraPets</Text>
+            <Text style={styles.numberConst}></Text>
+            <Text style={styles.numberDesc}></Text>
+          </View>
+
+          <View style={[styles.justifyCenter, styles.containerPrf]}>
+            <Text style={styles.numberConst}></Text>
+            <Text style={styles.numberDesc}></Text>
           </View>
 
           <View style={[styles.justifyCenter, styles.containerPrf]}>
@@ -83,10 +88,7 @@ return (
             }
           </View>
 
-          <View style={[styles.justifyCenter, styles.containerPrf]}>
-            <Text style={styles.numberConst}>00</Text>
-            <Text style={styles.numberDesc}>TeraPets</Text>
-          </View>
+
 
         </View>
           

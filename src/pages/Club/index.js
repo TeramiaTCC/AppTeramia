@@ -70,7 +70,8 @@ export default function Club({ navigation, route }) {
                     sobrenome: item.sobrenome,
                     crp: item.crp,
                     desc: item.bio,
-                    foto: item.imagem
+                    foto: item.imagem,
+                    tel: item.cell,
                   })
               }
               >
